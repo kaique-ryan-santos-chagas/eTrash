@@ -5,11 +5,16 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.2",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "knex": "^0.20.13",
     "pg": "^8.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "localStart": "nodemon src/index.js"
   }
 }
