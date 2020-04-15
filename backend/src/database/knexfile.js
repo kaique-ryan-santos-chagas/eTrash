@@ -4,7 +4,7 @@ module.exports = {
 
   development: {
     client: 'postgresql',
-    connection: 'postgres://postgres:_CUBE_@localhost:5432/eTrash',
+    connection: 'postgres://postgres:_CUBE_@localhost:5432/eTrashDB',
     migrations: {
       directory: './migrations'
     },
