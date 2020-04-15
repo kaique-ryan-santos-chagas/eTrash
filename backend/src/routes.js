@@ -7,7 +7,9 @@ const PointController = require('./controllers/PointController');
 const SessionController = require('./controllers/SessionController');
 
 
-routes.get('/',);
+routes.get('/users', UserController.index);
+routes.post('/users/create', UserController.create);
+routes.delete('/users/delete', UserController.delete);
 
 
 module.exports = routes;
