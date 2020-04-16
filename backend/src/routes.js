@@ -10,6 +10,7 @@ const SessionController = require('./controllers/SessionController');
 routes.get('/users', UserController.index);
 routes.post('/users/create', UserController.create);
 routes.delete('/users/delete', UserController.delete);
+routes.post('/session', SessionController.create);
 
 
 module.exports = routes;
