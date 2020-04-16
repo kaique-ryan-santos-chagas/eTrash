@@ -1,18 +1,20 @@
 const connection = require('../database/connection');
 const crypto = require('crypto');
 const axios = require('axios');
+const bcrypt = require('bcrypt');
 
 function hash(password){
-	const hash = crypto.createHash('sha256');
-	hash.update(password);
-	return hash.digest('HEX');
+	const saltRounds = 15;
+	const salt = bcrypt.genSaltSync(saltRounds);
+	const hash = bcrypt.hashSync(password, salt);
+	return hash;
 }
+
 
 module.exports = {
 	index: async (req, res) => {
 		const users = await connection('users').select('name', 'email');
 		const [count] = await connection('users').count();
-		console.log(count);
 		res.header('X-Total-Count', count['count']);
 		return res.json(users);
 	},
