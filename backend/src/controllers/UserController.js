@@ -48,12 +48,16 @@ module.exports = {
 		const idUserDB = await connection('users').where('id', user_id)
 		.select('id').first();
 
+		try{
 		if(idUserDB.id != user_id){
 			return res.status(401).json({error: 'Operação não permitida!'});
 		}  
-
 		await connection('users').where('id', user_id).delete();
 		return res.send();
+		}
+		catch{
+			return res.status(401).json({error: 'Operação não permitida!'});
+		}
 	}
 
 };
