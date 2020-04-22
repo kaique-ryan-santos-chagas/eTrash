@@ -45,19 +45,24 @@ module.exports = {
 
 	delete: async (req, res) => {
 		const user_id = req.headers.authorization;
+		const passwordInput = req.body; 
 		const idUserDB = await connection('users').where('id', user_id)
 		.select('id').first();
-
-		try{
+		
 		if(idUserDB.id != user_id){
 			return res.status(401).json({error: 'Operação não permitida!'});
-		}  
+		} 
+
+		const passwordDB = await connection('users').where('id', user_id)
+		.select('password')
+		.first();
+		
+		const userMacth = bcrypt.compare(passwordInput, passwordDB.password);
+		if(!userMacth){
+			return res.status(401).json({error: 'Senha Inválida!'});
+		}
 		await connection('users').where('id', user_id).delete();
 		return res.send();
-		}
-		catch{
-			return res.status(401).json({error: 'Operação não permitida!'});
-		}
 	}
 
 };

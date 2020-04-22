@@ -3,16 +3,15 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const axios = require('axios');
 
-    function hash(password){
-        const saltRounds = 15;
-        const salt = bcrypt.genSaltSync(saltRounds);
-        const hash = bcrypt.hashSync(password, salt);
-
-        return hash;
-    }
+function hash(password){
+    const saltRounds = 15;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hash = bcrypt.hashSync(password, salt);
+    return hash;
+}
 
 module.exports = {
-    async index(request,response){
+   async index(request,response){
         const companies = await connection('companies').select('name','email');
         const [count] = await connection('companies').count();
 
@@ -20,13 +19,11 @@ module.exports = {
 
         return response.json(companies);
     },
+
     async create(request,response){
-        const {name,email,passwordOriginal} = request.body;
-
+        const {name, email, passwordInput, cnpj} = request.body;
         const id = crypto.randomBytes(5).toString("HEX");
-
-        const password = hash(passwordOriginal);
-
+        const password = hash(passwordInput);
         const dataIp = await axios.get('http://ip-api.com/json');
         const country = dataIp.data.country;
         const city = dataIp.data.city;
@@ -35,6 +32,7 @@ module.exports = {
         const longitude = dataIp.data.lon;
         await connection('companies').insert({
             id,
+            cnpj,
             name,
             email,
             password,
@@ -48,20 +46,27 @@ module.exports = {
         return response.json("Companhia cadastrada com sucesso");
 
     },
-    async delete(request,response){
-        const id = request.headers.authorization;
+    
+    async delete(request, response){
+        const companie_id = request.headers.authorization;
+        const passwordInput = request.body;
 
-        const companies = await connection('companies').where('id',id).select('id').first();
-        try{
-        if(companies.id !== id){
-            response.status(401).json('Você não tem permissão para excluir essa conta!');
-        }
-        await connection('companies').where('id',id).delete();
+        const companieIdBD = await connection('companies').where('id', companie_id)
+        .select('id').first();
 
-        return response.status(204).send();
+        const passwordDB = await connection('users').where('id', companie_id)
+        .select('password').first();
+
+        if(companieIdBD.id != companie_id){
+            return response.status(401).json({error: 'Operação não permitida'});
         }
-        catch{
-            return response.status(401).json('Você não tem permissão para excluir essa conta!');
+
+        const companieMatch = bcrypt.compareSync(passwordInput, passwordDB.password);
+        if (!companieMatch) {
+            return response.status(401).json({error: 'Senha Inválida'});
         }
+
+        await connection('companies').where('id', companie_id).delete();
+        return response.send();
     }
-}
+};

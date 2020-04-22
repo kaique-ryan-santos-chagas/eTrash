@@ -18,7 +18,7 @@ module.exports = {
 		if (!passwordMatch) {
 			return res.status(400).json({error: 'Senha incorreta'});
 		}
-		return res.json(passwordDB.password);
+		return res.json({user: username});
 	}
 
 };
