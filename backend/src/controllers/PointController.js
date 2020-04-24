@@ -1,20 +1,29 @@
 const connection = require('../database/connection');
-const axios = require("axios");
-const crypto = require("crypto");
+const axios = require('axios');
+const crypto = require('crypto');
+const bcrypt = require('bcrypt');
+
+function hash(password){
+	const saltRounds = 12;
+	const salt = bcrypt.genSaltSync(saltRounds);
+	const hash = bcrypt.hashSync(password, salt);
+	return hash;
+}
 
 module.exports = {
-    async index(request,response){
+    index: async (request,response) => {
         const companies = await connection('discarts_points').select('name','rua','numero','numero','discarts','country','city','region');
         const [count] = await connection('companies').count();
 
         response.header('Total-Companies-Count',count['count']);
         return response.json(companies);
     },
-    async create(request,response){
-        const {name,discarts,rua,numero} = request.body;
-
+   	
+   	create: async (request,response) => {
+        const {name, passwordInput, discarts, rua, numero} = request.body;
+        const password = hash(passwordInput);
         const id = crypto.randomBytes(5).toString("HEX");
-
+        
         const dataIp = await axios.get("http://ip-api.com/json");
 
         const country = dataIp.data.country;
@@ -26,6 +35,7 @@ module.exports = {
         await connection('discarts_points').insert({
             id,
             name,
+            password,
             discarts,
             rua,
             numero,
@@ -37,17 +47,27 @@ module.exports = {
         });
         return response.json({reposta: "Ponto registrado com sucesso!"});
     },
-    async delete(request,response){
-        const id = request.headers.authorization;
-
-        const idSearch = await connection('discarts_points').where('id',id).select('id').first();
-        if(idSearch.id !== id){
-            return response.status(401).json("Você não tem permissão para deletar este ponto!");
+    
+    delete: async (request,response) => {
+        const point_id = request.headers.authorization;
+        const { passwordInput } = request.body;
+        const idSearch = await connection('discarts_points').where('id', point_id).select('id')
+        .first();
+        
+        if(!idSearch){
+            return response.status(401).json({error: "Você não tem permissão para deletar este ponto!"});
         }
 
-        await connection('discarts_points').where('id',id).select('*').delete();
+        const passwordDB = await connection('discarts_points').where('id', point_id)
+        .select('password').first();
+        const passwordMatch = await bcrypt.compareSync(passwordInput, passwordDB.password);
 
-        return response.status(200).json('Ponto deletado com sucesso!');
+        if(!passwordMatch){
+        	return response.status(400).json({error: 'Senha inválida'});
+        }
+        
+        await connection('discarts_points').where('id', point_id).delete();
+        return response.json('Ponto deletado com sucesso!');
     }
 
-    }    
+}    
