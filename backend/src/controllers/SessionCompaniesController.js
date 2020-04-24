@@ -1,16 +1,30 @@
 const connection = require('../database/connection');
 const bcrypt = require('bcrypt');
+const axios = require('axios');
 
 module.exports = {
-    async create(request,response){
+    create: async (request, response) => {
         const {name, passwordInput} = request.body;
-        const usernameSearch = await connection('companies').where('username', name).select('username').first();
-        const passwordCryptSearch = await connection('companies').where('name', name).select('password').first();
-        const passwordDeCrypt = bcrypt.compareSync(passwordInput, passwordCryptSearch.password);
-    
-        if(usernameSearch.name !== username && passwordInput !== passwordDeCrypt.password){
-            return response.status(400).json({Resposta:'Usuário da empresa e/ou senha incorretos'});
+        const companieNameDB = await connection('companies').where('name', name)
+        .first();
+
+        if (!companieNameDB) {
+            return res.status(400).json({error: 'Empresa não encontrada'});
         }
+
+        const companiePasswordDB = await connection('companies').where('name', name)
+        .select('password')
+        .first();
+        const passwordMatch = await bcrypt.compareSync(passwordInput, companiePasswordDB.password);
+        
+        if (!passwordMatch) {
+            return res.status(400).json({error: 'Senha Inválida'});
+        }
+
+        const dataCoord = await axios.get('http://www.ip-api.com/json');
+        const localLat = dataCoord.data.lat;
+        const localLon = dataCoord.data.lon;
+        await connection('users').update({latitude: localLat, longitude: localLon });
         return response.json({companie: name});
 
     }

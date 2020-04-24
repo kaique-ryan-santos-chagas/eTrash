@@ -4,7 +4,7 @@ const axios = require('axios');
 const bcrypt = require('bcrypt');
 
 function hash(password){
-	const saltRounds = 15;
+	const saltRounds = 12;
 	const salt = bcrypt.genSaltSync(saltRounds);
 	const hash = bcrypt.hashSync(password, salt);
 	return hash;
@@ -45,24 +45,26 @@ module.exports = {
 
 	delete: async (req, res) => {
 		const user_id = req.headers.authorization;
-		const passwordInput = req.body; 
+		const { passwordInput } = req.body; 
 		const idUserDB = await connection('users').where('id', user_id)
 		.select('id').first();
 		
-		if(idUserDB.id != user_id){
+		if(!idUserDB){
 			return res.status(401).json({error: 'Operação não permitida!'});
 		} 
 
 		const passwordDB = await connection('users').where('id', user_id)
-		.select('password')
-		.first();
+		.select('password').first();
 		
-		const userMacth = bcrypt.compare(passwordInput, passwordDB.password);
-		if(!userMacth){
-			return res.status(401).json({error: 'Senha Inválida!'});
+		const userMatch = await bcrypt.compareSync(passwordInput, passwordDB.password);
+		
+		if(!userMatch){
+			return res.status(400).json({error: 'Senha Inválida!'});
+		}else{
+			await connection('users').where('id', user_id).delete();
+			return res.send();
 		}
-		await connection('users').where('id', user_id).delete();
-		return res.send();
-	}
+		
+	}	
 
 };
