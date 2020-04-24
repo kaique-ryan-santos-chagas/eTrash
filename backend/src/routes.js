@@ -18,4 +18,8 @@ routes.post('/companies/create',CompaniesController.create);
 routes.get('/companies',CompaniesController.index);
 routes.delete('/companies/delete',CompaniesController.delete);
 
+routes.post('/point/create',PointController.create);
+routes.get('/point',PointController.index);
+routes.delete('/point/delete',PointController.delete);
+
 module.exports = routes;
