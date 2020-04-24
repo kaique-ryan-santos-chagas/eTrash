@@ -2,6 +2,7 @@ exports.up = function(knex) {
 	return knex.schema.createTable('discarts_points', function(table){
 		table.string('id').primary();
 		table.string('name').notNullable();
+		table.string('password').notNullable();
 		table.string('rua').notNullable();
 		table.integer('numero');
 		table.specificType('discarts', 'text[]').notNullable();
