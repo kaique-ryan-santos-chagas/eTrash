@@ -54,14 +54,14 @@ module.exports = {
         const companieIdBD = await connection('companies').where('id', companie_id)
         .select('id').first();
 
-        const passwordDB = await connection('users').where('id', companie_id)
-        .select('password').first();
-
-        if(companieIdBD.id != companie_id){
+        if(!companieIdBDd){
             return response.status(401).json({error: 'Operação não permitida'});
         }
 
+        const passwordDB = await connection('users').where('id', companie_id)
+        .select('password').first();
         const companieMatch = bcrypt.compareSync(passwordInput, passwordDB.password);
+        
         if (!companieMatch) {
             return response.status(401).json({error: 'Senha Inválida'});
         }
