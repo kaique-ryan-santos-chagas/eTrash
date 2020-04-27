@@ -5,7 +5,8 @@ const CompaniesController = require('./controllers/CompaniesController');
 const UserController = require('./controllers/UserController');
 const PointController = require('./controllers/PointController');
 const SessionController = require('./controllers/SessionController');
-const SessionCompaniesController = require('./controllers/SessionCompaniesController')
+const SessionCompaniesController = require('./controllers/SessionCompaniesController');
+const DiscartController = require('./controllers/DiscartController');
 
 routes.get('/users', UserController.index);
 routes.post('/users/create', UserController.create);
@@ -21,5 +22,8 @@ routes.delete('/companies/delete',CompaniesController.delete);
 routes.post('/point/create',PointController.create);
 routes.get('/point',PointController.index);
 routes.delete('/point/delete',PointController.delete);
+
+
+routes.post('/discarts', DiscartController.userCreate);
 
 module.exports = routes;
