@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const axios = require('axios');
 
 function hash(password){
-    const saltRounds = 15;
+    const saltRounds = 12;
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
     return hash;
@@ -21,9 +21,19 @@ module.exports = {
     },
 
     async create(request,response){
-        const {name, email, passwordInput, cnpj} = request.body;
+        const { cnpj, passwordInput } = request.body;
         const id = crypto.randomBytes(5).toString("HEX");
         const password = hash(passwordInput);
+        const dataCNPJ = await axios.get(`https://www.receitaws.com.br/v1/cnpj/${cnpj}`);
+        
+        if (dataCNPJ.status === "ERROR") {
+            return response.status(400).json(dataCNPJ.message);
+        }
+
+        const name = dataCNPJ.fantasia;
+        const email = dataCNPJ.email;
+        const activity = dataCNPJ.atividade_principal.text;
+
         const dataIp = await axios.get('http://ip-api.com/json');
         const country = dataIp.data.country;
         const city = dataIp.data.city;
@@ -36,6 +46,7 @@ module.exports = {
             name,
             email,
             password,
+            activity,
             country,
             city,
             region,
@@ -49,7 +60,7 @@ module.exports = {
     
     async delete(request, response){
         const companie_id = request.headers.authorization;
-        const passwordInput = request.body;
+        const { passwordInput } = request.body;
 
         const companieIdBD = await connection('companies').where('id', companie_id)
         .select('id').first();
