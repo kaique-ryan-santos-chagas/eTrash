@@ -6,6 +6,8 @@ exports.up = function(knex) {
 		table.string('email').notNullable();
 		table.string('password').notNullable();
 		table.specificType('discarts', 'text[]');
+		table.string('activity').notNullable();
+		table.boolean('collector').notNullable();
 		table.string('country').notNullable();
 		table.string('city').notNullable();
 		table.string('region').notNullable();
