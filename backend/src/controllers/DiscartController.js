@@ -49,6 +49,34 @@ module.exports = {
 		});
 		return res.json({sucess: 'Seus descartes foram atualizados'});
 	
+	},
+
+	searchPointForUser: async (req, res) => {
+		const { name } = req.body;
+		const userDiscartsDB = await connection('users').where('name', name)
+		.select('discarts').first();
+		const pointDiscartsDB = await connection('discarts_points')
+		.select('discarts');
+
+		console.log(discarsUserDB);
+		console.log(pointDiscartsDB);
+
+		const discartPoints = userDiscarsDB.map(function(item){
+			const pointFilter = pointDiscartsDB.filter(item);
+			
+			if (pointFilter === null) {
+				return res.status(400)
+				.json({error: 'Não há pontos que coletam esses descartes'});
+			}
+			
+			return pointFilter;
+		});
+
+		const points = await connection('discarts_points')
+		.where('discarts', discartPoints)
+		.select('name', 'rua', 'numero', 'country', 'city', 'region');
+
+		return res.json(discartPoints);
 	}	
 
 };
