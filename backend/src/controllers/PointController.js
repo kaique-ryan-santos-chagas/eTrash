@@ -45,7 +45,7 @@ module.exports = {
             latitude,
             longitude
         });
-        return response.json({reposta: "Ponto registrado com sucesso!"});
+        return response.json({sucess: "Ponto registrado com sucesso!"});
     },
     
     delete: async (request,response) => {
