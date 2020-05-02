@@ -27,5 +27,6 @@ routes.delete('/point/delete',PointController.delete);
 routes.post('/discarts/user', DiscartController.userCreate);
 routes.post('/discarts/company', DiscartController.companyCreate);
 routes.post('/discarts/point', DiscartController.pointCreate);
+routes.get('/discarts/points', DiscartController.searchPointForUser);
 
 module.exports = routes;
