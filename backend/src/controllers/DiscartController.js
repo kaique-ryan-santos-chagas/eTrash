@@ -1,82 +1,137 @@
 const connection = require('../database/connection');
+const stringSimilarity = require('string-similarity');
+const itertools = require('itertools');
 
 
 module.exports = {
 	userCreate: async (req, res) => {
-		const { user } = req.query;
-		const { eTrash } = req.body;
-		const userID_db = await connection('users').where('id', user)
+		const { name, userDiscarts } = req.body;
+		const userIDDB = await connection('users').where('name', name)
 		.select('id').first();
 
-		if(!userID_db){
+		if(!userIDDB){
 			return res.status(400).json({error: 'Usuário não encontrado'});
 		}
 
-		await connection('users').where('id', user).update({
-			discarts: eTrash 
+		await connection('users').where('id', userIDDB.id).update({
+			discarts: userDiscarts 
 		});
 		return res.json({sucess: 'Seus descartes foram atualizados'});
 	},
 
 	companyCreate: async (req, res) => {
-		const { company } = req.query;
-		const { eTrash } = req.body;
-		const comapanyID_db = await connection('companies').where('id', company)
+		const { companyName, companyDiscarts } = req.body;
+		const companyIDDB = await connection('companies').where('id', companyName)
 		.select('id').first();
 
-		if(!companyID_db){
+		if(!companyIDDB){
 			return res.status(400).json({error: 'Usuário não encontrado'});
 		}
 
-		await connection('companies').where('id', company).update({
-			discarts: eTrash 
+		await connection('companies').where('id', companyIDDB).update({
+			discarts: companyDiscarts
 		});
 		return res.json({sucess: 'Seus descartes foram atualizados'});
 	},
 	
 	pointCreate: async (req, res) => {
-		const { point } = req.query;
-		const { eTrash } = req.body;
-		const pointID_db = await connection('users').where('id', point)
+		const { pointName, pointDiscarts } = req.body;
+		const pointIDDB = await connection('discarts_points')
+		.where('name', pointName)
 		.select('id').first();
 
-		if(!pointID_db){
-			return res.status(400).json({error: 'Usuário não encontrado'});
+		if(!pointIDDB){
+			return res.status(400).json({error: 'Ponto não encontrado'});
 		}
 
-		await connection('discarts_points').where('id', point).update({
-			discarts: eTrash 
+		await connection('discarts_points').where('id', pointIDDB.id).update({
+			discarts: pointDiscarts 
 		});
 		return res.json({sucess: 'Seus descartes foram atualizados'});
 	
 	},
 
 	searchPointForUser: async (req, res) => {
-		const { name } = req.body;
-		const userDiscartsDB = await connection('users').where('name', name)
+		const { userName } = req.body;
+		const userDiscartsDB = await connection('users').where('name', userName)
 		.select('discarts').first();
-		const pointDiscartsDB = await connection('discarts_points')
-		.select('discarts');
+		const discartPointsDB = await connection('discarts_points')
+		.where('discarts', userDiscartsDB.discarts)
+		.select('name', 
+				'rua', 
+				'numero', 
+				'discarts', 
+				'country', 
+				'city', 
+				'region',
+				'latitude',
+				'longitude'
+				);
 
-		console.log(discarsUserDB);
-		console.log(pointDiscartsDB);
+		if (userDiscartsDB.discarts === null) {
+			return res.status(400).json({error: 'Não encontramos seus descartes'});
+		}
 
-		const discartPoints = userDiscarsDB.map(function(item){
-			const pointFilter = pointDiscartsDB.filter(item);
+		if (discartPointsDB[0] == null) {
+			const userDiscartArr = userDiscartsDB.discarts;
+			const discartsOfPoints = await connection('discarts_points')
+			.select('discarts');
+
+			const discartPointArr = discartsOfPoints.map(function(item){
+				return item.discarts;
+			});		
+
+
+			const matchDiscartArr = discartPointArr.map(function(item){
+				const stringUserDiscart = userDiscartArr.join(' ');
+				const stringDiscartPoint = item.join(' ');
+				const compareDiscarts = stringSimilarity.compareTwoStrings(stringUserDiscart, stringDiscartPoint);
+				if (compareDiscarts >= 0.10) {
+					return item;
+				} 
+			});
+
 			
-			if (pointFilter === null) {
-				return res.status(400)
-				.json({error: 'Não há pontos que coletam esses descartes'});
+			const matchDiscartFilter = matchDiscartArr.filter(function(item){
+				return item != undefined && Array.isArray(item);
+			});
+
+			
+			
+			const pointDB = await connection('discarts_points')
+			.select('name', 
+					'rua', 
+					'numero', 
+					'discarts', 
+					'country', 
+					'city', 
+					'region',
+					'latitude',
+					'longitude'
+					);
+			
+			if(matchDiscartFilter[0] != null){
+				const foundPoint = pointDB.filter(function(item){
+					for (const [x, y] of itertools.izipLongest(item.discarts, itertools.cycle(matchDiscartFilter), fillvalue='')) {
+						const discartMatch = stringSimilarity.findBestMatch(x, y);
+						if (discartMatch.bestMatch.rating > 0.10) {
+							return item;
+						}				
+					}
+				});
+
+				if (foundPoint[0] == "") {
+					return res.status(400)
+					.json({error: 'Nenhum ponto de coleta disponível'});
+				}
+				// response for result of search
+				return res.json(foundPoint);
 			}
-			
-			return pointFilter;
-		});
-
-		const points = await connection('discarts_points')
-		.where('discarts', discartPoints)
-		.select('name', 'rua', 'numero', 'country', 'city', 'region');
-
-		return res.json(discartPoints);
+			// case the filter return empty array
+			return res.status(400).json({error: 'Nenhum ponto de coleta encontrado'});
+		}
+		// case the dsiacarts of user return total Match with point discarts
+		return res.json(discartPointsDB);
 	}	
 
 };
