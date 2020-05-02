@@ -13,7 +13,7 @@ function hash(password){
 
 module.exports = {
 	index: async (req, res) => {
-		const users = await connection('users').select('name', 'email');
+		const users = await connection('users').select('name', 'email', 'discarts');
 		const [count] = await connection('users').count();
 		res.header('X-Total-Count', count['count']);
 		return res.json(users);
