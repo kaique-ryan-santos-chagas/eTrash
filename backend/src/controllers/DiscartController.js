@@ -69,69 +69,67 @@ module.exports = {
 				);
 
 		if (userDiscartsDB.discarts === null) {
-			return res.status(400).json({error: 'Não encontramos seus descartes'});
+		   return res.status(400).json({error: 'Não encontramos seus descartes'});
 		}
 
 		if (discartPointsDB[0] == null) {
-			const userDiscartArr = userDiscartsDB.discarts;
-			const discartsOfPoints = await connection('discarts_points')
-			.select('discarts');
+		   const userDiscartArr = userDiscartsDB.discarts;
+		   const discartsOfPoints = await connection('discarts_points')
+		   .select('discarts');
 
-			const discartPointArr = discartsOfPoints.map(function(item){
-				return item.discarts;
-			});		
+		   const discartPointArr = discartsOfPoints.map(function(item){
+			return item.discarts;
+		   });		
 
 
-			const matchDiscartArr = discartPointArr.map(function(item){
-				const stringUserDiscart = userDiscartArr.join(' ');
-				const stringDiscartPoint = item.join(' ');
-				const compareDiscarts = stringSimilarity.compareTwoStrings(stringUserDiscart, stringDiscartPoint);
-				if (compareDiscarts >= 0.10) {
-					return item;
-				} 
-			});
-
-			
-			const matchDiscartFilter = matchDiscartArr.filter(function(item){
-				return item != undefined && Array.isArray(item);
-			});
+		   const matchDiscartArr = discartPointArr.map(function(item){
+		       const stringUserDiscart = userDiscartArr.join(' ');
+		       const stringDiscartPoint = item.join(' ');
+		       const compareDiscarts = stringSimilarity.compareTwoStrings(stringUserDiscart, stringDiscartPoint);
+		       if (compareDiscarts >= 0.10) {
+		          return item;
+		       } 
+		   });
 
 			
-			
-			const pointDB = await connection('discarts_points')
-			.select('name', 
-					'rua', 
-					'numero', 
-					'discarts', 
-					'country', 
-					'city', 
-					'region',
-					'latitude',
-					'longitude'
-					);
-			
-			if(matchDiscartFilter[0] != null){
-				const foundPoint = pointDB.filter(function(item){
-					for (const [x, y] of itertools.izipLongest(item.discarts, itertools.cycle(matchDiscartFilter), fillvalue='')) {
-						const discartMatch = stringSimilarity.findBestMatch(x, y);
-						if (discartMatch.bestMatch.rating > 0.10) {
-							return item;
-						}				
-					}
-				});
+		   const matchDiscartFilter = matchDiscartArr.filter(function(item){
+		       return item != undefined && Array.isArray(item);
+		   });
 
-				if (foundPoint[0] == "") {
-					return res.status(400)
-					.json({error: 'Nenhum ponto de coleta disponível'});
-				}
-				// response for result of search
-				return res.json(foundPoint);
-			}
-			// case the filter return empty array
-			return res.status(400).json({error: 'Nenhum ponto de coleta encontrado'});
-		}
-		// case the dsiacarts of user return total Match with point discarts
-		return res.json(discartPointsDB);
+		   const pointDB = await connection('discarts_points')
+		   .select('name', 
+		           'rua', 
+			   'numero', 
+			   'discarts', 
+			   'country', 
+			   'city', 
+			   'region',
+			   'latitude',
+			   'longitude'
+			  );
+			
+		  if(matchDiscartFilter[0] != null){
+		     const foundPoint = pointDB.filter(function(item){
+		         for (const [x, y] of itertools.izipLongest(item.discarts, itertools.cycle(matchDiscartFilter), fillvalue='')) {
+			    const discartMatch = stringSimilarity.findBestMatch(x, y);
+			    if (discartMatch.bestMatch.rating > 0.10) {
+			        return item;
+			    }				
+			 }
+		     });
+
+		      if (foundPoint[0] == "") {
+		          return res.status(400).json({error: 'Nenhum ponto de coleta disponível'});
+		      }
+				
+	              // response for result of search
+		      return res.json(foundPoint);
+		  }
+		// case the filter return empty array
+		return res.status(400).json({error: 'Nenhum ponto de coleta encontrado'});
+	      }
+	    // case the dsiacarts of user return total Match with point discarts
+            return res.json(discartPointsDB);
 	}	
 
 };
