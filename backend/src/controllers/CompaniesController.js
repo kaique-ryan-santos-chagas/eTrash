@@ -2,12 +2,18 @@ const connection = require('../database/connection');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const axios = require('axios');
-
+    
 function hash(password){
     const saltRounds = 12;
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
     return hash;
+}
+
+function generateToken(params = {}){
+	return jwt.sign(params, authConfig.secret,{
+		expiresIn:86400,
+	});
 }
 
 module.exports = {
@@ -54,14 +60,18 @@ module.exports = {
             longitude
         });
 
-        return response.json("Companhia cadastrada com sucesso");
-
+        return response.json({
+        sucess: "Companhia cadastrada com sucesso",
+        token: generateToken(id)
+    });
+    
     },
     
     async delete(request, response){
         const companie_id = request.headers.authorization;
         const { passwordInput } = request.body;
 
+        
         const companieIdBD = await connection('companies').where('id', companie_id)
         .select('id').first();
 
@@ -79,5 +89,7 @@ module.exports = {
 
         await connection('companies').where('id', companie_id).delete();
         return response.send();
-    }
-};
+        }
+        
+        };
+    
