@@ -52,8 +52,8 @@ module.exports = {
 	},
 
 	searchPointForUser: async (req, res) => {
-		const { userName } = req.body;
-		const userDiscartsDB = await connection('users').where('name', userName)
+		const user_id = req.headers.identification;
+		const userDiscartsDB = await connection('users').where('id', user_id)
 		.select('discarts').first();
 		const discartPointsDB = await connection('discarts_points')
 		.where('discarts', userDiscartsDB.discarts)
@@ -68,7 +68,7 @@ module.exports = {
 				'longitude'
 				);
 
-		if (userDiscartsDB.discarts === null) {
+		if (userDiscartsDB.discarts[0] == null) {
 			return res.status(400).json({error: 'Não encontramos seus descartes'});
 		}
 
