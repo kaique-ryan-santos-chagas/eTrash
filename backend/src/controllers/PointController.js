@@ -2,12 +2,20 @@ const connection = require('../database/connection');
 const axios = require('axios');
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const authConfig = require('../config/auth');
 
 function hash(password){
 	const saltRounds = 12;
 	const salt = bcrypt.genSaltSync(saltRounds);
 	const hash = bcrypt.hashSync(password, salt);
 	return hash;
+}
+
+function generateToken(params = {}){
+	return jwt.sign(params, authConfig.secret,{
+		expiresIn:86400,
+	});
 }
 
 module.exports = {
@@ -45,7 +53,10 @@ module.exports = {
             latitude,
             longitude
         });
-        return response.json({sucess: "Ponto registrado com sucesso!"});
+        return response.json({
+        sucess: "Ponto registrado com sucesso!",
+        token: generateToken({id: id})
+    });
     },
     
     delete: async (request,response) => {
