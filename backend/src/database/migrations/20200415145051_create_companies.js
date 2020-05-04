@@ -11,6 +11,8 @@ exports.up = function(knex) {
 		table.string('country').notNullable();
 		table.string('city').notNullable();
 		table.string('region').notNullable();
+		table.string('neightborhood').notNullable();
+		table.string('phone').notNullable();
 		table.float('longitude').notNullable();
 		table.float('latitude').notNullable();
 	});
