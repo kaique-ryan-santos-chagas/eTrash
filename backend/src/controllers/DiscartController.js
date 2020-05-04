@@ -21,7 +21,7 @@ module.exports = {
 
 	companyCreate: async (req, res) => {
 		const { companyName, companyDiscarts } = req.body;
-		const companyIDDB = await connection('companies').where('id', companyName)
+		const companyIDDB = await connection('companies').where('name', companyName)
 		.select('id').first();
 
 		if(!companyIDDB){
