@@ -68,13 +68,9 @@ module.exports = {
 				'longitude'
 				);
 
-<<<<<<< HEAD
+
 		if (userDiscartsDB.discarts[0] == null) {
 			return res.status(400).json({error: 'Não encontramos seus descartes'});
-=======
-		if (userDiscartsDB.discarts === null) {
-		   return res.status(400).json({error: 'Não encontramos seus descartes'});
->>>>>>> 3849ecef12417d23fb1c7c351f4296e248d7329b
 		}
 
 		if (discartPointsDB[0] == null) {
@@ -104,37 +100,37 @@ module.exports = {
 		   const pointDB = await connection('discarts_points')
 		   .select('name', 
 		           'rua', 
-			   'numero', 
-			   'discarts', 
-			   'country', 
-			   'city', 
-			   'region',
-			   'latitude',
-			   'longitude'
-			  );
+			   	   'numero', 
+			       'discarts', 
+			       'country', 
+			       'city', 
+			       'region',
+			       'latitude',
+			       'longitude'
+			      );
 			
 		  if(matchDiscartFilter[0] != null){
 		     const foundPoint = pointDB.filter(function(item){
-		         for (const [x, y] of itertools.izipLongest(item.discarts, itertools.cycle(matchDiscartFilter), fillvalue='')) {
-			    const discartMatch = stringSimilarity.findBestMatch(x, y);
-			    if (discartMatch.bestMatch.rating > 0.10) {
-			        return item;
-			    }				
-			 }
+		        for (const [x, y] of itertools.izipLongest(item.discarts, itertools.cycle(matchDiscartFilter), fillvalue='')) {
+			    	const discartMatch = stringSimilarity.findBestMatch(x, y);
+			    	if (discartMatch.bestMatch.rating > 0.10) {
+			        	return item;
+			    	}				
+			 	}
 		     });
 
 		      if (foundPoint[0] == "") {
 		          return res.status(400).json({error: 'Nenhum ponto de coleta disponível'});
 		      }
 				
-	              // response for result of search
+	          // response for result of search
 		      return res.json(foundPoint);
 		  }
 		// case the filter return empty array
 		return res.status(400).json({error: 'Nenhum ponto de coleta encontrado'});
-	      }
-	    // case the dsiacarts of user return total Match with point discarts
-            return res.json(discartPointsDB);
+	   }
+	   // case the dsiacarts of user return total Match with point discarts
+       return res.json(discartPointsDB);
 	}	
 
 };

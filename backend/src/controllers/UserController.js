@@ -14,9 +14,11 @@ function hash(password){
 
 function generateToken(params = {}){
 	return jwt.sign(params, authConfig.secret,{
-		expiresIn:86400,
+		expiresIn: 86400,
 	});
 }
+
+
 module.exports = {
 	index: async (req, res) => {
 		const users = await connection('users').select('name', 'email', 'discarts');
@@ -46,11 +48,7 @@ module.exports = {
 			latitude,
 			longitude
 		});
-		return res.send({
-			"Bem-Vindo": name,
-			token: generateToken({id: id})
-		});
-
+		return res.json({'Bem-Vindo': name, token: generateToken(id)});
 	},
 
 	delete: async (req, res) => {
@@ -59,7 +57,6 @@ module.exports = {
 		const idUserDB = await connection('users').where('id', user_id)
 		.select('id').first();
 		
-
 		if(!idUserDB){
 			return res.status(401).json({error: 'Operação não permitida!'});
 		} 

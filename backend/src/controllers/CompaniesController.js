@@ -1,5 +1,7 @@
 const connection = require('../database/connection');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const authConfig = require('../config/auth');
 const crypto = require('crypto');
 const axios = require('axios');
     
@@ -27,18 +29,20 @@ module.exports = {
     },
 
     async create(request,response){
-        const { cnpj, passwordInput } = request.body;
+        const { cnpj, passwordInput, collector } = request.body;
         const id = crypto.randomBytes(5).toString("HEX");
         const password = hash(passwordInput);
         const dataCNPJ = await axios.get(`https://www.receitaws.com.br/v1/cnpj/${cnpj}`);
         
-        if (dataCNPJ.status === "ERROR") {
-            return response.status(400).json(dataCNPJ.message);
+        if (dataCNPJ.data.status == "ERROR") {
+            return response.status(400).json({error: dataCNPJ.data.message});
         }
 
-        const name = dataCNPJ.fantasia;
-        const email = dataCNPJ.email;
-        const activity = dataCNPJ.atividade_principal.text;
+        const name = dataCNPJ.data.nome;
+        const email = dataCNPJ.data.email;
+        const activity = dataCNPJ.data.atividade_principal[0].text;
+        const phone = dataCNPJ.data.telefone;
+        const neightborhood = dataCNPJ.data.bairro;
 
         const dataIp = await axios.get('http://ip-api.com/json');
         const country = dataIp.data.country;
@@ -53,16 +57,19 @@ module.exports = {
             email,
             password,
             activity,
+            collector,
             country,
             city,
             region,
+            neightborhood,
+            phone,
             latitude, 
             longitude
         });
 
         return response.json({
         sucess: "Companhia cadastrada com sucesso",
-        token: generateToken(id)
+        token: generateToken({id: id})
     });
     
     },
@@ -75,7 +82,7 @@ module.exports = {
         const companieIdBD = await connection('companies').where('id', companie_id)
         .select('id').first();
 
-        if(!companieIdBDd){
+        if(!companieIdBD){
             return response.status(401).json({error: 'Operação não permitida'});
         }
 
@@ -89,7 +96,7 @@ module.exports = {
 
         await connection('companies').where('id', companie_id).delete();
         return response.send();
-        }
+    }
         
-        };
+};
     
