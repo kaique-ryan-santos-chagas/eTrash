@@ -1,6 +1,5 @@
 const connection = require('../database/connection');
 const crypto = require('crypto');
-const axios = require('axios');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
@@ -28,15 +27,18 @@ module.exports = {
 	},
 
 	create: async (req, res) => {
-		const {name, email, passwordInput} = req.body;
+		const {name, 
+			   email, 
+			   passwordInput, 
+			   country, 
+			   city, 
+			   region, 
+			   latitude,
+			   longitude } = req.body;
+
 		const id = crypto.randomBytes(5).toString('HEX');
 		const password = hash(passwordInput);
-		const dataIp = await axios.get('http://ip-api.com/json');
-		const country = dataIp.data.country;
-		const city = dataIp.data.city;
-		const region = dataIp.data.region;
-		const latitude = dataIp.data.lat;
-		const longitude = dataIp.data.lon;
+		
 		await connection('users').insert({
 			id,
 			name,

@@ -59,7 +59,7 @@ module.exports = {
 		if(!userDiscartsDB){
 			return res.status(400).json({error: 'Usuário não encontrado'});
 		}
-		
+
 		const discartPointsDB = await connection('discarts_points')
 		.where('discarts', userDiscartsDB.discarts)
 		.select('name', 

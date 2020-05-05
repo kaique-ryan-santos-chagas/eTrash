@@ -1,5 +1,4 @@
 const connection = require('../database/connection');
-const axios = require('axios');
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -28,17 +27,19 @@ module.exports = {
     },
    	
    	create: async (request,response) => {
-        const {name, passwordInput, discarts, rua, numero} = request.body;
+        const {name, 
+              passwordInput, 
+              discarts, 
+              rua, 
+              numero,
+              country,
+              city,
+              region,
+              latitude,
+              longitude } = request.body;
+
         const password = hash(passwordInput);
         const id = crypto.randomBytes(5).toString("HEX");
-        
-        const dataIp = await axios.get("http://ip-api.com/json");
-
-        const country = dataIp.data.country;
-        const city = dataIp.data.city;
-        const region = dataIp.data.region;
-        const latitude = dataIp.data.lat;
-        const longitude = dataIp.data.lon;
 
         await connection('discarts_points').insert({
             id,

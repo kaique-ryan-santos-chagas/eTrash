@@ -29,7 +29,16 @@ module.exports = {
     },
 
     async create(request,response){
-        const { cnpj, passwordInput, collector } = request.body;
+        const { 
+              cnpj, 
+              passwordInput, 
+              collector,
+              country,
+              city,
+              region,
+              latitude,
+              longitude } = request.body;
+
         const id = crypto.randomBytes(5).toString("HEX");
         const password = hash(passwordInput);
         const dataCNPJ = await axios.get(`https://www.receitaws.com.br/v1/cnpj/${cnpj}`);
@@ -43,13 +52,7 @@ module.exports = {
         const activity = dataCNPJ.data.atividade_principal[0].text;
         const phone = dataCNPJ.data.telefone;
         const neightborhood = dataCNPJ.data.bairro;
-
-        const dataIp = await axios.get('http://ip-api.com/json');
-        const country = dataIp.data.country;
-        const city = dataIp.data.city;
-        const region = dataIp.data.region;
-        const latitude = dataIp.data.lat;
-        const longitude = dataIp.data.lon;
+        
         await connection('companies').insert({
             id,
             cnpj,

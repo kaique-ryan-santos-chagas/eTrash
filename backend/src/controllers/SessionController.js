@@ -2,7 +2,7 @@ const connection = require('../database/connection');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
-const axios = require('axios');
+
 
 function generateToken(params = {}){
 	return jwt.sign(params, authConfig.secret,{
@@ -12,7 +12,7 @@ function generateToken(params = {}){
 
 module.exports = {
 	userCreate: async (req, res) => {
-		const {username, passwordInput} = req.body;
+		const {username, passwordInput, localLat, localLon} = req.body;
 
 		const usernameID = await connection('users').where('name',username).select('id').first();
 
@@ -32,9 +32,6 @@ module.exports = {
 			return res.status(400).json({error: 'Senha incorreta'});
 		}
 		
-		const dataCoord = await axios.get('http://www.ip-api.com/json');
-		const localLat = dataCoord.data.lat;
-		const localLon = dataCoord.data.lon;
 		await connection('users').update({latitude: localLat, longitude: localLon });
 		return res.json({
         user: username, 
@@ -43,7 +40,7 @@ module.exports = {
 	},
 
 	companyCreate: async (req, res) => {
-        const {name, passwordInput} = req.body;
+        const {name, passwordInput, localLat, localLon} = req.body;
         const companieID = await connection('companies').where('name',name).select('id')
         .first();
 
@@ -63,9 +60,6 @@ module.exports = {
             return res.status(400).json({error: 'Senha Inválida'});
         }
 
-        const dataCoord = await axios.get('http://www.ip-api.com/json');
-        const localLat = dataCoord.data.lat;
-        const localLon = dataCoord.data.lon;
         await connection('companies').update({latitude: localLat, longitude: localLon });
         return res.json({
         companie: name,
@@ -74,7 +68,7 @@ module.exports = {
 	},
 
 	pointCreate: async (req, res) => {
-        const {name, passwordInput} = req.body;
+        const {name, passwordInput, localLat, localLon} = req.body;
         const pointID = await connection('discarts_points').where('name',name).select('id')
         .first();
 
@@ -94,9 +88,6 @@ module.exports = {
             return res.status(400).json({error: 'Senha Inválida'});
         }
 
-        const dataCoord = await axios.get('http://www.ip-api.com/json');
-        const localLat = dataCoord.data.lat;
-        const localLon = dataCoord.data.lon;
         await connection('discarts_points').update({latitude: localLat, longitude: localLon });
         return res.json({
             point: name,
