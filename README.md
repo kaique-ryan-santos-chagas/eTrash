@@ -5,8 +5,9 @@
 # Tecnologias
 
 1. ### [Node.js (back-end)](https://www.nodejs.org)
-2. ### React Native (mobile)
-3. ### PostgreSQL (base de dados relacional)
+2. ### [React Native (mobile)](https://www.reactnative.dev)
+3. ### [PostgreSQL (base de dados relacional)](https://postgresql.org)
+4. ### [Expo (mobile)](https://www.expo.io)
 
 # Bibliotecas e Frameworks Back-End
 
