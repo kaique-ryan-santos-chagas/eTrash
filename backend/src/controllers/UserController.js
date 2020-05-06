@@ -75,5 +75,8 @@ module.exports = {
 			return res.send();
 		}
 		
+	},
+	upload: async (req,res) =>{
+		return res.json({sucess:"Imagem carregada com sucesso!" });
 	}	
 };
