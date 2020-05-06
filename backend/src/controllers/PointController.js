@@ -80,6 +80,9 @@ module.exports = {
         
         await connection('discarts_points').where('id', point_id).delete();
         return response.json('Ponto deletado com sucesso!');
+    },
+    upload: async(request,response)=>{
+        return response.json({sucess:"Imagem carregada com suceeso."});
     }
 
 }    
