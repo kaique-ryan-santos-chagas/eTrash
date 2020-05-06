@@ -4,8 +4,8 @@
 
 # Tecnologias
 
-1. ![node](https://user-images.githubusercontent.com/59677362/81222503-c16c2300-8fba-11ea-843b-195e00876701.jpg?w=50h=50)
-   ### [Node.js (back-end)](https://www.nodejs.org)
+![node](https://user-images.githubusercontent.com/59677362/81222503-c16c2300-8fba-11ea-843b-195e00876701.jpg?w=10h=10)
+1. ### [Node.js (back-end)](https://www.nodejs.org)
    
 2. ### [React Native (mobile)](https://www.reactnative.dev)
 3. ### [PostgreSQL (base de dados relacional)](https://postgresql.org)
