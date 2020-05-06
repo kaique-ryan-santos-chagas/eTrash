@@ -99,6 +99,9 @@ module.exports = {
 
         await connection('companies').where('id', companie_id).delete();
         return response.send();
+    },
+    async upload(request,response){
+        return response.json({sucess:"Imagem carregada com sucesso!"});
     }
         
 };
