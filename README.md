@@ -1,6 +1,6 @@
-# eTrash
+# E-Trash
 
-## Aplicação em React Native consumindo uma API em Node.js para auxiliar no descarte de lixos eletrônicos.
+### E-Trash é uma aplicação que possui objetivo de auxiliar usuários e empresas no descarte do seu lixo eletrônico, com o uso de geolocalização e inteligência artificial baseado no IBM Watson, é possível agregar ao usuário ou empresa a orientação necessária para promover o descarte sustentável do seu seja em empresas de coleta deste material ou pontos de coleta.    
 
 # Tecnologias
 
