@@ -5,7 +5,7 @@
 # Tecnologias
 
 1. ### [Node.js (back-end)](https://www.nodejs.org) 
-![node](https://user-images.githubusercontent.com/59677362/81222849-5b33d000-8fbb-11ea-9dd3-e7d8c9596119.jpeg =10x10)
+![node](https://user-images.githubusercontent.com/59677362/81222849-5b33d000-8fbb-11ea-9dd3-e7d8c9596119.jpeg)
 2. ### [React Native (mobile)](https://www.reactnative.dev)
 3. ### [PostgreSQL (base de dados relacional)](https://postgresql.org)
 4. ### [Expo (mobile)](https://www.expo.io)
@@ -24,5 +24,5 @@
 * ### Multer (upload de arquivos)
 * ### Morgan (log de requisições HTTP)
 
-
+img[alt=node] { width: 10, height: 10 }
 
