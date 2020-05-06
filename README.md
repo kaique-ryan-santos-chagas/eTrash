@@ -24,5 +24,5 @@
 * ### Multer (upload de arquivos)
 * ### Morgan (log de requisições HTTP)
 
-img[alt=node] { width: 10, height: 10 }
+img[alt=node] { width: 10px; height: 10px; }
 
