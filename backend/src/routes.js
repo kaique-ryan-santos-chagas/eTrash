@@ -1,10 +1,13 @@
 const express = require('express');
+const morgan = require('morgan');
 const routes = express.Router();
 
 const CompaniesController = require('./controllers/CompaniesController');
 const UserController = require('./controllers/UserController');
 const PointController = require('./controllers/PointController');
 const SessionController = require('./controllers/SessionController');
+
+routes.use(morgan('dev'));
 
 routes.post('/users/create', UserController.create);
 
