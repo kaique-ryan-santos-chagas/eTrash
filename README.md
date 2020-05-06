@@ -4,7 +4,8 @@
 
 # Tecnologias
 
-1. ### Node.js (back-end) ##### [node](https://www.nodejs.org)
+1. ### Node.js (back-end) [![nodejs](https://user-images.githubusercontent.com/59677362/81220690-1f4b3b80-8fb8-11ea-8362-4c5b6fdcc41f.png)
+](https://www.nodejs.org)
 2. ### React Native (mobile)
 3. ### PostgreSQL (base de dados relacional)
 
