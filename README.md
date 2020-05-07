@@ -17,7 +17,7 @@
 
 * ### [Express (rotas da aplicação)](https://www.expressjs.com)
 * ### [Axios (consulta a api pública de CNPJ)](https://www.npmjs.com/package/axios)
-* ### [Bcrypt (criptografia e geração de secret do token de acesso)](https://www.npmjs.com/package/bcrypt)
+* ### [Bcrypt (criptografia e geração de hash de senhas)](https://www.npmjs.com/package/bcrypt)
 * ### [Cors (módulo de segurança de acesso a api)](https://www.npmjs.com/package/cors)
 * ### [Itertools (Iteração de múltiplos array simultâneamente)](https://www.npmjs.com/package/itertools)
 * ### [Json Web Token (geração de token de acesso a api)](https://www.jwt.io)
