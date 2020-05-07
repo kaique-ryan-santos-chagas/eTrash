@@ -13,7 +13,7 @@
 
 ### <img src="https://user-images.githubusercontent.com/59677362/81311750-2c216b00-905c-11ea-8c4f-ac5bb2d7b467.png" width=30/>[ > Expo (mobile)](https://www.expo.io)
 
-# `Libraries and Frameworks Back-End` >_ <img src="https://user-images.githubusercontent.com/59677362/81249040-0fe9e380-8ff4-11ea-885f-50de3722ecb9.jpeg" width=40 height=40 />
+# `Libraries and Frameworks Back-End` <img src="https://user-images.githubusercontent.com/59677362/81249040-0fe9e380-8ff4-11ea-885f-50de3722ecb9.jpeg" width=40 height=40 />
 
 
 * ### [Express (application routes)](https://www.expressjs.com)
