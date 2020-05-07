@@ -4,7 +4,7 @@
 
 # Tecnologias
 
-### <img src="https://user-images.githubusercontent.com/59677362/81310360-5d00a080-905a-11ea-9e44-366297fab59f.png" width=40/>[ > Node.js (back-end)](https://www.nodejs.org) 
+### <img src="https://user-images.githubusercontent.com/59677362/81310360-5d00a080-905a-11ea-9e44-366297fab59f.png" width=30/>[ > Node.js (back-end)](https://www.nodejs.org) 
 
 ### <img src="https://user-images.githubusercontent.com/59677362/81252655-dc5f8700-8ffc-11ea-9dbc-0041100d3782.png" width=30/>[ > React Native (mobile)](https://www.reactnative.dev) 
 
