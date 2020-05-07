@@ -15,7 +15,7 @@
 # Bibliotecas e Frameworks Back-End >_<img src="https://user-images.githubusercontent.com/59677362/81249040-0fe9e380-8ff4-11ea-885f-50de3722ecb9.jpeg" width=40 height=40 />
 
 
-* ### Express (rotas da aplicação)
+* ### [Express (rotas da aplicação)](https://www.npmjs.com/package/morgan)
 * ### Axios (consulta a api pública de CNPJ)
 * ### Bcrypt (criptografia e geração de secret do token de acesso)
 * ### Cors (módulo de segurança de acesso a api)
