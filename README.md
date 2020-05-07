@@ -10,7 +10,7 @@
 
 ### <img src="https://user-images.githubusercontent.com/59677362/81250560-a1a72000-8ff7-11ea-8b63-c05996d3a8d4.png" width=30 />[ - PostgreSQL (base de dados)](https://postgresql.org)
 
-### <img src="https://user-images.githubusercontent.com/59677362/81251842-a6b99e80-8ffa-11ea-871c-d2f45e580e85.png" width=40/>[ - Expo (mobile)](https://www.expo.io)
+### <img src="https://user-images.githubusercontent.com/59677362/81251842-a6b99e80-8ffa-11ea-871c-d2f45e580e85.png" width=30/>[ - Expo (mobile)](https://www.expo.io)
 
 # Bibliotecas e Frameworks Back-End  <img src="https://user-images.githubusercontent.com/59677362/81249040-0fe9e380-8ff4-11ea-885f-50de3722ecb9.jpeg" width=40 height=40 />
 
