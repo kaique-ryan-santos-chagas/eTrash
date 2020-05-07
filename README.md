@@ -4,11 +4,11 @@
 
 # Tecnologias
 
-### <img src="https://user-images.githubusercontent.com/59677362/81222849-5b33d000-8fbb-11ea-9dd3-e7d8c9596119.jpeg" width=40/>[ Node.js (back-end)](https://www.nodejs.org) 
+### <img src="https://user-images.githubusercontent.com/59677362/81222849-5b33d000-8fbb-11ea-9dd3-e7d8c9596119.jpeg" width=40/>[ - Node.js (back-end)](https://www.nodejs.org) 
 
-### <img src="https://user-images.githubusercontent.com/59677362/81249472-1462cc00-8ff5-11ea-84c7-0733fb4b4a22.png" width=40/>[ React Native (mobile)](https://www.reactnative.dev) 
+### <img src="https://user-images.githubusercontent.com/59677362/81249472-1462cc00-8ff5-11ea-84c7-0733fb4b4a22.png" width=40/>[- React Native (mobile)](https://www.reactnative.dev) 
 
-### <img src="https://user-images.githubusercontent.com/59677362/81250560-a1a72000-8ff7-11ea-8b63-c05996d3a8d4.png" width=30 />[ -PostgreSQL (base de dados)](https://postgresql.org)
+### <img src="https://user-images.githubusercontent.com/59677362/81250560-a1a72000-8ff7-11ea-8b63-c05996d3a8d4.png" width=30 />[ - PostgreSQL (base de dados)](https://postgresql.org)
 
 4. ### [Expo (mobile)](https://www.expo.io)
 
