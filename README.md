@@ -16,16 +16,16 @@
 
 
 * ### [Express (rotas da aplicação)](https://www.expressjs.com)
-* ### Axios (consulta a api pública de CNPJ)
-* ### Bcrypt (criptografia e geração de secret do token de acesso)
-* ### Cors (módulo de segurança de acesso a api)
-* ### Itertools (Iteração de múltiplos array simultâneamente)
-* ### Json Web Token (geração de token de acesso a api)
-* ### Knex (configuração da base de dados e JavaScript como linguagem de consulta)
-* ### Pg (Driver de conexão com PostgreSQL)
-* ### String-similarity (comparação entre strings)
-* ### Multer (upload de arquivos)
-* ### Morgan (log de requisições HTTP)
+* ### [Axios (consulta a api pública de CNPJ)](https://www.npmjs.com/package/axios)
+* ### [Bcrypt (criptografia e geração de secret do token de acesso)](https://www.npmjs.com/package/bcrypt)
+* ### [Cors (módulo de segurança de acesso a api)]]
+* ### [Itertools (Iteração de múltiplos array simultâneamente)](https://www.npmjs.com/package/itertools)
+* ### [Json Web Token (geração de token de acesso a api)](https://www.jwt.io)
+* ### [Knex (configuração da base de dados e JavaScript como linguagem de consulta)](https://www.knex.org)
+* ### [Pg (Driver de conexão com PostgreSQL)](https://www.npmjs.com/package/pg)
+* ### [String-similarity (comparação entre strings)](https://www.npmjs.com/package/string-similarity)
+* ### [Multer (upload de arquivos)](https://www.npmjs.com/package/multer)
+* ### [Morgan (log de requisições HTTP)](https://www.npmjs.com/package/morgan)
 
 
 
