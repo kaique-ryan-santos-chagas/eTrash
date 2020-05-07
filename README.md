@@ -1,6 +1,6 @@
 # E-Trash
 
-### E-Trash is a mobile application that it has objective from help users and companies at that discart your electronic trash, with use geolocalization and artificial intelligence based in IBM Watson, it's possible help user or company in guidance required for promote the sustanble discart of your electronic trash, be in companies of colect this material or colect points.    
+### E-Trash is a mobile application that has the objective on helping users and companies how to discart their electronic trash, using  geolocalization and artificial intelligence based on IBM Watson, it's possible to help user or company in guidance required to promote the sustanble discart of their electronic trash throughout companies that colect this material or specific colecting points.    
 
 # Technologies
 
