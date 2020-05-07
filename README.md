@@ -8,9 +8,9 @@
 
 ### <img src="https://user-images.githubusercontent.com/59677362/81252655-dc5f8700-8ffc-11ea-9dbc-0041100d3782.png" width=30/>[ > React Native (mobile)](https://www.reactnative.dev) 
 
-### <img src="https://user-images.githubusercontent.com/59677362/81250560-a1a72000-8ff7-11ea-8b63-c05996d3a8d4.png" width=30 />[ > PostgreSQL (base de dados)](https://postgresql.org)
+### <img src="https://user-images.githubusercontent.com/59677362/81310759-e912c800-905a-11ea-8d00-de268970a0cf.png" width=30 />[ > PostgreSQL (base de dados)](https://postgresql.org)
 
-### <img src="https://user-images.githubusercontent.com/59677362/81251842-a6b99e80-8ffa-11ea-871c-d2f45e580e85.png" width=30/>[ > Expo (mobile)](https://www.expo.io)
+### <img src="https://user-images.githubusercontent.com/59677362/81311750-2c216b00-905c-11ea-8c4f-ac5bb2d7b467.png" width=30/>[ > Expo (mobile)](https://www.expo.io)
 
 # Bibliotecas e Frameworks Back-End >_ <img src="https://user-images.githubusercontent.com/59677362/81249040-0fe9e380-8ff4-11ea-885f-50de3722ecb9.jpeg" width=40 height=40 />
 
