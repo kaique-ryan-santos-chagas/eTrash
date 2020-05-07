@@ -12,7 +12,7 @@
 
 ### <img src="https://user-images.githubusercontent.com/59677362/81251842-a6b99e80-8ffa-11ea-871c-d2f45e580e85.png" width=30/>[ > Expo (mobile)](https://www.expo.io)
 
-# Bibliotecas e Frameworks Back-End >_<img src="https://user-images.githubusercontent.com/59677362/81249040-0fe9e380-8ff4-11ea-885f-50de3722ecb9.jpeg" width=40 height=40 />
+# Bibliotecas e Frameworks Back-End >_<img src="https://user-images.githubusercontent.com/59677362/81249040-0fe9e380-8ff4-11ea-885f-50de3722ecb9.jpeg" width=40 height=40 /><font color="white"></font>
 
 
 * ### [Express (rotas da aplicação)](https://www.expressjs.com)
