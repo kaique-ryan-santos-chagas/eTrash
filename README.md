@@ -24,7 +24,7 @@
 * ### [Json Web Token (generation token of API access)](https://www.jwt.io)
 * ### [Knex (settings of database and JavaScript like query language)](https://www.knex.org)
 * ### [Pg (Driver of connection with PostgreSQL)](https://www.npmjs.com/package/pg)
-* ### [String-similarity (compare behind strings)](https://www.npmjs.com/package/string-similarity)
+* ### [String-similarity (compare strings)](https://www.npmjs.com/package/string-similarity)
 * ### [Multer (upload files)](https://www.npmjs.com/package/multer)
 * ### [Morgan (log HTTP request)](https://www.npmjs.com/package/morgan)
 
