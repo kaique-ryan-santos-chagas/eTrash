@@ -9,7 +9,7 @@
 3. ### [PostgreSQL (base de dados relacional)](https://postgresql.org)
 4. ### [Expo (mobile)](https://www.expo.io)
 
-# Bibliotecas e Frameworks Back-End <img src="https://user-images.githubusercontent.com/59677362/81249040-0fe9e380-8ff4-11ea-885f-50de3722ecb9.jpeg" width=40 height=40 />
+# Bibliotecas e Frameworks Back-End <img src=" https://user-images.githubusercontent.com/59677362/81249040-0fe9e380-8ff4-11ea-885f-50de3722ecb9.jpeg" width=40 height=40 />
 
 
 * ### Express (rotas da aplicação)
@@ -18,7 +18,7 @@
 * ### Cors (módulo de segurança de acesso a api)
 * ### Itertools (Iteração de múltiplos array simultâneamente)
 * ### Json Web Token (geração de token de acesso a api)
-* ### Knex (configuração de base dados e JavaScript como linguagem de consulta)
+* ### Knex (configuração da base de dados e JavaScript como linguagem de consulta)
 * ### Pg (Driver de conexão com PostgreSQL)
 * ### String-similarity (comparação entre strings)
 * ### Multer (upload de arquivos)
