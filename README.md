@@ -23,7 +23,7 @@
 * ### [Cors (security module of api access)](https://www.npmjs.com/package/cors)
 * ### [Itertools (Iteration of multiple array at the same time)](https://www.npmjs.com/package/itertools)
 * ### [Json Web Token (generation token of API access)](https://jwt.io)
-* ### [Knex (settings of database and JavaScript like query language)](https://knex.org)
+* ### [Knex (settings of database and JavaScript like query language)](https://knexjs.org)
 * ### [Pg (Driver of connection with PostgreSQL)](https://www.npmjs.com/package/pg)
 * ### [String-similarity (compare strings)](https://www.npmjs.com/package/string-similarity)
 * ### [Multer (upload files)](https://www.npmjs.com/package/multer)
