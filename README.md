@@ -3,7 +3,7 @@
 
 #### E-Trash is a mobile application that has the objective on helping users and companies how to discart their electronic trash, using  geolocalization and artificial intelligence based on IBM Watson, it's possible to help user or company in guidance required to promote the sustanble discart of their electronic trash throughout companies that colect this material or specific colecting points.    
 
-# Technologies _ <img src="https://user-images.githubusercontent.com/59677362/81365606-f3ff4400-90be-11ea-901d-f27fb5df04cd.png" width=40/>  
+# Technologies _ <img src="https://user-images.githubusercontent.com/59677362/81365606-f3ff4400-90be-11ea-901d-f27fb5df04cd.png" width=40/> _
 
 
 ### <img src="https://user-images.githubusercontent.com/59677362/81310360-5d00a080-905a-11ea-9e44-366297fab59f.png" width=30/>[ > Node.js (back-end)](https://www.nodejs.org) 
