@@ -22,7 +22,7 @@
 * ### [Bcrypt (cryptography and generate hash of password)](https://www.npmjs.com/package/bcrypt)
 * ### [Cors (security module of api access)](https://www.npmjs.com/package/cors)
 * ### [Itertools (Iteration of multiple array at the same time)](https://www.npmjs.com/package/itertools)
-* ### [Json Web Token (generation token of API access)](https://www.jwt.io)
+* ### [Json Web Token (generation token of API access)](https://jwt.io)
 * ### [Knex (settings of database and JavaScript like query language)](https://www.knex.org)
 * ### [Pg (Driver of connection with PostgreSQL)](https://www.npmjs.com/package/pg)
 * ### [String-similarity (compare strings)](https://www.npmjs.com/package/string-similarity)
