@@ -28,6 +28,7 @@
 * ### [String-similarity (compare strings)](https://www.npmjs.com/package/string-similarity)
 * ### [Multer (upload files)](https://www.npmjs.com/package/multer)
 * ### [Morgan (log HTTP request)](https://www.npmjs.com/package/morgan)
+* ### [Path (directory manager)](https://nodejs.org/dist/latest-v12.x/docs/api/path.html)
 
 
 
