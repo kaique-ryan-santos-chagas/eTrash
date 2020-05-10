@@ -1,4 +1,4 @@
- <img src="https://user-images.githubusercontent.com/59677362/81488061-66e0fa00-923a-11ea-892b-72642bbce827.jpg" width=200 height=200/> 
+ <img src="https://user-images.githubusercontent.com/59677362/81488061-66e0fa00-923a-11ea-892b-72642bbce827.jpg" width=400/> 
 
 # `E-Trash`
 
