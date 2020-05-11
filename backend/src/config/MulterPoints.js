@@ -5,12 +5,15 @@ const crypto = require('crypto');
 module.exports = {
 
     dest: path.resolve(__dirname,'..','..','temp','uploads','points'),
+    
     storage: multer.diskStorage({
-        destination: (req,file,cb) =>{
+        
+        destination: (req, file, cb) =>{
             cb(null, path.resolve(__dirname,'..','..','temp','uploads','points'));
         },
-        filename: (req,file,cb) =>{
-            crypto.randomBytes(16,(err, hash)=> {
+
+        filename: (req, file, cb) => {
+            crypto.randomBytes(16, (err, hash)=> {
                 if(err) cb(err);
 
                 const fileName = `${hash.toString('hex')}-${file.originalname}`;
@@ -19,9 +22,11 @@ module.exports = {
             });
         }
     }),
+
     limits:{
-    filesize: 2*1024*1024,
+        filesize: 10 * 1024 * 1024,
     },
+
     fileFilter: (req, file, cb) =>{
         const allowedMimmes = [
             'image/jpeg',
