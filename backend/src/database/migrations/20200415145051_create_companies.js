@@ -15,6 +15,7 @@ exports.up = function(knex) {
 		table.string('phone').notNullable();
 		table.float('longitude').notNullable();
 		table.float('latitude').notNullable();
+		
 	});
 };
 

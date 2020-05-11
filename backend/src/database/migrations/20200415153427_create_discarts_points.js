@@ -11,6 +11,7 @@ exports.up = function(knex) {
 		table.string('region').notNullable();
 		table.float('longitude').notNullable();
 		table.float('latitude').notNullable();
+
 	});  
 };
 
