@@ -19,16 +19,29 @@ function generateToken(params = {}){
 }
 
 module.exports = {
-   async index(request,response){
-        const companies = await connection('companies').select('name','email');
+   async index(request, response){
+        const companies = await connection('companies')
+        .select('id', 
+                'name', 
+                'email',
+                'activity',
+                'collector', 
+                'country', 
+                'city', 
+                'region', 
+                'neightborhood',
+                'phone',
+                'latitude', 
+                'longitude');
+
         const [count] = await connection('companies').count();
 
-        response.header('Total-Companies-Count',count['count']);
+        response.header('Total-Companies-Count', count['count']);
 
         return response.json(companies);
     },
 
-    async create(request,response){
+    async create(request, response){
         const { 
               cnpj, 
               passwordInput, 
@@ -78,30 +91,84 @@ module.exports = {
     },
     
     async delete(request, response){
-        const companie_id = request.headers.authorization;
+        const companyId = req.headers.identification;
         const { passwordInput } = request.body;
 
-        
-        const companieIdBD = await connection('companies').where('id', companie_id)
+        const companyIdBD = await connection('companies').where('id', companyId)
         .select('id').first();
 
-        if(!companieIdBD){
+        if(!companyIdBD){
             return response.status(401).json({error: 'Operação não permitida'});
         }
 
-        const passwordDB = await connection('companies').where('id', companie_id)
+        const passwordDB = await connection('companies').where('id', companyIdBD.id)
         .select('password').first();
-        const companieMatch = bcrypt.compareSync(passwordInput, passwordDB.password);
+
+        const companyMatch = bcrypt.compareSync(passwordInput, passwordDB.password);
         
-        if (!companieMatch) {
+        if (!companyMatch) {
             return response.status(401).json({error: 'Senha Inválida'});
         }
 
-        await connection('companies').where('id', companie_id).delete();
+        await connection('uploads').where('company_id', companyIdBD.id).delete();
+        await connection('companies').where('id', companyIdBD.id).delete();
         return response.send();
     },
-    async upload(request,response){
-        return response.json({sucess:"Imagem carregada com sucesso!"});
+    
+    async upload(request, response){
+        const companyId = request.headers.identification;
+        const companyIDDB = await connection('companies').where('id', companyId)
+        .select('id').first();
+
+        if (!companyIDDB) {
+            return res.status(400).json({error: 'Empresa não encontrado.'})
+        }
+        
+        const id = crypto.randomBytes(5).toString('HEX');
+        const company_id = userIDDB.id;
+        const imgName = req.file.originalname;
+        const size = req.file.size;
+        const key = req.file.filename;
+        await connection('uploads').insert({
+            id,
+            imgName,
+            size,
+            key,
+            company_id
+        }); 
+        return response.json({sucess:"Imagem carregada com sucesso!" });
+    
+    },
+
+    async scheduling(request, response){
+        const company_id = request.headers.identification;
+        const { nameCollector, date } = request.body;
+        
+        const companyDB = await connection('companies').where('id', company_id)
+        .select('id').first();
+
+        const idCollector = await connection('companies').where('name', nameCollector)
+        .select('id').first();
+
+        if (!companyDB) {
+            return res.status(400).json({error: 'Empresa não encontrada'});
+        }
+
+        if (!idCollector) {
+            return res.status(400).json({error: 'Empresa não encontrada'});
+        }
+
+        const company_id_collector = idCollector.id;
+        const date_scheduling = Date.now;
+        const date_collect = date;
+        await connection('schedule').insert({
+            company_id,
+            company_id_collector,
+            date_scheduling,
+            date_collect
+        });
+
+        return res.json({sucess: 'Coleta Solicitada'});
     }
         
 };

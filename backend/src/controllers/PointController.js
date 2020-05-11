@@ -18,7 +18,7 @@ function generateToken(params = {}){
 }
 
 module.exports = {
-    index: async (request,response) => {
+    index: async (request, response) => {
         const companies = await connection('discarts_points').select('name','rua','numero','numero','discarts','country','city','region');
         const [count] = await connection('companies').count();
 
@@ -26,7 +26,7 @@ module.exports = {
         return response.json(companies);
     },
    	
-   	create: async (request,response) => {
+   	create: async (request, response) => {
         const {name, 
               passwordInput, 
               discarts, 
@@ -57,10 +57,10 @@ module.exports = {
         return response.json({
         sucess: "Ponto registrado com sucesso!",
         token: generateToken({id: id})
-    });
+        });
     },
     
-    delete: async (request,response) => {
+    delete: async (request, response) => {
         const point_id = request.headers.authorization;
         const { passwordInput } = request.body;
         const idSearch = await connection('discarts_points').where('id', point_id).select('id')
@@ -81,8 +81,30 @@ module.exports = {
         await connection('discarts_points').where('id', point_id).delete();
         return response.json('Ponto deletado com sucesso!');
     },
-    upload: async(request,response)=>{
-        return response.json({sucess:"Imagem carregada com suceeso."});
+    
+    upload: async(request, response) => {
+        const pointId = request.headers.identification;
+        const pointIDDB = await connection('discarts_points').where('id', pointId)
+        .select('id').first();
+
+        if (!pointIDDB) {
+            return res.status(400).json({error: 'Ponto de coleta não encontrado.'})
+        }
+        
+        const id = crypto.randomBytes(5).toString('HEX');
+        const point_id = userIDDB.id;
+        const imgName = req.file.originalname;
+        const size = req.file.size;
+        const key = req.file.filename;
+        await connection('uploads').insert({
+            id,
+            imgName,
+            size,
+            key,
+            point_id
+        }); 
+        return response.json({sucess:"Imagem carregada com sucesso!" });
+    
     }
 
 }    

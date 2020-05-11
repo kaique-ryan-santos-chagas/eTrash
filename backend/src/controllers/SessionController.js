@@ -14,7 +14,7 @@ module.exports = {
 	userCreate: async (req, res) => {
 		const {username, passwordInput, localLat, localLon} = req.body;
 
-		const usernameID = await connection('users').where('name',username).select('id').first();
+		const usernameID = await connection('users').where('name', username).select('id').first();
 
 		const usernameDB = await connection('users').where('name', username)
 		.select('name').first();

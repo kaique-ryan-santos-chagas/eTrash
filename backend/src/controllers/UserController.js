@@ -54,29 +54,43 @@ module.exports = {
 	},
 
 	delete: async (req, res) => {
-		const user_id = req.headers.authorization;
-		const { passwordInput } = req.body; 
-		const idUserDB = await connection('users').where('id', user_id)
+		const userId = req.headers.identification; 
+		const userIDDB = await connection('users').where('id', userId)
 		.select('id').first();
 		
-		if(!idUserDB){
+		if(!userIDDB){
 			return res.status(401).json({error: 'Operação não permitida!'});
 		} 
-
-		const passwordDB = await connection('users').where('id', user_id)
-		.select('password').first();
 		
-		const userMatch = await bcrypt.compareSync(passwordInput, passwordDB.password);
-		
-		if(!userMatch){
-			return res.status(400).json({error: 'Senha Inválida!'});
-		}else{
-			await connection('users').where('id', user_id).delete();
-			return res.send();
-		}
+		// Deletar Avatar do Usuário aqui
+		await connection('uploads').where('user_id', userId).delete();
+		await connection('users').where('id', userId).delete();
+		return res.send();
 		
 	},
-	upload: async (req,res) =>{
+	
+	upload: async (req, res) => {
+		const userId = req.headers.identification;
+		const userIDDB = await connection('users').where('id', userId)
+		.select('id').first();
+
+		if (!userIDDB) {
+			return res.status(400).json({error: 'Usuário não encontrado.'})
+		}
+		
+		const id = crypto.randomBytes(5).toString('HEX');
+		const user_id = userIDDB.id;
+		const imgName = req.file.originalname;
+		const size = req.file.size;
+		const key = req.file.filename;
+		await connection('uploads').insert({
+			id,
+			imgName,
+			size,
+			key,
+			user_id
+		}); 
 		return res.json({sucess:"Imagem carregada com sucesso!" });
-	}	
+	}
+
 };
