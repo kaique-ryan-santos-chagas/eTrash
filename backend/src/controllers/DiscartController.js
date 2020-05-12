@@ -63,15 +63,15 @@ module.exports = {
 		const discartPointsDB = await connection('discarts_points')
 		.where('discarts', userDiscartsDB.discarts)
 		.select('name', 
-				'rua', 
-				'numero', 
-				'discarts', 
-				'country', 
-				'city', 
-				'region',
-				'latitude',
-				'longitude'
-				);
+		        'rua', 
+		        'numero', 
+			'discarts', 
+			'country', 
+			'city', 
+			'region',
+			'latitude',
+			'longitude'
+		       );
 
 
 		if (userDiscartsDB.discarts[0] == null) {
@@ -105,14 +105,14 @@ module.exports = {
 		   const pointDB = await connection('discarts_points')
 		   .select('name', 
 		           'rua', 
-			   	   'numero', 
-			       'discarts', 
-			       'country', 
-			       'city', 
-			       'region',
-			       'latitude',
-			       'longitude'
-			      );
+			   'numero', 
+			   'discarts', 
+			   'country', 
+			   'city', 
+			   'region',
+			   'latitude',
+			   'longitude'
+			   );
 			
 		  if(matchDiscartFilter[0] != null){
 		     const foundPoint = pointDB.filter(function(item){
@@ -120,8 +120,8 @@ module.exports = {
 			    	const discartMatch = stringSimilarity.findBestMatch(x, y);
 			    	if (discartMatch.bestMatch.rating > 0.10) {
 			        	return item;
-			    	}				
-			 	}
+			        }				
+			 }
 		     });
 
 		      if (foundPoint[0] == "") {
@@ -129,13 +129,13 @@ module.exports = {
 		      }
 				
 	          // response for result of search
-		      return res.json(foundPoint);
+		    return res.json(foundPoint);
 		  }
 		// case the filter return empty array
 		return res.status(400).json({error: 'Nenhum ponto de coleta encontrado'});
 	   }
 	   // case the dsiacarts of user return total Match with point discarts
-       return res.json(discartPointsDB);
+           return res.json(discartPointsDB);
 	}	
 
 };
