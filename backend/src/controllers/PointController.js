@@ -54,10 +54,13 @@ module.exports = {
             latitude,
             longitude
         });
+        
         return response.json({
-        sucess: "Ponto registrado com sucesso!",
-        token: generateToken({id: id})
+            sucess: "Ponto registrado com sucesso!",
+            id: id,
+            token: generateToken({id: id})
         });
+
     },
     
     delete: async (request, response) => {
