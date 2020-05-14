@@ -26,6 +26,7 @@ routesAuth.post('/companies/upload', multer(MulterCompanies).single('file'), Com
 routesAuth.get('/companies', CompaniesController.index);
 routesAuth.delete('/companies/delete', CompaniesController.delete);
 routesAuth.post('/companies/sheduling', CompaniesController.scheduling);
+routesAuth.get('/companies/schedule', CompaniesController.schedule);
 
 routesAuth.post('/point/upload', multer(MulterPoints).single('file'), PointController.upload);
 routesAuth.get('/point', PointController.index);
@@ -37,6 +38,10 @@ routesAuth.put('/discarts/point', DiscartController.pointCreate);
 routesAuth.get('/discarts/points', DiscartController.searchPointForUser);
 
 routesAuth.get('/profile/user', ProfileController.userProfile);
-
+routesAuth.post('/profile/user/avatar', ProfileController.updateUserAvatar);
+routesAuth.get('/profile/company', ProfileController.companyProfile);
+routesAuth.post('/profile/company/avatar', ProfileController.updateCompanyAvatar);
+routesAuth.get('/profile/point', ProfileController.pointProfile);
+routesAuth.post('/profile/point/avatar', ProfileController.updatePointAvatar);
 
 module.exports = routesAuth;
