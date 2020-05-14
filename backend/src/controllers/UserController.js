@@ -50,18 +50,28 @@ module.exports = {
 			latitude,
 			longitude
 		});
-		return res.json({'Bem-Vindo': name, token: generateToken({id: id})});
+		return res.json({'Bem-Vindo': name, id: id,  token: generateToken({id: id})});
 	},
 
 	delete: async (req, res) => {
 		const userId = req.headers.identification; 
+		const { passwordInput } = req.body;
 		const userIDDB = await connection('users').where('id', userId)
 		.select('id').first();
 		
 		if(!userIDDB){
 			return res.status(401).json({error: 'Operação não permitida!'});
-		} 
-		
+		}
+
+		const userPasswordMatch = await connection('users').where('id', userIDDB.id)
+		.select('password').first();
+
+		const passwordMatch = await bcrypt.compareSync(passwordInput, userPasswordMatch.password);
+
+		if (!passwordMatch) {
+			return res.status(401).json({error: 'Senha incorreta'});
+		}
+
 		// Deletar Avatar do Usuário aqui
 		await connection('uploads').where('user_id', userId).delete();
 		await connection('users').where('id', userId).delete();
