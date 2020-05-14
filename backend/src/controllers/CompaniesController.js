@@ -84,9 +84,10 @@ module.exports = {
         });
 
         return response.json({
-        sucess: "Companhia cadastrada com sucesso",
-        token: generateToken({id: id})
-    });
+            sucess: "Companhia cadastrada com sucesso",
+            id: id,
+            token: generateToken({id: id})
+        });
     
     },
     
@@ -111,6 +112,8 @@ module.exports = {
         }
 
         await connection('uploads').where('company_id', companyIdBD.id).delete();
+        await connection('schedule').where('company_id', companyIdBD.id).delete();
+        await connection('schedule').where('company_collector_id', companyIdBD.id).delete();
         await connection('companies').where('id', companyIdBD.id).delete();
         return response.send();
     },
@@ -143,7 +146,6 @@ module.exports = {
     async scheduling(request, response){
         const company_id = request.headers.identification;
         const { nameCollector, date } = request.body;
-        
         const companyDB = await connection('companies').where('id', company_id)
         .select('id').first();
 
@@ -151,24 +153,55 @@ module.exports = {
         .select('id').first();
 
         if (!companyDB) {
-            return res.status(400).json({error: 'Empresa não encontrada'});
+            return response.status(400).json({error: 'Empresa não encontrada'});
         }
 
         if (!idCollector) {
-            return res.status(400).json({error: 'Empresa não encontrada'});
+            return response.status(400).json({error: 'Empresa não encontrada'});
         }
 
-        const company_id_collector = idCollector.id;
-        const date_scheduling = Date.now;
+        const company_collector_id = idCollector.id;
+        const dateNow = Date();
+        const date_scheduling = dateNow.toString();
         const date_collect = date;
         await connection('schedule').insert({
             company_id,
-            company_id_collector,
+            company_collector_id,
             date_scheduling,
             date_collect
         });
 
-        return res.json({sucess: 'Coleta Solicitada'});
+        return response.json({sucess: 'Coleta Solicitada'});
+    },
+
+    async schedule(request, response){
+        const company_id = request.headers.identification;
+        const idCompanyDB = await connection('companies').where('id', company_id)
+        .select('id').first();
+
+        if (!idCompanyDB) {
+            return response.status(400).json({error: 'Empresa não encontrada'});
+        }
+
+        const collector = await connection('companies').where('id', idCompanyDB.id)
+        .select('collector').first();
+
+        if (collector.collector != true) {
+            return response.status(400).json({error: 'Sua empresa não faz coleta de descartes eletrônicos'});
+        }
+
+        const solicitations = await connection('schedule').where('company_collector_id', idCompanyDB.id)
+        .select('*');
+
+        if (solicitations[0] == null) {
+            return response.json({message: 'Nenhuma solicitação de descarte encontrada'});
+        }
+
+        const companySolicitation = await connection('companies')
+        .join('schedule', 'schedule.company_id', '=', 'companies.id')
+        .select('cnpj','name', 'email', 'discarts', 'activity', 'country', 'city', 'region', 'neightborhood', 'phone', 'latitude', 'longitude');
+
+        return response.json({solicitations, companySolicitation});
     }
         
 };
