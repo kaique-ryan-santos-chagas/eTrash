@@ -47,6 +47,11 @@ module.exports = {
 			return res.status(400).json({error: 'Usuário não encontrado'});
 		}
 
+		const oldAvatarKey = await connection('uploads').where('user_id', userId)
+		.select('key');
+
+		// Deleta a imagem aqui e vê se funciona
+
 		const imgName = req.file.originalname;
 		const size = req.file.size;
 		const key = req.file.filename;
@@ -103,6 +108,11 @@ module.exports = {
 			return res.status(400).json({error: 'Empresa não encontrada'});
 		}
 
+		const oldAvatarKey = await connection('uploads').where('user_id', userId)
+		.select('key');
+
+		// Deleta a imagem aqui e vê se funciona
+
 		const imgName = req.file.originalname;
 		const size = req.file.size;
 		const key = req.file.filename;
@@ -111,6 +121,7 @@ module.exports = {
 
 		return res.json({sucess: 'Avatar atualizado'}); 
 	},
+
 
 	pointProfile: async (req, res) => {
 		const pointId = req.headers.identification;		
@@ -156,6 +167,11 @@ module.exports = {
 			return res.status(400).json({error: 'Ponto de coleta não encontrado'});
 		}
 
+		const oldAvatarKey = await connection('uploads').where('user_id', userId)
+		.select('key');
+
+		// Deleta a imagem aqui e vê se funciona
+
 		const imgName = req.file.originalname;
 		const size = req.file.size;
 		const key = req.file.filename;
@@ -163,6 +179,7 @@ module.exports = {
 		.update({ imgName: imgName, size: size, key: key });
 
 		return res.json({sucess: 'Avartar atualizado'}); 
+		
 	}
 
 };
