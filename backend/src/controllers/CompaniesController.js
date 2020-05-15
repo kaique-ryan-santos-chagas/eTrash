@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
 const crypto = require('crypto');
 const axios = require('axios');
-    
+const fs = require('fs');
+
 function hash(password){
     const saltRounds = 12;
     const salt = bcrypt.genSaltSync(saltRounds);
@@ -111,6 +112,14 @@ module.exports = {
             return response.status(401).json({error: 'Senha Inválida'});
         }
 
+        const oldCompanyKey = await connection('uploads').where('company_id',companyId)
+        .select('key').first();
+
+        fs.unlink(`./temp/uploads/companies/${oldCompanyKey.key}`,function(err){
+			if(err)throw err
+			res.status(400).json("Imagem de perfil inexistente!");
+        });
+        
         await connection('uploads').where('company_id', companyIdBD.id).delete();
         await connection('schedule').where('company_id', companyIdBD.id).delete();
         await connection('schedule').where('company_collector_id', companyIdBD.id).delete();
