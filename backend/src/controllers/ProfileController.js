@@ -1,6 +1,7 @@
 const connection = require('../database/connection');
 const bcrypt = require('bcrypt');
 const path = require('path');
+const fs = require('fs');
 
 module.exports = {
 
@@ -48,9 +49,12 @@ module.exports = {
 		}
 
 		const oldAvatarKey = await connection('uploads').where('user_id', userId)
-		.select('key');
+		.select('key').first();
 
-		// Deleta a imagem aqui e vê se funciona
+		fs.unlink(`./temp/uploads/companies/${oldAvatarKey.key}`,function(err){
+			if(err)throw err
+			res.status(400).json("Imagem de perfil inexistente!");
+		});
 
 		const imgName = req.file.originalname;
 		const size = req.file.size;
@@ -108,10 +112,13 @@ module.exports = {
 			return res.status(400).json({error: 'Empresa não encontrada'});
 		}
 
-		const oldAvatarKey = await connection('uploads').where('user_id', userId)
-		.select('key');
+		const oldCompanyKey = await connection('uploads').where('company_id', companyId)
+		.select('key').first();
 
-		// Deleta a imagem aqui e vê se funciona
+		fs.unlink(`./temp/uploads/companies/${oldCompanyKey.key}`,function(err){
+			if(err)throw err
+			res.status(400).json("Imagem de perfil inexistente!");
+		});
 
 		const imgName = req.file.originalname;
 		const size = req.file.size;
@@ -167,10 +174,14 @@ module.exports = {
 			return res.status(400).json({error: 'Ponto de coleta não encontrado'});
 		}
 
-		const oldAvatarKey = await connection('uploads').where('user_id', userId)
-		.select('key');
+		const oldPointAvatarKey = await connection('uploads').where('point_id', pointId)
+		.select('key').first();
 
-		// Deleta a imagem aqui e vê se funciona
+		fs.unlink(`./temp/uploads/companies/${oldPointAvatarKey.key}`,function(err){
+			if(err)throw err
+			res.status(400).json("Imagem de perfil inexistente!");
+		});
+
 
 		const imgName = req.file.originalname;
 		const size = req.file.size;
