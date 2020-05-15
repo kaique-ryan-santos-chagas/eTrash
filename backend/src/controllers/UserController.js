@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
+const fs = require('fs');
 
 function hash(password){
 	const saltRounds = 12;
@@ -54,11 +55,12 @@ module.exports = {
 	},
 
 	delete: async (req, res) => {
-		const userId = req.headers.identification; 
+		const userId = req.headers.identification;
 		const { passwordInput } = req.body;
+
 		const userIDDB = await connection('users').where('id', userId)
 		.select('id').first();
-		
+
 		if(!userIDDB){
 			return res.status(401).json({error: 'Operação não permitida!'});
 		}
@@ -72,7 +74,14 @@ module.exports = {
 			return res.status(401).json({error: 'Senha incorreta'});
 		}
 
-		// Deletar Avatar do Usuário aqui
+		const oldAvatarKey = await connection('uploads').where('user_id',userId).select('key')
+		.first();
+		
+		await fs.unlink(`./temp/uploads/users/${oldAvatarKey.key}`,function(err){
+		if(err)
+		return res.status(400).json("Imagem de perfil inexistente!");
+		});
+		
 		await connection('uploads').where('user_id', userId).delete();
 		await connection('users').where('id', userId).delete();
 		return res.send();
