@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
+const fs = require('fs');
 
 function hash(password){
 	const saltRounds = 12;
@@ -80,6 +81,14 @@ module.exports = {
         if(!passwordMatch){
         	return response.status(400).json({error: 'Senha inválida'});
         }
+
+        const oldPointKey = await connection('uploads').where('point_id',point_id).select('key')
+        .first();
+
+        fs.unlink(`./temp/uploads/companies/${oldPointKey.key}`,function(err){
+			if(err)throw err
+			res.status(400).json("Imagem de perfil inexistente!");
+		});
         
         await connection('discarts_points').where('id', point_id).delete();
         return response.json('Ponto deletado com sucesso!');
