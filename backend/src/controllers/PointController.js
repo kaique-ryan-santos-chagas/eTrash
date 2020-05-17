@@ -85,7 +85,7 @@ module.exports = {
         const oldPointKey = await connection('uploads').where('point_id',point_id).select('key')
         .first();
 
-        fs.unlink(`./temp/uploads/companies/${oldPointKey.key}`,function(err){
+        fs.unlink(`./temp/uploads/companies/${oldPointKey.key}`, function(err){
 			if(err)throw err
 			res.status(400).json("Imagem de perfil inexistente!");
 		});
