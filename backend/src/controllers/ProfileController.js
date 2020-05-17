@@ -51,8 +51,8 @@ module.exports = {
 		const oldAvatarKey = await connection('uploads').where('user_id', userId)
 		.select('key').first();
 
-		fs.unlink(`./temp/uploads/companies/${oldAvatarKey.key}`,function(err){
-			if(err)throw err
+		fs.unlink(`./temp/uploads/companies/${oldAvatarKey.key}`, function(err){
+			if(err) throw err
 			res.status(400).json("Imagem de perfil inexistente!");
 		});
 
@@ -115,8 +115,8 @@ module.exports = {
 		const oldCompanyKey = await connection('uploads').where('company_id', companyId)
 		.select('key').first();
 
-		fs.unlink(`./temp/uploads/companies/${oldCompanyKey.key}`,function(err){
-			if(err)throw err
+		fs.unlink(`./temp/uploads/companies/${oldCompanyKey.key}`, function(err){
+			if(err) throw err
 			res.status(400).json("Imagem de perfil inexistente!");
 		});
 
@@ -177,8 +177,8 @@ module.exports = {
 		const oldPointAvatarKey = await connection('uploads').where('point_id', pointId)
 		.select('key').first();
 
-		fs.unlink(`./temp/uploads/companies/${oldPointAvatarKey.key}`,function(err){
-			if(err)throw err
+		fs.unlink(`./temp/uploads/companies/${oldPointAvatarKey.key}`, function(err){
+			if(err) throw err
 			res.status(400).json("Imagem de perfil inexistente!");
 		});
 
