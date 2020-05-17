@@ -115,8 +115,8 @@ module.exports = {
         const oldCompanyKey = await connection('uploads').where('company_id',companyId)
         .select('key').first();
 
-        fs.unlink(`./temp/uploads/companies/${oldCompanyKey.key}`,function(err){
-			if(err)throw err
+        fs.unlink(`./temp/uploads/companies/${oldCompanyKey.key}`, function(err){
+			if(err) throw err
 			res.status(400).json("Imagem de perfil inexistente!");
         });
         
