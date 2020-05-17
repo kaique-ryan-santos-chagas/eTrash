@@ -74,12 +74,12 @@ module.exports = {
 			return res.status(401).json({error: 'Senha incorreta'});
 		}
 
-		const oldAvatarKey = await connection('uploads').where('user_id',userId).select('key')
+		const oldAvatarKey = await connection('uploads').where('user_id', userId).select('key')
 		.first();
 		
-		await fs.unlink(`./temp/uploads/users/${oldAvatarKey.key}`,function(err){
-		if(err)
-		return res.status(400).json("Imagem de perfil inexistente!");
+		await fs.unlink(`./temp/uploads/users/${oldAvatarKey.key}`, function(err){
+		if(err) throw err
+			return res.status(400).json("Imagem de perfil inexistente!");
 		});
 		
 		await connection('uploads').where('user_id', userId).delete();
