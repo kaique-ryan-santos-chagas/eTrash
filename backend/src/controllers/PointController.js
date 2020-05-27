@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
 const fs = require('fs');
+const path = require('path');
 
 function hash(password){
 	const saltRounds = 12;
@@ -20,11 +21,16 @@ function generateToken(params = {}){
 
 module.exports = {
     index: async (request, response) => {
-        const companies = await connection('discarts_points').select('name','rua','numero','numero','discarts','country','city','region');
+        const points = await connection('discarts_points').select('name','rua','numero','numero','discarts','country','city','region');
         const [count] = await connection('companies').count();
+        response.header('Total-Companies-Count', count['count']);
 
-        response.header('Total-Companies-Count',count['count']);
-        return response.json(companies);
+        const pointsAvatarsKey = await connection('uploads').select('key');
+        const pointsAvatars = companiesAvatarsKey.map(function(item){
+            const avatar = path.resolve(`../../temp/uploads/points/${item}`);
+            return avatar;
+        }); 
+        return response.json({points, avatar: pointsAvatars});
     },
    	
    	create: async (request, response) => {
@@ -86,8 +92,7 @@ module.exports = {
         .first();
 
         fs.unlink(`./temp/uploads/companies/${oldPointKey.key}`, function(err){
-			if(err)throw err
-			res.status(400).json("Imagem de perfil inexistente!");
+			if(err)throw err;
 		});
         
         await connection('discarts_points').where('id', point_id).delete();

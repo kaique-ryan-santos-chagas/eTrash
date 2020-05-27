@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
 const fs = require('fs');
+const path = require('path');
 
 function hash(password){
 	const saltRounds = 12;
@@ -24,7 +25,12 @@ module.exports = {
 		const users = await connection('users').select('name', 'email', 'discarts');
 		const [count] = await connection('users').count();
 		res.header('X-Total-Count', count['count']);
-		return res.json(users);
+		const usersAvatarsKey = await connection('uploads').select('key');
+		const usersAvatars = usersAvatarsKey.map(function(item){
+			const avatar = path.resolve(`../../temp/uploads/users/${item}`);
+			return avatar;
+		}); 
+		return res.json({users, avatar: usersAvatars});
 	},
 
 	create: async (req, res) => {
@@ -78,8 +84,7 @@ module.exports = {
 		.first();
 		
 		await fs.unlink(`./temp/uploads/users/${oldAvatarKey.key}`, function(err){
-		if(err) throw err
-			return res.status(400).json("Imagem de perfil inexistente!");
+			if(err) throw err;
 		});
 		
 		await connection('uploads').where('user_id', userId).delete();

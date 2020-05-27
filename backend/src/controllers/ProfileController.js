@@ -51,9 +51,8 @@ module.exports = {
 		const oldAvatarKey = await connection('uploads').where('user_id', userId)
 		.select('key').first();
 
-		fs.unlink(`./temp/uploads/companies/${oldAvatarKey.key}`, function(err){
-			if(err) throw err
-			res.status(400).json("Imagem de perfil inexistente!");
+		await fs.unlink(`./temp/uploads/companies/${oldAvatarKey.key}`, function(err){
+			if(err) throw err;
 		});
 
 		const imgName = req.file.originalname;
@@ -116,8 +115,7 @@ module.exports = {
 		.select('key').first();
 
 		fs.unlink(`./temp/uploads/companies/${oldCompanyKey.key}`, function(err){
-			if(err) throw err
-			res.status(400).json("Imagem de perfil inexistente!");
+			if(err) throw err;
 		});
 
 		const imgName = req.file.originalname;
@@ -178,8 +176,7 @@ module.exports = {
 		.select('key').first();
 
 		fs.unlink(`./temp/uploads/companies/${oldPointAvatarKey.key}`, function(err){
-			if(err) throw err
-			res.status(400).json("Imagem de perfil inexistente!");
+			if(err) throw err;
 		});
 
 

@@ -1,6 +1,7 @@
 const connection = require('../database/connection');
 const stringSimilarity = require('string-similarity');
 const itertools = require('itertools');
+const path = require('path');
 
 
 module.exports = {
@@ -65,12 +66,12 @@ module.exports = {
 		.select('name', 
 		        'rua', 
 		        'numero', 
-			'discarts', 
-			'country', 
-			'city', 
-			'region',
-			'latitude',
-			'longitude'
+				'discarts', 
+				'country', 
+				'city', 
+				'region',
+				'latitude',
+				'longitude'
 		       );
 
 
@@ -105,23 +106,23 @@ module.exports = {
 		   const pointDB = await connection('discarts_points')
 		   .select('name', 
 		           'rua', 
-			   'numero', 
-			   'discarts', 
-			   'country', 
-			   'city', 
-			   'region',
-			   'latitude',
-			   'longitude'
-			   );
+			   	   'numero', 
+			   	   'discarts', 
+			       'country', 
+			       'city', 
+			       'region',
+			       'latitude',
+			       'longitude'
+			      );
 			
 		  if(matchDiscartFilter[0] != null){
-		     const foundPoint = pointDB.filter(function(item){
+		     const foundPoints = pointDB.filter(function(item){
 		        for (const [x, y] of itertools.izipLongest(item.discarts, itertools.cycle(matchDiscartFilter), fillvalue='')) {
 			    	const discartMatch = stringSimilarity.findBestMatch(x, y);
 			    	if (discartMatch.bestMatch.rating > 0.10) {
 			        	return item;
 			        }				
-			 }
+			 	}
 		     });
 
 		      if (foundPoint[0] == "") {
@@ -129,13 +130,32 @@ module.exports = {
 		      }
 				
 	          // response for result of search
-		    return res.json(foundPoint);
+	          const avatarPointsUpload = await connection('uploads').select('*');
+	  		  const avatarPoints = avatarPointsUpload.filter(function(item){
+	   			for(const [upPointId, disPointId] of itertools.izipLongest(item.point_id, itertools.cycle(foundPoints.id), fillvalue='')){
+	   				if(upPointId == disPointId){
+	   					const avatar = path.resolve(`../../temp/uploads/points/${item.key}`);
+	   					return avatar;
+	   				}
+	   			}
+	   		  });
+
+		      return res.json({foundPoints, avatar: avatarPoints});
 		  }
 		// case the filter return empty array
 		return res.status(400).json({error: 'Nenhum ponto de coleta encontrado'});
 	   }
 	   // case the dsiacarts of user return total Match with point discarts
-           return res.json(discartPointsDB);
+	   const avatarPointsUpload = await connection('uploads').select('*');
+	   const avatarPoints = avatarPointsUpload.filter(function(item){
+	   		for(const [upPointId, disPointId] of itertools.izipLongest(item.point_id, itertools.cycle(discartPointsDB.id), fillvalue='')){
+	   			if(upPointId == disPointId){
+	   				const avatar = path.resolve(`../../temp/uploads/points/${item.key}`);
+	   				return avatar;
+	   			}
+	   		}
+	   });
+       return res.json({discartPointsDB, avatar: avatarPoints});
 	}	
 
 };

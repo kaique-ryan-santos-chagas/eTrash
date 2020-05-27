@@ -5,6 +5,7 @@ const authConfig = require('../config/auth');
 const crypto = require('crypto');
 const axios = require('axios');
 const fs = require('fs');
+const path = require('path');
 
 function hash(password){
     const saltRounds = 12;
@@ -36,10 +37,14 @@ module.exports = {
                 'longitude');
 
         const [count] = await connection('companies').count();
-
         response.header('Total-Companies-Count', count['count']);
 
-        return response.json(companies);
+        const companiesAvatarsKey = await connection('uploads').select('key');
+        const companiesAvatars = companiesAvatarsKey.map(function(item){
+            const avatar = path.resolve(`../../temp/uploads/companies/${item}`);
+            return avatar;
+        }); 
+        return response.json({companies, avatar: companiesAvatars});
     },
 
     async create(request, response){
