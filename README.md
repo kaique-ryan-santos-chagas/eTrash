@@ -17,7 +17,7 @@
 
 ### <img src="https://user-images.githubusercontent.com/59677362/81311750-2c216b00-905c-11ea-8c4f-ac5bb2d7b467.png" width=30/>[ > Expo (mobile)](https://www.expo.io)
 
-# `Back-End API` <img src="https://user-images.githubusercontent.com/59677362/83289220-1f0b1e00-a1bb-11ea-8abe-404381063a99.png" width=60/>
+# `API BASE URL` <img src="https://user-images.githubusercontent.com/59677362/83289220-1f0b1e00-a1bb-11ea-8abe-404381063a99.png" width=60/>
 
 
 #### `https://e-trash.herokuapp.com/` 
