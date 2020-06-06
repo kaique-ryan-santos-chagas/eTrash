@@ -98,7 +98,7 @@ module.exports = {
     },
     
     async delete(request, response){
-        const companyId = req.headers.identification;
+        const companyId = request.headers.identification;
         const { passwordInput } = request.body;
 
         const companyIdBD = await connection('companies').where('id', companyId)
@@ -120,9 +120,9 @@ module.exports = {
         const oldCompanyKey = await connection('uploads').where('company_id',companyId)
         .select('key').first();
 
-        fs.unlink(`./temp/uploads/companies/${oldCompanyKey.key}`, function(err){
+        await fs.unlink(`./temp/uploads/companies/${oldCompanyKey.key}`, function(err){
 			if(err) throw err
-			res.status(400).json("Imagem de perfil inexistente!");
+			response.status(400).json("Imagem de perfil inexistente!");
         });
         
         await connection('uploads').where('company_id', companyIdBD.id).delete();
@@ -138,14 +138,14 @@ module.exports = {
         .select('id').first();
 
         if (!companyIDDB) {
-            return res.status(400).json({error: 'Empresa não encontrado.'})
+            return response.status(400).json({error: 'Empresa não encontrado.'})
         }
         
         const id = crypto.randomBytes(5).toString('HEX');
         const company_id = userIDDB.id;
-        const imgName = req.file.originalname;
-        const size = req.file.size;
-        const key = req.file.filename;
+        const imgName = request.file.originalname;
+        const size = request.file.size;
+        const key = request.file.filename;
         await connection('uploads').insert({
             id,
             imgName,
