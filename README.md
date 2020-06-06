@@ -17,6 +17,11 @@
 
 ### <img src="https://user-images.githubusercontent.com/59677362/81311750-2c216b00-905c-11ea-8c4f-ac5bb2d7b467.png" width=30/>[ > Expo (mobile)](https://www.expo.io)
 
+# `API BASE URL` <img src="https://user-images.githubusercontent.com/59677362/83289220-1f0b1e00-a1bb-11ea-8abe-404381063a99.png" width=60/>
+
+
+#### >> `https://e-trash.herokuapp.com/` 
+
 # `Libraries and Frameworks Back-End` >> <img src="https://user-images.githubusercontent.com/59677362/81249040-0fe9e380-8ff4-11ea-885f-50de3722ecb9.jpeg" width=40 height=40 />
 
 
@@ -26,12 +31,14 @@
 * ### [Cors (security module of api access)](https://www.npmjs.com/package/cors)
 * ### [Itertools (Iteration of multiple array at the same time)](https://www.npmjs.com/package/itertools)
 * ### [Json Web Token (generation token of API access)](https://jwt.io)
-* ### [Knex (settings of database and JavaScript like query language)](https://knexjs.org)
+* ### [Knex (settings of database and JavaScript as a query language)](https://knexjs.org)
 * ### [Pg (Driver of connection with PostgreSQL)](https://www.npmjs.com/package/pg)
 * ### [String-similarity (compare strings)](https://www.npmjs.com/package/string-similarity)
 * ### [Multer (upload files)](https://www.npmjs.com/package/multer)
 * ### [Morgan (log HTTP request)](https://www.npmjs.com/package/morgan)
 * ### [Path (directory manager)](https://nodejs.org/dist/latest-v12.x/docs/api/path.html)
+* ### [File System (file manager)](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html)
+* ### [Socket.io (real-time library)](https://socket.io)
 
 
 
