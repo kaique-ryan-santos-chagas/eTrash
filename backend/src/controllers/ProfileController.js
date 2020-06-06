@@ -175,7 +175,7 @@ module.exports = {
 		const oldPointAvatarKey = await connection('uploads').where('point_id', pointId)
 		.select('key').first();
 
-		fs.unlink(`./temp/uploads/companies/${oldPointAvatarKey.key}`, function(err){
+		await fs.unlink(`./temp/uploads/companies/${oldPointAvatarKey.key}`, function(err){
 			if(err) throw err;
 		});
 
