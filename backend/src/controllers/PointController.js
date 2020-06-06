@@ -105,14 +105,14 @@ module.exports = {
         .select('id').first();
 
         if (!pointIDDB) {
-            return res.status(400).json({error: 'Ponto de coleta não encontrado.'})
+            return response.status(400).json({error: 'Ponto de coleta não encontrado.'})
         }
         
         const id = crypto.randomBytes(5).toString('HEX');
         const point_id = userIDDB.id;
-        const imgName = req.file.originalname;
-        const size = req.file.size;
-        const key = req.file.filename;
+        const imgName = request.file.originalname;
+        const size = request.file.size;
+        const key = request.file.filename;
         await connection('uploads').insert({
             id,
             imgName,
