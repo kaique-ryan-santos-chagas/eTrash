@@ -26,7 +26,7 @@ module.exports = {
         response.header('Total-Companies-Count', count['count']);
 
         const pointsAvatarsKey = await connection('uploads').select('key');
-        const pointsAvatars = companiesAvatarsKey.map(function(item){
+        const pointsAvatars = pointsAvatarsKey.map(function(item){
             const avatar = path.resolve(`../../temp/uploads/points/${item}`);
             return avatar;
         }); 
@@ -71,7 +71,7 @@ module.exports = {
     },
     
     delete: async (request, response) => {
-        const point_id = request.headers.authorization;
+        const point_id = request.headers.identification;
         const { passwordInput } = request.body;
         const idSearch = await connection('discarts_points').where('id', point_id).select('id')
         .first();
@@ -91,11 +91,12 @@ module.exports = {
         const oldPointKey = await connection('uploads').where('point_id',point_id).select('key')
         .first();
 
-        fs.unlink(`./temp/uploads/companies/${oldPointKey.key}`, function(err){
+        await fs.unlink(`./temp/uploads/points/${oldPointKey.key}`, function(err){
 			if(err)throw err;
 		});
         
         await connection('discarts_points').where('id', point_id).delete();
+        
         return response.json('Ponto deletado com sucesso!');
     },
     
@@ -109,7 +110,7 @@ module.exports = {
         }
         
         const id = crypto.randomBytes(5).toString('HEX');
-        const point_id = userIDDB.id;
+        const point_id = pointIDDB.id;
         const imgName = request.file.originalname;
         const size = request.file.size;
         const key = request.file.filename;
