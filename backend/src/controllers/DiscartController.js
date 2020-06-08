@@ -29,7 +29,7 @@ module.exports = {
 			return res.status(400).json({error: 'Usuário não encontrado'});
 		}
 
-		await connection('companies').where('id', companyIDDB).update({
+		await connection('companies').where('id', companyIDDB.id).update({
 			discarts: companyDiscarts
 		});
 		return res.json({sucess: 'Seus descartes foram atualizados'});
