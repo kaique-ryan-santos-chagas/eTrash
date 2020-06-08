@@ -121,8 +121,7 @@ module.exports = {
         .select('key').first();
 
         await fs.unlink(`./temp/uploads/companies/${oldCompanyKey.key}`, function(err){
-			if(err) throw err
-			response.status(400).json("Imagem de perfil inexistente!");
+			if(err) throw err;
         });
         
         await connection('uploads').where('company_id', companyIdBD.id).delete();
@@ -142,7 +141,7 @@ module.exports = {
         }
         
         const id = crypto.randomBytes(5).toString('HEX');
-        const company_id = userIDDB.id;
+        const company_id = companyIDDB.id;
         const imgName = request.file.originalname;
         const size = request.file.size;
         const key = request.file.filename;
