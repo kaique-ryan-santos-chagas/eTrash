@@ -6,7 +6,7 @@ const authConfig = require('../config/auth');
 
 function generateToken(params = {}){
 	return jwt.sign(params, authConfig.secret,{
-		expiresIn:86400,
+        expiresIn:86400,
 	});
 }
 
@@ -31,7 +31,8 @@ module.exports = {
 		
 		await connection('users').where('id', userIDDB.id).update({latitude: localLat, longitude: localLon });
 		return res.json({
-            user: name, 
+            id: userIDDB.id,
+            user: name,
             token: generateToken({id: userIDDB.id})
         });
 
@@ -57,6 +58,7 @@ module.exports = {
 
         await connection('companies').where('id', companyID.id).update({latitude: localLat, longitude: localLon });
         return res.json({
+            id: companyID.id,
             company: name,
             token: generateToken({id: companyID.id})
         });
@@ -83,6 +85,7 @@ module.exports = {
 
         await connection('discarts_points').where('id', pointID.id).update({latitude: localLat, longitude: localLon });
         return res.json({
+            id: pointID.id,
             point: name,
             token: generateToken({id: pointID.id})
         });
