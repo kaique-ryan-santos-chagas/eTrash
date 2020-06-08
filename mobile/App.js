@@ -8,6 +8,14 @@ import { faArrowRight, faArrowLeft, faCheck } from '@fortawesome/free-solid-svg-
 const slides = [
   {
     key: 1,
+    title: 'Geolocalização',
+    text: 'Usamos sua localização para achar\npontos de coleta próximos a você',
+    image: require('./src/assets/animations/maps.json'), 
+    backgroundColor: '#ffffff',
+  },
+
+  {
+    key: 2,
     title: 'Inteligência Artificial',
     text: 'Estou aqui para te ajudar\ncom seu lixo eletrônico.',
     image: require('./src/assets/animations/robot.json'), 
@@ -15,7 +23,7 @@ const slides = [
   },
 
   {
-    key: 2,
+    key: 3,
     title: 'Chatbot',
     text: 'Tire suas dúvidas com a IA',
     image: require('./src/assets/animations/chatbot.json'), 
@@ -62,7 +70,7 @@ export default class App extends React.Component{
   _renderSkipButton = () => {
       return (
         <View style={styles.skip}>
-          <Text style={{color: '#ffffff'}}>Pular</Text>
+          <Text style={{color: '#ffffff', fontWeight: 'bold'}}>Pular</Text>
         </View>
       );
   }
@@ -107,21 +115,21 @@ const styles = StyleSheet.create({
     },
 
     buttonCircle: {
-      width: 40,
-      height: 40,
+      width: 45,
+      height: 45,
       backgroundColor: '#38c172',
-      borderRadius: 20,
+      borderRadius: 25,
       justifyContent: 'center',
       alignItems: 'center'
     },
 
     skip: {
-      borderRadius: 15,
+      borderRadius: 25,
       backgroundColor: '#38c172',
       justifyContent: 'center',
       alignItems: 'center',
       width: 70,
-      height: 40,
+      height: 50,
     }
 
 });
