@@ -59,8 +59,6 @@ module.exports = {
 		const size = req.file.size;
 		const key = req.file.filename;
 
-		console.log({imgName:imgName});
-
 	    await connection('uploads').where('user_id', userDB.id)
 		.update({ imgName: imgName, size: size, key: key });
 
