@@ -117,16 +117,24 @@ module.exports = {
             return response.status(401).json({error: 'Senha Inválida'});
         }
 
-        const oldCompanyKey = await connection('uploads').where('company_id',companyId)
+        const oldCompanyKey = await connection('uploads').where('company_id', companyId)
         .select('key').first();
 
-        await fs.unlink(`./temp/uploads/companies/${oldCompanyKey.key}`, function(err){
-			if(err) throw err;
-        });
+        if(oldCompanyKey){
+            await fs.unlink(`./temp/uploads/companies/${oldCompanyKey.key}`, function(err){
+			     if(err) throw err;
+            });
+        }   
+        
+        const companyCollector = await connection('companies').where('collector', true)
+        .select('collector').first();
+        
+        if (companyCollector) {
+            await connection('schedule').where('company_collector_id', companyIdBD.id).delete();
+        }
         
         await connection('uploads').where('company_id', companyIdBD.id).delete();
         await connection('schedule').where('company_id', companyIdBD.id).delete();
-        await connection('schedule').where('company_collector_id', companyIdBD.id).delete();
         await connection('companies').where('id', companyIdBD.id).delete();
         return response.send();
     },
