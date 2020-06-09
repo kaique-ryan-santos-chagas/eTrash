@@ -38,10 +38,10 @@ routesAuth.put('/discarts/point', DiscartController.pointCreate);
 routesAuth.get('/discarts/points', DiscartController.searchPointForUser);//Testa no seu, o meu diz que não consegue ler a posição 0 no vetor se for nulo então não entra no IF (Linha 78), quando os discarts do usuario são os mesmos.
 
 routesAuth.get('/profile/user', ProfileController.userProfile);
-routesAuth.post('/profile/user/avatar', ProfileController.updateUserAvatar); //Erro na linha 58 (não foi possivel ler a propiedade originalname que é indefinida)
+routesAuth.post('/profile/user/avatar', multer(MulterUsers).single('file'), ProfileController.updateUserAvatar); //Erro na linha 58 (não foi possivel ler a propiedade originalname que é indefinida)
 routesAuth.get('/profile/company', ProfileController.companyProfile);
-routesAuth.post('/profile/company/avatar', ProfileController.updateCompanyAvatar);//Erro na linha 124 (não foi possivel ler a propiedade originalname que é indefinida)
+routesAuth.post('/profile/company/avatar', multer(MulterCompanies).single('file'), ProfileController.updateCompanyAvatar);//Erro na linha 124 (não foi possivel ler a propiedade originalname que é indefinida)
 routesAuth.get('/profile/point', ProfileController.pointProfile);
-routesAuth.post('/profile/point/avatar', ProfileController.updatePointAvatar);//Erro na linha 186 (não foi possivel ler a propiedade originalname que é indefinida)
+routesAuth.post('/profile/point/avatar', multer(MulterPoints).single('file'), ProfileController.updatePointAvatar);//Erro na linha 186 (não foi possivel ler a propiedade originalname que é indefinida)
 
 module.exports = routesAuth;
