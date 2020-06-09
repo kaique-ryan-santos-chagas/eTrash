@@ -88,21 +88,23 @@ module.exports = {
         	return response.status(400).json({error: 'Senha inválida'});
         }
 
-        const oldPointKey = await connection('uploads').where('point_id',point_id).select('key')
+        const oldPointKey = await connection('uploads').where('point_id',  point_id).select('key')
         .first();
 
-        await fs.unlink(`./temp/uploads/points/${oldPointKey.key}`, function(err){
-			if(err)throw err;
-		});
+        if(oldPointKey){
+            await fs.unlink(`./temp/uploads/points/${oldPointKey.key}`, function(err){
+			     if(err) throw err;
+		    });
+        }
         
         await connection('discarts_points').where('id', point_id).delete();
         
-        return response.json('Ponto deletado com sucesso!');
+        return response.json({sucess: 'Ponto deletado com sucesso!'});
     },
     
     upload: async(request, response) => {
-        const pointId = request.headers.identification;
-        const pointIDDB = await connection('discarts_points').where('id', pointId)
+        const point_id = request.headers.identification;
+        const pointIDDB = await connection('discarts_points').where('id', point_id)
         .select('id').first();
 
         if (!pointIDDB) {
