@@ -90,13 +90,15 @@ module.exports = {
 
         const oldPointKey = await connection('uploads').where('point_id',  point_id).select('key')
         .first();
-
+        
         if(oldPointKey){
             await fs.unlink(`./temp/uploads/points/${oldPointKey.key}`, function(err){
 			     if(err) throw err;
 		    });
         }
-        
+        const imageID = await connection('uploads').select('id').where('point_id',point_id).first();
+
+        await connection('uploads').where('id',imageID.id).delete();
         await connection('discarts_points').where('id', point_id).delete();
         
         return response.json({sucess: 'Ponto deletado com sucesso!'});
@@ -112,7 +114,7 @@ module.exports = {
         }
         
         const id = crypto.randomBytes(5).toString('HEX');
-        const point_id = pointIDDB.id;
+        const newPointId = pointIDDB.id;
         const imgName = request.file.originalname;
         const size = request.file.size;
         const key = request.file.filename;
@@ -121,7 +123,7 @@ module.exports = {
             imgName,
             size,
             key,
-            point_id
+            point_id: newPointId
         }); 
         return response.json({sucess:"Imagem carregada com sucesso!" });
     
