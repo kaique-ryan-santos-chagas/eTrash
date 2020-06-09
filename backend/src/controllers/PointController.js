@@ -112,7 +112,6 @@ module.exports = {
         }
         
         const id = crypto.randomBytes(5).toString('HEX');
-        const point_id = pointIDDB.id;
         const imgName = request.file.originalname;
         const size = request.file.size;
         const key = request.file.filename;
