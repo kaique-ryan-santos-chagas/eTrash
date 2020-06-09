@@ -15,7 +15,6 @@
 
 ### <img src="https://user-images.githubusercontent.com/59677362/81310759-e912c800-905a-11ea-8d00-de268970a0cf.png" width=30 />[ > PostgreSQL (relational database)](https://postgresql.org)
 
-### <img src="https://user-images.githubusercontent.com/59677362/81311750-2c216b00-905c-11ea-8c4f-ac5bb2d7b467.png" width=30/>[ > Expo (mobile)](https://www.expo.io)
 
 # `API BASE URL` <img src="https://user-images.githubusercontent.com/59677362/83289220-1f0b1e00-a1bb-11ea-8abe-404381063a99.png" width=60/>
 

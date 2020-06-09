@@ -51,13 +51,16 @@ module.exports = {
 		const oldAvatarKey = await connection('uploads').where('user_id', userId)
 		.select('key').first();
 
-		await fs.unlink(`./temp/uploads/companies/${oldAvatarKey.key}`, function(err){
+		await fs.unlink(`./temp/uploads/users/${oldAvatarKey.key}`, function(err){
 			if(err) throw err;
 		});
 
 		const imgName = req.file.originalname;
 		const size = req.file.size;
 		const key = req.file.filename;
+
+		console.log({imgName:imgName});
+
 	    await connection('uploads').where('user_id', userDB.id)
 		.update({ imgName: imgName, size: size, key: key });
 
@@ -175,7 +178,7 @@ module.exports = {
 		const oldPointAvatarKey = await connection('uploads').where('point_id', pointId)
 		.select('key').first();
 
-		await fs.unlink(`./temp/uploads/companies/${oldPointAvatarKey.key}`, function(err){
+		await fs.unlink(`./temp/uploads/points/${oldPointAvatarKey.key}`, function(err){
 			if(err) throw err;
 		});
 

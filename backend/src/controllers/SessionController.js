@@ -6,7 +6,7 @@ const authConfig = require('../config/auth');
 
 function generateToken(params = {}){
 	return jwt.sign(params, authConfig.secret,{
-		expiresIn:86400,
+        expiresIn:86400,
 	});
 }
 
@@ -32,7 +32,7 @@ module.exports = {
 		await connection('users').where('id', userIDDB.id).update({latitude: localLat, longitude: localLon });
 		return res.json({
             id: userIDDB.id,
-            user: name, 
+            user: name,
             token: generateToken({id: userIDDB.id})
         });
 
