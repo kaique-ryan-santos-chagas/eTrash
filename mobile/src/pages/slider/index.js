@@ -10,6 +10,22 @@ import { useNavigation } from '@react-navigation/native';
 const slides = [
   {
     key: 1,
+    title: 'Notícias',
+    text: 'Acompanhe as notícias a respeito\n do lixo eletrônico no Brasil e no mundo',
+    image: require('../../assets/animations/news.json'), 
+    backgroundColor: '#ffffff',
+  },
+
+  {
+    key: 2,
+    title: 'Disponibilidade',
+    text: 'Certifique-se se há conexão\n com a internet',
+    image: require('../../assets/animations/online.json'), 
+    backgroundColor: '#ffffff',
+  },
+
+  {
+    key: 3,
     title: 'Geolocalização',
     text: 'Usamos sua localização para achar\npontos de coleta próximos a você',
     image: require('../../assets/animations/maps.json'), 
@@ -17,7 +33,7 @@ const slides = [
   },
 
   {
-    key: 2,
+    key: 4,
     title: 'Inteligência Artificial',
     text: 'Estou aqui para te ajudar\ncom seu lixo eletrônico',
     image: require('../../assets/animations/robot.json'), 
@@ -25,7 +41,7 @@ const slides = [
   },
 
   {
-    key: 3,
+    key: 5,
     title: 'Chatbot',
     text: 'Tire suas dúvidas com a IA',
     image: require('../../assets/animations/chatbot.json'), 
@@ -110,20 +126,21 @@ const styles = StyleSheet.create({
       color: '#38c172',
       textAlign: 'center',
       fontSize: 30,
-      marginBottom: 300,
-      fontWeight: 'bold'
+      marginBottom: 280,
+      fontFamily: 'Roboto-Bold'
     },
 
     text: {
       color: '#38c172',
-      paddingVertical: 30,
+      paddingVertical: 10,
       textAlign: 'center',
       paddingBottom: 70,
-      fontSize: 15
+      fontSize: 15,
+      marginTop: 100
     },
 
     buttonCircle: {
-      width: 45,
+      width: 45, 
       height: 45,
       backgroundColor: '#38c172',
       borderRadius: 25,
