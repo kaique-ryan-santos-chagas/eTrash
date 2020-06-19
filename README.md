@@ -39,5 +39,22 @@
 * #### [File System (file manager)](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html)
 * #### [Socket.io (real-time library)](https://socket.io)
 
+# `Libraries and Frameworks Mobile`
 
+* #### React
+* #### React Native
+* #### react-native-gesture-handler
+* #### react-native-reanimated
+* #### react-native-safe-area-context
+* #### react-native-screens
+* #### react-native-svg
+* #### react-native-app-intro-slider
+* #### axios
+* #### @fortawesome/react-native-fontawesome
+* #### @fortawesome/free-solid-svg-icons
+* #### @fortawesome/fontawesome-svg-core
+* #### @react-navigation/native
+* #### @react-navigation/stack
+* #### lottie-react-native
+* #### @react-native-community/masked-view
 
