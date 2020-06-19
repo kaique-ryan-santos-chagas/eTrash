@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, createSwitchNavigator } from '@react-navigation/stack';
 
 import Slider from './pages/slider/index';
 import SignOption from './pages/signOption/index';
