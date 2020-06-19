@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       fontSize: 30,
       marginBottom: 280,
-      fontFamily: 'Roboto-Bold'
+      fontFamily: 'Roboto-Black'
     },
 
     text: {
