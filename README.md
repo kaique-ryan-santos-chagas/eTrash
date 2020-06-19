@@ -24,20 +24,20 @@
 # `Libraries and Frameworks Back-End` >> <img src="https://user-images.githubusercontent.com/59677362/81249040-0fe9e380-8ff4-11ea-885f-50de3722ecb9.jpeg" width=40 height=40 />
 
 
-* ### [Express (application routes)](https://www.expressjs.com)
-* ### [Axios (get data from cnpj public API)](https://www.npmjs.com/package/axios)
-* ### [Bcrypt (cryptography and generate hash of password)](https://www.npmjs.com/package/bcrypt)
-* ### [Cors (security module of api access)](https://www.npmjs.com/package/cors)
-* ### [Itertools (Iteration of multiple array at the same time)](https://www.npmjs.com/package/itertools)
-* ### [Json Web Token (generation token of API access)](https://jwt.io)
-* ### [Knex (settings of database and JavaScript as a query language)](https://knexjs.org)
-* ### [Pg (Driver of connection with PostgreSQL)](https://www.npmjs.com/package/pg)
-* ### [String-similarity (compare strings)](https://www.npmjs.com/package/string-similarity)
-* ### [Multer (upload files)](https://www.npmjs.com/package/multer)
-* ### [Morgan (log HTTP request)](https://www.npmjs.com/package/morgan)
-* ### [Path (directory manager)](https://nodejs.org/dist/latest-v12.x/docs/api/path.html)
-* ### [File System (file manager)](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html)
-* ### [Socket.io (real-time library)](https://socket.io)
+* #### [Express (application routes)](https://www.expressjs.com)
+* #### [Axios (get data from cnpj public API)](https://www.npmjs.com/package/axios)
+* #### [Bcrypt (cryptography and generate hash of password)](https://www.npmjs.com/package/bcrypt)
+* #### [Cors (security module of api access)](https://www.npmjs.com/package/cors)
+* #### [Itertools (Iteration of multiple array at the same time)](https://www.npmjs.com/package/itertools)
+* #### [Json Web Token (generation token of API access)](https://jwt.io)
+* #### [Knex (settings of database and JavaScript as a query language)](https://knexjs.org)
+* #### [Pg (Driver of connection with PostgreSQL)](https://www.npmjs.com/package/pg)
+* #### [String-similarity (compare strings)](https://www.npmjs.com/package/string-similarity)
+* #### [Multer (upload files)](https://www.npmjs.com/package/multer)
+* #### [Morgan (log HTTP request)](https://www.npmjs.com/package/morgan)
+* #### [Path (directory manager)](https://nodejs.org/dist/latest-v12.x/docs/api/path.html)
+* #### [File System (file manager)](https://nodejs.org/dist/latest-v12.x/docs/api/fs.html)
+* #### [Socket.io (real-time library)](https://socket.io)
 
 
 
