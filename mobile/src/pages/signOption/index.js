@@ -16,7 +16,7 @@ const SignOption = () => {
 	const [logoTextOpacity] = useState(new Animated.Value(0));
 	const [showTextCentral] = useState(new Animated.ValueXY({x: 0, y: 80}));
 	const [textCentralOpacity] = useState(new Animated.Value(0));
-	const [buttonAnim] = useState(new Animated.ValueXY({x: 0, y: 60}))
+	const [buttonAnim] = useState(new Animated.ValueXY({x: 0, y: 60}));
 
 	useEffect(() => {
 		Animated.parallel([
@@ -31,21 +31,21 @@ const SignOption = () => {
 			}),	
 			Animated.spring(logoText.y, {
 				toValue: 0,
-				speed: 1,
+				speed: 2,
 				bounciness: 0
 			}),
 			Animated.timing(logoTextOpacity, {
 				toValue: 1,
-				duration: 1000
+				duration: 500
 			}),			
+			Animated.timing(textCentralOpacity, {
+				toValue: 1,
+				duration: 500
+			}),
 			Animated.spring(showTextCentral.y, {
 				toValue: 0,
 				speed: 1,
 				bounciness: 0
-			}),
-			Animated.timing(textCentralOpacity, {
-				toValue: 1,
-				duration: 500
 			}),
 			Animated.spring(buttonAnim.y, {
 				toValue: 0,
@@ -61,8 +61,8 @@ const SignOption = () => {
 		navigation.navigate('SignIn');
 	}
 
-	function changeScreenToSignUp(){
-		navigation.navigate('SignUp');
+	function changeScreenToChooseUser(){
+		navigation.navigate('ChooseUser');
 	} 
 
 	const centralTextStr = 'Descarte seu\nresíduo eletrônico\ne ajude o'; 
@@ -123,7 +123,7 @@ const SignOption = () => {
 					</View>
 					<Text style={styles.textButtonIn}>Entrar</Text>
 				</RectButton>
-				<RectButton style={styles.signUpButton} onPress={() => changeScreenToSignUp()}>
+				<RectButton style={styles.signUpButton} onPress={() => changeScreenToChooseUser()}>
 					<View style={styles.buttonIconUp}>
 						<FontAwesomeIcon style={styles.iconUp} icon={ faUserPlus }/>
 					</View>
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
 
 	signInButton: {
 		backgroundColor: '#38c172',
-		borderRadius: 10,
+		borderRadius: 5,
 		width: 250,
 		height: 60,
 		justifyContent: 'center',
