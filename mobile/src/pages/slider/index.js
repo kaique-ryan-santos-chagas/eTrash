@@ -1,10 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+
 import AppIntroSlider from 'react-native-app-intro-slider';
+
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight, faArrowLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
+
 import LottieView from 'lottie-react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 const slides = [
@@ -36,15 +40,15 @@ const slides = [
     key: 4,
     title: 'Inteligência Artificial',
     text: 'Estou aqui para te ajudar\ncom seu lixo eletrônico',
-    image: require('../../assets/animations/robot.json'), 
+    image: require('../../assets/animations/chatbot.json'), 
     backgroundColor: '#ffffff',
   },
 
   {
     key: 5,
-    title: 'Chatbot',
-    text: 'Tire suas dúvidas com a IA',
-    image: require('../../assets/animations/chatbot.json'), 
+    title: 'Juntos',
+    text: 'Juntos podemos acabar com o descarte\ninadequado de resíduos eletrônicos',
+    image: require('../../assets/animations/together.json'), 
     backgroundColor: '#ffffff', 
   }
 
@@ -136,7 +140,8 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       paddingBottom: 70,
       fontSize: 15,
-      marginTop: 100
+      marginTop: 100,
+      fontFamily: 'Roboto-Medium'
     },
 
     buttonCircle: {
