@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StatusBar } from 'react-native';
 
-import Routes from './src/routes';
+import Routes from './src/routes/app-routes.js';
 
-export default class App extends React.Component{
-    render(){
-      return (
+const App = () => {
+    return (
         <>
         <StatusBar backgroundColor="#ffffff" barStyle='dark-content' translucent />
         <Routes />
         </>
-      );
-    }
+     );
+    
 }
+
+export default App;
