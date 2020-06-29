@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, Animated } from 'react-native';
 
+
 import LottieView from 'lottie-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
@@ -10,34 +11,32 @@ import { faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 const SignOption = () => {
 
-	const [logoAnim] = useState(new Animated.ValueXY({x: 0, y: 80}));
-	const [logoOpacity] = useState(new Animated.Value(0)); 
-	const [logoText] = useState(new Animated.ValueXY({x: 0, y: 80 }));
+	const [logoOpacity] = useState(new Animated.Value(0));
+	const [showLogo] = useState(new Animated.ValueXY({x: 0, y: 80}));
 	const [logoTextOpacity] = useState(new Animated.Value(0));
+	const [showLogoText] = useState(new Animated.ValueXY({x: 0, y: 80}));
 	const [showTextCentral] = useState(new Animated.ValueXY({x: 0, y: 80}));
 	const [textCentralOpacity] = useState(new Animated.Value(0));
 	const [buttonAnim] = useState(new Animated.ValueXY({x: 0, y: 60}));
 
 	useEffect(() => {
 		Animated.parallel([
-			Animated.spring(logoAnim.y, {
-				toValue: 0,
-				speed: 1,
-				bounciness: 0
-			}),
 			Animated.timing(logoOpacity, {
 				toValue: 1,
-				duration: 500
-			}),	
-			Animated.spring(logoText.y, {
+				duration: 1000
+			}),
+			Animated.spring(showLogo.y, {
 				toValue: 0,
-				speed: 2,
-				bounciness: 0
+				speed: 4
 			}),
 			Animated.timing(logoTextOpacity, {
 				toValue: 1,
-				duration: 500
-			}),			
+				duration: 1000
+			}),
+			Animated.spring(showLogoText.y, {
+				toValue: 0,
+				speed: 4
+			}),
 			Animated.timing(textCentralOpacity, {
 				toValue: 1,
 				duration: 500
@@ -51,7 +50,7 @@ const SignOption = () => {
 				toValue: 0,
 				speed: 1,
 				bounciness: 0
-			}),
+			})
 		]).start();
 	}, []);
 
@@ -70,28 +69,13 @@ const SignOption = () => {
 	return (
 		<View style={styles.container}> 
 			
-			<Animated.Image style={[
-				styles.logo,
-				{
-					opacity: logoOpacity,
-					transform: [
-						{ translateY: logoAnim.y }
-					]
-				}
-			]} 
-				source={require('../../assets/pictures/icon.jpg')} 
-			/>
+			<Animated.Image 
+			style={[styles.logo, { opacity: logoOpacity, transform: [ { translateY: showLogo.y }] }]} 
+			source={require('../../assets/pictures/icon.jpg')} />
 
-			<Animated.Text style={[
-				styles.logoText,
-				{	
-					opacity: logoTextOpacity,
-					transform: [
-						{ translateY: logoText.y }
-					]
-				}
-
-			]}>Trash</Animated.Text>
+			<Animated.Text style={
+				[styles.logoText, { opacity: logoTextOpacity, 
+				transform: [ { translateY: showLogoText.y }] }]}>Trash</Animated.Text>
 
 			<Animated.View style={[
 				styles.central,
@@ -144,7 +128,14 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		
 	},
+	central: {
+		marginTop: 50,
+		marginBottom: 0,
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginLeft: 30
 
+	},
 	logo: {
 		width: 100,
 		height: 70,
@@ -152,7 +143,6 @@ const styles = StyleSheet.create({
 		marginRight: 120,
 		marginBottom: 10
 	},
-
 	logoText: {
 		fontSize: 30,
 		color: '#38c172',
@@ -163,22 +153,11 @@ const styles = StyleSheet.create({
 		marginRight: 100,
 		fontFamily: 'Nerik-normal'
 	},
-
-	central: {
-		marginTop: 50,
-		marginBottom: 0,
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginLeft: 30
-
-	},
-
 	textCentral: {
 		color: 'black',
 		fontFamily: 'Roboto-Bold',
 		fontSize: 45,
 	},
-
 	earthAnimation: {
 		right: 0,
 		width: 50,
@@ -187,13 +166,11 @@ const styles = StyleSheet.create({
 		marginTop: 40,
 		left: 110
 	},
-
 	footer: {
 		marginTop: 100,
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
-
 	signInButton: {
 		backgroundColor: '#38c172',
 		borderRadius: 5,
@@ -203,7 +180,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		margin: 3
 	},
-
 	signUpButton: {
 		backgroundColor: '#ffffff',
 		borderRadius: 5,
@@ -214,7 +190,6 @@ const styles = StyleSheet.create({
 		margin: 3,
 		marginTop: 10
 	},
-
 	buttonIconIn: {
 		backgroundColor: 'transparent',
 		borderRadius: 5,
@@ -226,7 +201,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 		
 	},
-
 	buttonIconUp: {
 		backgroundColor: 'transparent',
 		borderRadius: 5,
