@@ -2,13 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 
-const SignIn = () => {
+const SignUp = () => {
 	return (
 		<View style={styles.container}>
-			<Text>Sign In</Text>
+			<Text>Sign Up</Text>
 		</View>
 	);
-}
+};
+
 
 const styles = StyleSheet.create({
 	container: {
@@ -18,4 +19,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default SignIn;
+export default SignUp;
