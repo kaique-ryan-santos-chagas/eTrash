@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, Animated, TouchableOpacity } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native'; 
 
 const ChooseUser = () => {
+
+	const navigation = useNavigation();
 
 	const [imageHeaderOpacity] = useState(new Animated.Value(0));
 	const [showImageHeader] = useState(new Animated.ValueXY({x: 0, y: 80}));
@@ -39,7 +42,7 @@ const ChooseUser = () => {
 	}, []);
 
 	useEffect(() => {
-		Animated.stagger(50, [
+		Animated.stagger(30, [
 			Animated.timing(opacityButtonA, {
 				toValue: 1,
 				duration: 500
@@ -70,6 +73,9 @@ const ChooseUser = () => {
 		]).start();
 	}, []);
 
+	function pointsSignUpScreen(){
+		navigation.navigate('SignUpPoints');
+	}
 
 	return (
 		<View style={styles.container}>
@@ -104,7 +110,7 @@ const ChooseUser = () => {
 				 		opacity: opacityButtonB,
 				 		transform: [ {translateY: showButtonB.y } ]
 				 }]}>
-				 	<TouchableOpacity style={styles.pointButton} onPress={() => {}}>
+				 	<TouchableOpacity style={styles.pointButton} onPress={() => pointsSignUpScreen()}>
 				 		<Image 
 				 		style={styles.buttonImage} 
 				 		source={require('../../assets/pictures/point.jpg')} />
@@ -197,7 +203,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#ffffff',
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderWidth: 1,
+		borderWidth: 1.5,
 		borderColor: '#38C172',
 		borderRadius: 10,
 	},
@@ -207,7 +213,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#ffffff',
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderWidth: 1,
+		borderWidth: 1.5,
 		borderColor: '#38C172',
 		borderRadius: 10,
 	},
@@ -217,7 +223,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#ffffff',
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderWidth: 1,
+		borderWidth: 1.5,
 		borderColor: '#38C172',
 		borderRadius: 10,
 	},
