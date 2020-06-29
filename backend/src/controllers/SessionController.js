@@ -58,7 +58,7 @@ module.exports = {
 
         await connection('companies').where('id', companyID.id).update({latitude: localLat, longitude: localLon });
         return res.json({
-            id: company.id,
+            id: companyID.id,
             company: name,
             token: generateToken({id: companyID.id})
         });
