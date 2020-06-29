@@ -25,9 +25,11 @@ module.exports = {
         const [count] = await connection('companies').count();
         response.header('Total-Companies-Count', count['count']);
 
-        const pointsAvatarsKey = await connection('uploads').select('key');
+        const pointsAvatarsKey = await connection('uploads').whereNotNull('point_id').select('key');
+
         const pointsAvatars = pointsAvatarsKey.map(function(item){
-            const avatar = path.resolve(`../../temp/uploads/points/${item}`);
+            const key = item.key;
+            const avatar = path.resolve(`../../temp/uploads/points/${key}`);
             return avatar;
         }); 
         return response.json({points, avatar: pointsAvatars});
