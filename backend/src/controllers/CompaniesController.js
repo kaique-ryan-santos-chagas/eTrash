@@ -39,9 +39,11 @@ module.exports = {
         const [count] = await connection('companies').count();
         response.header('Total-Companies-Count', count['count']);
 
-        const companiesAvatarsKey = await connection('uploads').select('key');
+        const companiesAvatarsKey = await connection('uploads').whereNotNull('company_id').select('key');
+        
         const companiesAvatars = companiesAvatarsKey.map(function(item){
-            const avatar = path.resolve(`../../temp/uploads/companies/${item}`);
+            const key = item.key;
+            const avatar = path.resolve(`../../temp/uploads/companies/${key}`);
             return avatar;
         }); 
         return response.json({companies, avatar: companiesAvatars});
