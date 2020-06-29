@@ -6,7 +6,8 @@ import Slider from '../pages/slider/index';
 import SignOption from '../pages/signOption/index';
 import ChooseUser from '../pages/chooseUser/index';
 import SignIn from '../pages/signIn/index';
-import SignUp from '../pages/signUp/index';
+import SignUpPoints from '../pages/discardPoints/signUp';
+
 
 const AppStack = createStackNavigator();
 
@@ -23,10 +24,10 @@ const Routes = () => {
 					}
 				}}>
 				<AppStack.Screen name="Slider" component={Slider} />
-				<AppStack.Screen name="ChooseUser" component={ChooseUser} /> 
 				<AppStack.Screen name="SignOption" component={SignOption} />
+				<AppStack.Screen name="ChooseUser" component={ChooseUser} /> 
 				<AppStack.Screen name="SignIn" component={SignIn} />
-				<AppStack.Screen name="SignUp" component={SignUp} />	
+				<AppStack.Screen name="SignUpPoints" component={SignUpPoints} />
 			</AppStack.Navigator>
 		</NavigationContainer>
 	);
