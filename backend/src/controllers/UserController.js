@@ -25,9 +25,12 @@ module.exports = {
 		const users = await connection('users').select('name', 'email', 'discarts');
 		const [count] = await connection('users').count();
 		res.header('X-Total-Count', count['count']);
-		const usersAvatarsKey = await connection('uploads').select('key');
+		
+		const usersAvatarsKey = await connection('uploads').whereNotNull('user_id').select('key');
+
 		const usersAvatars = usersAvatarsKey.map(function(item){
-			const avatar = path.resolve(`../../temp/uploads/users/${item}`);
+			const key = item.key;
+			const avatar = path.resolve(`../../temp/uploads/users/${key}`);
 			return avatar;
 		}); 
 		return res.json({users, avatar: usersAvatars});
