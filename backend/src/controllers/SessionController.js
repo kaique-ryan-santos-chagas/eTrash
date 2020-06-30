@@ -13,8 +13,8 @@ function generateToken(params = {}){
 module.exports = {
 	
     userCreate: async (req, res) => {
-		const {name, passwordInput, localLat, localLon} = req.body;
-        const userIDDB = await connection('users').where('name', name).select('id').first();
+		const {email, passwordInput, localLat, localLon} = req.body;
+        const userIDDB = await connection('users').where('email', email).select('id').first();
 
 		const passwordDB = await connection('users').where('id', userIDDB.id)
 		.select('password').first();
@@ -39,8 +39,8 @@ module.exports = {
 	},
 
 	companyCreate: async (req, res) => {
-        const {name, passwordInput, localLat, localLon} = req.body;
-        const companyID = await connection('companies').where('name', name).select('id')
+        const {email, passwordInput, localLat, localLon} = req.body;
+        const companyID = await connection('companies').where('email', email).select('id')
         .first();
 
         if (!companyID) {
@@ -66,8 +66,8 @@ module.exports = {
 	},
 
 	pointCreate: async (req, res) => {
-        const {name, passwordInput, localLat, localLon} = req.body;
-        const pointID = await connection('discarts_points').where('name', name).select('id')
+        const {email, passwordInput, localLat, localLon} = req.body;
+        const pointID = await connection('discarts_points').where('email', email).select('id')
         .first();
 
         if (!pointID) {
