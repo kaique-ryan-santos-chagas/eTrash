@@ -64,7 +64,7 @@ const Anddress = () => {
 	}, []);
 
 	useEffect(async () => {
-		const response = await ipApi.get('/json'); 
+	    const response = await ipApi.get('/json'); 
 	    setCountry(response.data.country);
 	    setCity(response.data.city);
 	    setRegion(response.data.region);
