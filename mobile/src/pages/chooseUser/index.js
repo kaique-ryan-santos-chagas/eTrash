@@ -22,53 +22,60 @@ const ChooseUser = () => {
 		Animated.parallel([
 			Animated.timing(imageHeaderOpacity, {
 				toValue: 1,
-				duration: 500
+				duration: 500,
+				useNativeDriver: true
 			}),
 			Animated.spring(showImageHeader.y, {
 				toValue: 0,
 				speed: 1,
-				bounciness: 0
+				bounciness: 0,
+				useNativeDriver: true
 			}),
 			Animated.timing(choiceTextOpacity, {
 				toValue: 1,
-				duration: 1000
+				duration: 1000,
+				useNativeDriver: true
 			}),
 			Animated.spring(showChoiceText.y, {
 				toValue: 0,
 				speed: 1,
-				bounciness: 0
+				bounciness: 0,
+				useNativeDriver: true
 			})
 		]).start();
 	}, []);
 
 	useEffect(() => {
-		Animated.stagger(30, [
+		Animated.stagger(110, [
 			Animated.timing(opacityButtonA, {
 				toValue: 1,
-				duration: 500
+				duration: 500,
+				useNativeDriver: true
 			}),
 			Animated.spring(showButtonA.y, {
 				toValue: 0,
 				speed: 1,
-				
+				useNativeDriver: true
 			}),
 			Animated.timing(opacityButtonB, {
 				toValue: 1,
-				duration: 500
+				duration: 500,
+				useNativeDriver: true
 			}),
 			Animated.spring(showButtonB.y, {
 				toValue: 0,
 				speed: 1,
-				
+				useNativeDriver: true
 			}),
 			Animated.timing(opacityButtonC, {
 				toValue: 1,
-				duration: 500
+				duration: 500,
+				useNativeDriver: true
 			}),
 			Animated.spring(showButtonC.y, {
 				toValue: 0,
 				speed: 1,
-				
+				useNativeDriver: true
 			})
 		]).start();
 	}, []);
@@ -110,7 +117,7 @@ const ChooseUser = () => {
 				 		opacity: opacityButtonB,
 				 		transform: [ {translateY: showButtonB.y } ]
 				 }]}>
-				 	<TouchableOpacity style={styles.pointButton} onPress={() => pointsSignUpScreen()}>
+				 	<TouchableOpacity style={styles.pointButton} onPress={pointsSignUpScreen}>
 				 		<Image 
 				 		style={styles.buttonImage} 
 				 		source={require('../../assets/pictures/point.jpg')} />
@@ -203,7 +210,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#ffffff',
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderWidth: 1.5,
+		borderWidth: 2,
 		borderColor: '#38C172',
 		borderRadius: 10,
 	},
@@ -213,7 +220,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#ffffff',
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderWidth: 1.5,
+		borderWidth: 2,
 		borderColor: '#38C172',
 		borderRadius: 10,
 	},
@@ -223,7 +230,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#ffffff',
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderWidth: 1.5,
+		borderWidth: 2,
 		borderColor: '#38C172',
 		borderRadius: 10,
 	},
