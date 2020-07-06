@@ -27,6 +27,7 @@ routesAuth.get('/companies', CompaniesController.index);
 routesAuth.delete('/companies/delete', CompaniesController.delete);
 routesAuth.post('/companies/scheduling', CompaniesController.scheduling);
 routesAuth.get('/companies/schedule', CompaniesController.schedule);
+routesAuth.delete('/companies/schedule/delete',CompaniesController.scheduleDelete);
 
 routesAuth.post('/point/upload', multer(MulterPoints).single('file'), PointController.upload);
 routesAuth.get('/point', PointController.index);
