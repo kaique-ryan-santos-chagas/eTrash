@@ -23,33 +23,40 @@ const SignOption = () => {
 		Animated.parallel([
 			Animated.timing(logoOpacity, {
 				toValue: 1,
-				duration: 1000
+				duration: 500,
+				useNativeDriver: true
 			}),
 			Animated.spring(showLogo.y, {
 				toValue: 0,
-				speed: 4
+				speed: 1,
+				useNativeDriver: true
 			}),
 			Animated.timing(logoTextOpacity, {
 				toValue: 1,
-				duration: 1000
+				duration: 500,
+				useNativeDriver: true
 			}),
 			Animated.spring(showLogoText.y, {
 				toValue: 0,
-				speed: 4
+				speed: 1,
+				useNativeDriver: true
 			}),
 			Animated.timing(textCentralOpacity, {
 				toValue: 1,
-				duration: 500
+				duration: 500,
+				useNativeDriver: true
 			}),
 			Animated.spring(showTextCentral.y, {
 				toValue: 0,
 				speed: 1,
-				bounciness: 0
+				bounciness: 0,
+				useNativeDriver: true
 			}),
 			Animated.spring(buttonAnim.y, {
 				toValue: 0,
 				speed: 1,
-				bounciness: 0
+				bounciness: 0,
+				useNativeDriver: true
 			})
 		]).start();
 	}, []);
@@ -103,7 +110,7 @@ const SignOption = () => {
 
 				<RectButton style={styles.signInButton} onPress={() => changeScreenToSignIn()}>
 					<View style={styles.buttonIconIn}>
-						<FontAwesomeIcon style={styles.iconIn} icon={ faSignInAlt }/>
+						<FontAwesomeIcon style={styles.iconIn} icon={ faSignInAlt } size={20} />
 					</View>
 					<Text style={styles.textButtonIn}>Entrar</Text>
 				</RectButton>
@@ -215,24 +222,21 @@ const styles = StyleSheet.create({
 
 	iconIn: {
 		color: '#ffffff',
-		height: 50,
-		width: 50,
 	},
 
 	iconUp: {
 		color: '#38c172',
-		height: 50,
-		width: 50,
 	},
 
 	textButtonIn: {
 		color: '#ffffff',
-		fontWeight: 'bold',
+		fontFamily: 'Roboto-Bold',
+		fontSize: 20
 	},
 
 	textButtonUp: {
 		color: '#38c172',
-		fontWeight: 'bold',
+		fontFamily: 'Roboto-Bold',
 	}
 });
 
