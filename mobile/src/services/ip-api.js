@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const ipApi = axios.create({
-	baseURL: 'https://ip-api.com/json'
+	baseURL: 'http://ip-api.com'
 });
 
 export default ipApi;
