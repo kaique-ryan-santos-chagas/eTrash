@@ -7,7 +7,8 @@ import SignOption from '../pages/signOption/index';
 import ChooseUser from '../pages/chooseUser/index';
 import SignIn from '../pages/signIn/index';
 import SignUpPoints from '../pages/discardPoints/signUp';
-
+import Anddress from '../pages/discardPoints/anddress.js';
+import Avatar from '../pages/avatar-upload/index';
 
 const AppStack = createStackNavigator();
 
@@ -28,6 +29,8 @@ const Routes = () => {
 				<AppStack.Screen name="ChooseUser" component={ChooseUser} /> 
 				<AppStack.Screen name="SignIn" component={SignIn} />
 				<AppStack.Screen name="SignUpPoints" component={SignUpPoints} />
+				<AppStack.Screen name="Anddress" component={Anddress} />
+				<AppStack.Screen name="Avatar" component={Avatar} />
 			</AppStack.Navigator>
 		</NavigationContainer>
 	);
