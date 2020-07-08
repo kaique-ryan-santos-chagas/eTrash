@@ -125,8 +125,8 @@ const Anddress = () => {
 				<FontAwesomeIcon style={styles.numberIcon} icon={ faSortNumericUp } size={20} />
 				<TouchableOpacity style={styles.nextButton} 
 				onPress={() => {				
-					if(street != null || street != ''){
-						navigation.navigate('Avatar', {
+					if(street != null && street != ''){
+						navigation.navigate('DiscardMain', {
 							usernameInput: route.params.usernameInput,
 							passwordInput: route.params.passwordInput,
 							streetInput: street,
