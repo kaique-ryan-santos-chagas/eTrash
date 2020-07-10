@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, 
 	     Text, 
 	     StyleSheet, 
 	     Animated,
-	     TouchableOpacity } from 'react-native';
+	     TouchableOpacity,
+	     ScrollView,
+	     TextInput } from 'react-native';
 
-
+import { RectButton } from 'react-native-gesture-handler';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPlus, faTrash, faRecycle } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrash, faRecycle, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -16,8 +18,11 @@ const DiscardMain = () => {
 	
 	const navigation = useNavigation();
 	const route = useRoute();
+	const inputField = useRef(null);
 
-	const [countList, setCountList] = useState(0);
+	const [discards, setDiscards] = useState([{name: 'Computer'}, {name: 'Batery'}]);
+	const [countList, setCountList] = useState(discards.length);
+	const [discardInput, setDiscardInput] = useState();
 
 	return (
 		<View style={styles.container}> 
@@ -32,17 +37,42 @@ const DiscardMain = () => {
 				<Text style={styles.listCount}>Lista com {countList} itens</Text>
 			</View>
 			<View style={styles.centralContainer}>
-				<View style={styles.list}>
-					
+				<View style={styles.list}> 
+				<ScrollView style={styles.scroll} horizontal={true}>
+					<RectButton style={styles.readyBtn} onPress={() => {}} >
+						<FontAwesomeIcon style={styles.readyIcon} icon={ faCheck } size={25} />
+						<Text style={styles.readyText}>Pronto</Text>
+					</RectButton> 
+					{discards.map(function(item){
+						return (
+							<View style={styles.discardItem}>
+								<Text style={styles.itemName}>{item.name}</Text>
+							</View>
+						);
+					})
+					}
+				</ScrollView>
 				</View>
 			</View>
 		
 			<View style={styles.footer}> 
 				<TouchableOpacity style={styles.plusButton} 
-				onPress={() => {}}>
+				onPress={() => {
+					if(discardInput != '' && discardInput != null){
+						discards.push({name: discardInput});
+						setCountList(discards.length);
+						console.log(discards);
+					}
+				}}>
 					<FontAwesomeIcon style={styles.plusIcon} icon={ faPlus } size={22} />
 				</TouchableOpacity>
-			
+				<TextInput 
+					style={styles.input}
+					value={discardInput}
+					onChangeText={text => setDiscardInput(text)}
+					placeholder="Adicione sua coleta aqui"
+					ref={inputField}
+				/>
 			</View>
 		</View>
 	);	
@@ -139,6 +169,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		borderBottomLeftRadius: 180,
 		borderTopRightRadius: 100,
+		padding: 100
 		
 	},
 	plusButton: {
@@ -163,8 +194,56 @@ const styles = StyleSheet.create({
 		bottom: 0,
 		position: 'absolute',
 		backgroundColor: '#ffffff',
-	
+		borderTopLeftRadius: 200
 	},
+	readyBtn: {
+		width: 100,
+		height: 100,
+		backgroundColor: 'white',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 200,
+		left: 0,
+		position: 'absolute',
+		marginLeft: 10
+	},
+	readyText: {
+		color: '#38c172',
+		fontFamily: 'Roboto-Bold',
+		fontSize: 15,
+		marginTop: 10
+	},
+	readyIcon: {
+		color: '#38c172'
+	},
+	input: {
+		width: 250, 
+		height: 50,
+		borderWidth: 2,
+		borderColor: '#38c172',
+		marginRight: 60,
+		borderRadius: 200,
+		paddingLeft: 20
+	},
+	scroll: {
+		width: 280,
+		height: 300,
+		marginHorizontal: 20,
+		paddingHorizontal: 30
+
+	},
+	discardItem: {
+		width: 100,
+		height: 90,
+		backgroundColor: 'white',
+		borderWidth: 2,
+		borderColor: '#38c172',
+	},
+	itemName: {
+		color: 'black',
+		fontSize: 15,
+		fontFamily: 'Roboto-Bold'
+	}
 });
 
 
