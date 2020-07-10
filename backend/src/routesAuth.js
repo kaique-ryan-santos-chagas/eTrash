@@ -8,6 +8,7 @@ const UserController = require('./controllers/UserController');
 const PointController = require('./controllers/PointController');
 const DiscartController = require('./controllers/DiscartController');
 const ProfileController = require('./controllers/ProfileController');
+const botController = require('./watson chat/botController');
 
 const authMiddleware = require('./middlewares/auth');
 const MulterUsers = require('./config/MulterUsers');
@@ -44,5 +45,7 @@ routesAuth.get('/profile/company', ProfileController.companyProfile);
 routesAuth.post('/profile/company/avatar', multer(MulterCompanies).single('file'), ProfileController.updateCompanyAvatar);
 routesAuth.get('/profile/point', ProfileController.pointProfile);
 routesAuth.post('/profile/point/avatar', multer(MulterPoints).single('file'), ProfileController.updatePointAvatar);
+
+routesAuth.post('/watson/send',botController.sendChat);
 
 module.exports = routesAuth;
