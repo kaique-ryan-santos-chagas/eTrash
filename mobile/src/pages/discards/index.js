@@ -10,7 +10,7 @@ import { View,
 import { RectButton } from 'react-native-gesture-handler';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPlus, faTrash, faRecycle, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrash, faRecycle, faCheck, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -32,13 +32,17 @@ const DiscardMain = () => {
 				<FontAwesomeIcon style={styles.titleIcon} icon={ faRecycle } size={25} /> 
 				<Text style={styles.title}>Sua Coleta</Text>
 			</View>
-			<View style={styles.central}>
-				<FontAwesomeIcon style={styles.trashIcon} icon={ faTrash } /> 
-				<Text style={styles.listCount}>Lista com {countList} itens</Text>
-			</View>
-			<View style={styles.centralContainer}>
 				<View style={styles.list}> 
-				<ScrollView style={styles.scroll} horizontal={true}>
+					<View style={styles.central}>
+						<FontAwesomeIcon style={styles.trashIcon} icon={ faTrash } /> 
+						<Text style={styles.listCount}>Lista com {countList} itens</Text>
+					</View>
+					
+					<ScrollView style={styles.scroll} 
+						horizontal={true} 
+						showsHorizontalScrollIndicator={false}
+						contentContainerStyle={{paddingHorizontal: 110}}
+					>
 					<RectButton style={styles.readyBtn} onPress={() => {}} >
 						<FontAwesomeIcon style={styles.readyIcon} icon={ faCheck } size={25} />
 						<Text style={styles.readyText}>Pronto</Text>
@@ -51,9 +55,9 @@ const DiscardMain = () => {
 						);
 					})
 					}
-				</ScrollView>
+					</ScrollView>
 				</View>
-			</View>
+
 		
 			<View style={styles.footer}> 
 				<TouchableOpacity style={styles.plusButton} 
@@ -61,7 +65,7 @@ const DiscardMain = () => {
 					if(discardInput != '' && discardInput != null){
 						discards.push({name: discardInput});
 						setCountList(discards.length);
-						console.log(discards);
+						
 					}
 				}}>
 					<FontAwesomeIcon style={styles.plusIcon} icon={ faPlus } size={22} />
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#38c172'
+		
 	},
 	header: {
 		top: 0,
@@ -102,8 +106,8 @@ const styles = StyleSheet.create({
 		top: 0,
 		position: 'absolute',
 		width: 400,
-		height: 190,
-		backgroundColor: '#ffffff',
+		height: 150,
+		backgroundColor: 'white',
 		justifyContent: 'center',
 		alignItems: 'center',
 	
@@ -112,26 +116,26 @@ const styles = StyleSheet.create({
 		fontSize: 25,
 		fontFamily: 'Roboto-Bold',
 		color: 'black',
-		marginRight: 70,
 		marginTop: 40
 	},
 	titleIcon: {
 		color: 'black',
 		bottom: 0,
 		left: 0,
-		marginLeft: 70,
+		marginLeft: 100,
 		marginBottom: 40,
 		position: 'absolute',
 	},
 	central: {
 		width: 380,
-		height: 100,
-		marginTop: 70,
+		height: 80,
 		backgroundColor: '#ffffff',
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderBottomLeftRadius: 200,
-		borderBottomRightRadius: 200
+		
+		top: 0,
+		position: 'absolute',
 
 	},
 	trashIcon: {
@@ -147,30 +151,20 @@ const styles = StyleSheet.create({
 		top: 0,
 		left: 0,
 		position: 'absolute',
-		marginTop: 60,
+		marginTop: 40,
 		marginLeft: 120,
 		color: 'black',
 	},
-	centralContainer: {
-		width: 380,
-		height: 300,
-		backgroundColor: 'white',
-		marginTop: 0,
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderBottomLeftRadius: 180,
-	},
+
 	list: {
 		width: 380,
-		height: 280,
+		height: 370,
 		backgroundColor: '#38c172',
-		marginTop: 0,
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderBottomLeftRadius: 180,
-		borderTopRightRadius: 100,
-		padding: 100
-		
+		borderBottomLeftRadius: 100,
+		padding: 100,
+		marginTop: 50
 	},
 	plusButton: {
 		justifyContent: 'center',
@@ -226,23 +220,28 @@ const styles = StyleSheet.create({
 		paddingLeft: 20
 	},
 	scroll: {
-		width: 280,
+		flex: 1,
+		width: 400,
 		height: 300,
-		marginHorizontal: 20,
-		paddingHorizontal: 30
-
+		paddingLeft: 50, 
+		marginTop: 20
 	},
 	discardItem: {
-		width: 100,
-		height: 90,
+		width: 150,
+		height: 150,
 		backgroundColor: 'white',
 		borderWidth: 2,
 		borderColor: '#38c172',
+		borderRadius: 20,
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginLeft: 20 
 	},
 	itemName: {
 		color: 'black',
 		fontSize: 15,
-		fontFamily: 'Roboto-Bold'
+		fontFamily: 'Roboto-Bold',
+		marginRight: 15
 	}
 });
 
