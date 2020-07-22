@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-	baseURL: 'https://e-trash.herokuapp.com'
+	baseURL: 'http://10.0.0.8:3001'
 });
 
 export default api;
