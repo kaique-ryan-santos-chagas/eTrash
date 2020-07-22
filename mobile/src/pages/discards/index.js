@@ -11,8 +11,8 @@ import { RectButton } from 'react-native-gesture-handler';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPlus, faTrash, faRecycle, faCheck, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-
-
+import AsyncStorage from '@react-native-community/async-storage';
+import api from '../../services/api';
 
 const DiscardMain = () => {
 	
@@ -20,10 +20,13 @@ const DiscardMain = () => {
 	const route = useRoute();
 	const inputField = useRef(null);
 
-	const [discards, setDiscards] = useState([{name: 'Computer'}, {name: 'Batery'}]);
+	const [discards] = useState([]);
 	const [countList, setCountList] = useState(discards.length);
 	const [discardInput, setDiscardInput] = useState();
+	const [newDiscard, setNewDiscard] = useState(false);
 
+
+		
 	return (
 		<View style={styles.container}> 
 			<View style={styles.whiteHeader}>
@@ -43,14 +46,45 @@ const DiscardMain = () => {
 						showsHorizontalScrollIndicator={false}
 						contentContainerStyle={{paddingHorizontal: 110}}
 					>
-					<RectButton style={styles.readyBtn} onPress={() => {}} >
+					<RectButton style={styles.readyBtn} onPress={() => {
+						api.post('/point/create', {
+							name: route.params.usernameInput,
+							passwordInput: route.params.passwordInput,
+							discarts: discards,
+							rua: route.params.streetInput,
+							numero: route.params.numberInput,
+							country: route.params.localCountry,
+							city: route.params.localCity,
+							region: route.params.localRegion,
+							latitude: route.params.localLatitude,
+							longitude: route.params.localLongitude
+
+						})
+						.then(function(response){
+							console.log(response);
+						})
+						.catch(function(error){
+							console.log(error);
+						});
+					}} >
 						<FontAwesomeIcon style={styles.readyIcon} icon={ faCheck } size={25} />
 						<Text style={styles.readyText}>Pronto</Text>
 					</RectButton> 
 					{discards.map(function(item){
 						return (
-							<View style={styles.discardItem}>
-								<Text style={styles.itemName}>{item.name}</Text>
+							<View 
+							style={styles.discardItem}>
+								<TouchableOpacity 
+								style={styles.deleteItemButton}
+								onPress={() => {
+									const discardPosition = discards.indexOf(item);
+									discards.splice(discardPosition, 1);
+									setCountList(discards.length);
+									
+								}}>
+									<Text style={styles.deleteItemText}>x</Text>
+								</TouchableOpacity>
+								<Text style={styles.itemName}>{item}</Text>
 							</View>
 						);
 					})
@@ -63,8 +97,9 @@ const DiscardMain = () => {
 				<TouchableOpacity style={styles.plusButton} 
 				onPress={() => {
 					if(discardInput != '' && discardInput != null){
-						discards.push({name: discardInput});
+						discards.unshift(discardInput);
 						setCountList(discards.length);
+						inputField.current.clear();
 						
 					}
 				}}>
@@ -206,6 +241,22 @@ const styles = StyleSheet.create({
 		fontFamily: 'Roboto-Bold',
 		fontSize: 15,
 		marginTop: 10
+	},
+	deleteItemButton: {
+		top: 0,
+		right: 0,
+		position: 'absolute',
+		width: 40,
+		height: 30,
+	
+	},
+	deleteItemText: {
+		color: '#38c172',
+		fontSize: 20,
+		right: 0,
+		position: 'absolute',
+		marginRight: 15,
+		marginTop: 5
 	},
 	readyIcon: {
 		color: '#38c172'
