@@ -23,19 +23,35 @@ const DiscardMain = () => {
 	const [discards] = useState([]);
 	const [countList, setCountList] = useState(discards.length);
 	const [discardInput, setDiscardInput] = useState();
-	const [newDiscard, setNewDiscard] = useState(false);
+	const [titleOpacity] = useState(new Animated.Value(0));
+	const [showTitle] = useState(new Animated.ValueXY({x: 0, y: 80}));
 
-
+	useEffect(() => {
+		Animated.parallel([
+			Animated.timing(titleOpacity, {
+				toValue: 1,
+				duration: 1000,
+				useNativeDriver: true,
+				bounciness: 0
+			}),
+			Animated.spring(showTitle.y, {
+				toValue: 0,
+				speed: 1,
+				useNativeDriver: true, 
+				bounciness: 0
+			})
+		]).start();
+	}, []);
 		
 	return (
 		<View style={styles.container}> 
 			<View style={styles.whiteHeader}>
 			</View>
-			<View style={styles.header}>
+			<Animated.View style={[styles.header, { opacity: titleOpacity, transform: [{ translateY: showTitle.y }] }]}>
 				<FontAwesomeIcon style={styles.titleIcon} icon={ faRecycle } size={25} /> 
 				<Text style={styles.title}>Sua Coleta</Text>
-			</View>
-				<View style={styles.list}> 
+			</Animated.View>
+				<Animated.View style={[styles.list, { opacity: titleOpacity, transform: [{ translateY: showTitle.y }] }]}> 
 					<View style={styles.central}>
 						<FontAwesomeIcon style={styles.trashIcon} icon={ faTrash } /> 
 						<Text style={styles.listCount}>Lista com {countList} itens</Text>
@@ -46,22 +62,23 @@ const DiscardMain = () => {
 						showsHorizontalScrollIndicator={false}
 						contentContainerStyle={{paddingHorizontal: 110}}
 					>
-					<RectButton style={styles.readyBtn} onPress={() => {
-						api.post('/point/create', {
-							name: route.params.usernameInput,
-							passwordInput: route.params.passwordInput,
-							discarts: discards,
-							rua: route.params.streetInput,
-							numero: route.params.numberInput,
-							country: route.params.localCountry,
-							city: route.params.localCity,
-							region: route.params.localRegion,
-							latitude: route.params.localLatitude,
-							longitude: route.params.localLongitude
+					<RectButton style={styles.readyBtn} onPress={async () => {
+						await api.post('/point/create', {
+								name: route.params.usernameTextInput,
+								passwordInput: route.params.passwordTextInput,
+								discarts: discards,
+								rua: route.params.streetInput,
+								numero: route.params.numberInput,
+								country: route.params.localCountry,
+								city: route.params.localCity,
+								region: route.params.localRegion,
+								latitude: route.params.localLatitude,
+								longitude: route.params.localLongitude
 
 						})
 						.then(function(response){
-							console.log(response);
+							console.log(response.data);
+							navigation.navigate('Avatar');
 						})
 						.catch(function(error){
 							console.log(error);
@@ -90,10 +107,10 @@ const DiscardMain = () => {
 					})
 					}
 					</ScrollView>
-				</View>
+				</Animated.View>
 
 		
-			<View style={styles.footer}> 
+			<Animated.View style={[styles.footer, { opacity: titleOpacity, transform: [{ translateY: showTitle.y }] }]}> 
 				<TouchableOpacity style={styles.plusButton} 
 				onPress={() => {
 					if(discardInput != '' && discardInput != null){
@@ -112,7 +129,7 @@ const DiscardMain = () => {
 					placeholder="Adicione sua coleta aqui"
 					ref={inputField}
 				/>
-			</View>
+			</Animated.View>
 		</View>
 	);	
 }
