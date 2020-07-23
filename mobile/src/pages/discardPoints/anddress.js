@@ -127,8 +127,8 @@ const Anddress = () => {
 				onPress={() => {				
 					if(street != null && street != ''){
 						navigation.navigate('DiscardMain', {
-							usernameInput: route.params.usernameInput,
-							passwordInput: route.params.passwordInput,
+							usernameTextInput: route.params.usernameTextInput,
+							passwordTextInput: route.params.passwordTextInput,
 							streetInput: street,
 							numberInput: number,
 							localCountry: country,

@@ -115,8 +115,8 @@ const SignUpPoint = () => {
 				onPress={() => {				
 					if(username != null && password != null && username != '' && password != ''){
 						navigation.navigate('Anddress', {
-					  		usernameInput: username,
-					  		passwordInput: password
+					  		usernameTextInput: username,
+					  		passwordTextInput: password
 					  	});
 					}
 					 
