@@ -22,8 +22,8 @@ function generateToken(params = {}){
 module.exports = {
     index: async (request, response) => {
         const points = await connection('discarts_points').select('name','rua','numero','numero','discarts','country','city','region');
-        const [count] = await connection('companies').count();
-        response.header('Total-Companies-Count', count['count']);
+        const [count] = await connection('disacrat_points').count();
+        response.header('Total-Points-Count', count['count']);
 
         const pointsAvatarsKey = await connection('uploads').whereNotNull('point_id').select('key');
 
