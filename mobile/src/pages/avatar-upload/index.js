@@ -1,24 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View,  StyleSheet, Animated } from 'react-native';
 
 import { useRoute, useNavigation } from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
 
 const Avatar = () => {
 
 	const navigation = useNavigation();
 	const route = useRoute();
 
+	//Terminar fluxo de animação
+
 	return(
 		<View style={styles.container}>
-			<Text>{route.params.usernameInput}</Text>
-			<Text>{route.params.passwordInput}</Text>
-			<Text>{route.params.streetInput}</Text>
-			<Text>{route.params.numberInput}</Text>
-			<Text>{route.params.localCountry}</Text>
-			<Text>{route.params.localCity}</Text>
-			<Text>{route.params.localRegion}</Text>
-			<Text>{route.params.localLatitude}</Text>
-			<Text>{route.params.localLongitude}</Text>
+			<LottieView style={styles.readyAnimation} source={require('../../assets/animations/ready.json')} autoPlay loop />
 		</View>
 	);
 }
@@ -27,7 +22,11 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		backgroundColor: '#38c172'
+	},
+	readyAnimation: {
+		width: 100
 	}
 });
 
