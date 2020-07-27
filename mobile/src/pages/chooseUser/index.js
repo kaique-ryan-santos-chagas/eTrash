@@ -80,9 +80,6 @@ const ChooseUser = () => {
 		]).start();
 	}, []);
 
-	function pointsSignUpScreen(){
-		navigation.navigate('SignUpPoints');
-	}
 
 	return (
 		<View style={styles.container}>
@@ -105,7 +102,7 @@ const ChooseUser = () => {
 				 		transform: [ {translateY: showButtonA.y } ]
 				 }]}>
 				 	<TouchableOpacity 
-				 	style={styles.companyButton} onPress={() => {}}>
+				 	style={styles.companyButton} onPress={() => navigation.navigate('SignUpCompany')}>
 				 		<Image 
 				 		style={styles.buttonImage} 
 				 		source={require('../../assets/pictures/company.jpg')} />
@@ -117,7 +114,7 @@ const ChooseUser = () => {
 				 		opacity: opacityButtonB,
 				 		transform: [ {translateY: showButtonB.y } ]
 				 }]}>
-				 	<TouchableOpacity style={styles.pointButton} onPress={pointsSignUpScreen}>
+				 	<TouchableOpacity style={styles.pointButton} onPress={() => navigation.navigate('SignUpPoints')}>
 				 		<Image 
 				 		style={styles.buttonImage} 
 				 		source={require('../../assets/pictures/point.jpg')} />
@@ -129,7 +126,7 @@ const ChooseUser = () => {
 				 		opacity: opacityButtonC,
 				 		transform: [ {translateY: showButtonC.y } ]
 				 }]}>
-				 	<TouchableOpacity style={styles.userButton} onPress={() => {}}>
+				 	<TouchableOpacity style={styles.userButton} onPress={() => navigation.navigate('SignUpUser')}>
 				 		<Image 
 				 		style={styles.buttonImage} 
 				 		source={require('../../assets/pictures/userImage.jpg')} />
