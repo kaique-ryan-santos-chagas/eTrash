@@ -109,9 +109,9 @@ const SignUpUser = () => {
 				<FontAwesomeIcon style={styles.passwordIcon} icon={ faLock } size={20} />
 				<TouchableOpacity style={styles.nextButton} 
 				onPress={() => {				
-					if(cnpj != null && password != null && cnpj != '' && password != ''){
-						navigation.navigate('Anddress', {
-					  		cnpjTextInput: cnpj,
+					if(username != null && password != null && username != '' && password != ''){
+						navigation.navigate('UserEmail', {
+					  		usernameTextInput: username,
 					  		passwordTextInput: password
 					  	});
 					}
