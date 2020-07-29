@@ -6,8 +6,9 @@ const path = require('path');
 
 module.exports = {
 	userCreate: async (req, res) => {
-		const { name, userDiscarts } = req.body;
-		const userIDDB = await connection('users').where('name', name)
+		const id = req.headers.identification;
+		const { userDiscarts } = req.body;
+		const userIDDB = await connection('users').where('id', id)
 		.select('id').first();
 
 		if(!userIDDB){
