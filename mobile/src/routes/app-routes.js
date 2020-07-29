@@ -12,6 +12,7 @@ import Avatar from '../pages/avatar-upload/index';
 import DiscardMain from '../pages/discards/index';
 import SignUpCompany from '../pages/companies/signUp';
 import SignUpUser from '../pages/users/signUp';
+import UserEmail from '../pages/users/email';
 
 const AppStack = createStackNavigator();
 
@@ -36,6 +37,7 @@ const Routes = () => {
 				<AppStack.Screen name="DiscardMain" component={DiscardMain} />
 				<AppStack.Screen name="SignUpCompany" component={SignUpCompany} />
 				<AppStack.Screen name="SignUpUser" component={SignUpUser} />
+				<AppStack.Screen name="UserEmail" component={UserEmail} />
 			</AppStack.Navigator>
 		</NavigationContainer>
 	);
