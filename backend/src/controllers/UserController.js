@@ -60,7 +60,7 @@ module.exports = {
 			latitude,
 			longitude
 		});
-		return res.json({'Bem-Vindo': name, id: id,  token: generateToken({id: id})});
+		return res.json({welcome: `Bem vindo(a) ${name}`, id: id,  token: generateToken({id: id})});
 	},
 
 	delete: async (req, res) => {
