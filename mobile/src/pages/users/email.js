@@ -17,7 +17,7 @@ import LottieView from 'lottie-react-native';
 import useKeyboard from '@rnhooks/keyboard';
 import ipApi from '../../services/ip-api';
 import api from '../../services/api';
-import AsyncStorage from '@react-native-community/async-storage';
+
 
 const UserEmail = () => {
 
@@ -118,7 +118,7 @@ const UserEmail = () => {
 						await api.post('/users/create', {
 							name: route.params.usernameTextInput,
 							email: email,
-							password: route.params.passwordTextInput,
+							passwordInput: route.params.passwordTextInput,
 							country: country,
 							city: city,
 							region: region,
@@ -127,9 +127,11 @@ const UserEmail = () => {
 						})
 
 						.then(function(response){
-							console.log(response.data);
 							navigation.navigate('Avatar', {
-								user: 'user'
+								user: 'user',
+								welcome: response.data.welcome,
+								id: response.data.id,
+								token: response.data.token
 							});
 						})
 
@@ -154,7 +156,7 @@ const UserEmail = () => {
 					source={require('../../assets/animations/robot.json')}
 					autoPlay loop /> 
 
-					<Text style={[styles.textFooter, footerDisplay]}>Lembre-se sua localizão é importante{'\n'}para que pessoas te encontrem</Text>
+					<Text style={[styles.textFooter, footerDisplay]}>Estou aqui para te ajudar com seus{'\n'}resíduos eletrônicos.</Text>
 			</Animated.View>
 		  </View>
 		
@@ -322,7 +324,7 @@ const styles = StyleSheet.create({
 		color: '#ffffff',
 		fontSize: 15,
 		fontFamily: 'Roboto-Italic',
-		marginLeft: 60,
+		marginLeft: 40,
 		marginTop: 40
 		
 	}
