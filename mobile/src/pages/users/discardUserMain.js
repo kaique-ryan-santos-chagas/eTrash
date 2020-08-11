@@ -77,7 +77,6 @@ const DiscardMain = () => {
 
 						})
 						.then(function(response){
-							console.log(response.data);
 							navigation.navigate('Avatar');
 						})
 						.catch(function(error){
