@@ -8,7 +8,7 @@ import { faArrowRight, faArrowLeft, faCheck } from '@fortawesome/free-solid-svg-
 
 import LottieView from 'lottie-react-native';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-community/async-storage';
+
 
 
 const slides = [
@@ -56,7 +56,7 @@ const slides = [
 
 
 const Slider = () => {
-  
+
   const navigation = useNavigation();
 
   _renderItem = ({ item }) => {
