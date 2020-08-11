@@ -15,7 +15,7 @@ import { faArrowLeft,
 		 faUser } from '@fortawesome/free-solid-svg-icons';
 
 import { useNavigation } from '@react-navigation/native';
-import api from '../../services/api';
+
 
 const SignUpUser = () => {
 
