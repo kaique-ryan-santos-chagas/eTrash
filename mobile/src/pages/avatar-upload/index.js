@@ -10,7 +10,9 @@ const Avatar = () => {
 	const navigation = useNavigation();
 	const route = useRoute();
 
-	const [AnimProgress, setProgress] = useState(new Animated.Value(0));
+	const [AnimProgress] = useState(new Animated.Value(0));
+	const [endAnim] = useState(new Animated.Value(1));
+	const [hideAnim] = useState(new Animated.ValueXY({x: 0, y: 0}));
 
 	useEffect( async () => {
 		try {
@@ -27,8 +29,28 @@ const Avatar = () => {
 	useEffect(() => {
 		Animated.timing(AnimProgress, {
 			toValue: 1,
-			duration: 3000
+			duration: 2000,
+			useNativeDriver: true
 		}).start();
+	}, []);
+
+	function hideAnimation(){
+		Animated.parallel([
+			Animated.spring(hideAnim.y, {
+				toValue: -100,
+				speed: 4,
+				useNativeDriver: true
+			}),
+			Animated.timing(endAnim, {
+				toValue: 0,
+				duration: 500,
+				useNativeDriver: true
+			})
+		]).start();
+	}
+
+	useEffect(() => {
+		setTimeout(hideAnimation, 2000);
 	}, []);
 
 	//Terminar fluxo de animação
@@ -36,8 +58,10 @@ const Avatar = () => {
 	return(
 		<View style={styles.container}>
 			<StatusBar backgroundColor="#38c172" barStyle="light-content" />
-			<LottieView style={styles.readyAnimation} progress={AnimProgress} source={require('../../assets/animations/ready.json')} />
-			<Text style={styles.welcome}>{route.params.welcome}</Text>
+			<Animated.View style={[styles.centerAnimation, { opacity: endAnim, transform: [ { translateY: hideAnim.y } ] }]}>
+				<LottieView style={styles.readyAnimation} progress={AnimProgress} source={require('../../assets/animations/ready.json')} />
+				<Text style={styles.welcome}>{route.params.welcome}</Text>
+			</Animated.View>
 		</View>
 	);
 }
@@ -49,8 +73,13 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: '#38c172'
 	},
+	centerAnimation: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: 'transparent'
+	},
 	readyAnimation: {
-		width: 100
+		width: 100,
 	},
 	welcome: {
 		color: 'white',
