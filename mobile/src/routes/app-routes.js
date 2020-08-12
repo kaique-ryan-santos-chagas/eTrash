@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -19,6 +19,14 @@ import AsyncStorage from '@react-native-community/async-storage';
 const AppStack = createStackNavigator();
 
 const Routes = () => {
+
+	useEffect( async () => {
+		try {
+			await AsyncStorage.clear();
+		}catch (e) {
+			console.log(e);
+		}
+	}, []);
 
 	return (
 		<NavigationContainer>
