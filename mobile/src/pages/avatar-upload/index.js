@@ -29,7 +29,7 @@ const Avatar = () => {
 	useEffect(() => {
 		Animated.timing(AnimProgress, {
 			toValue: 1,
-			duration: 2000,
+			duration: 3000,
 			useNativeDriver: true
 		}).start();
 	}, []);
@@ -50,10 +50,10 @@ const Avatar = () => {
 	}
 
 	useEffect(() => {
-		setTimeout(hideAnimation, 2000);
+		setTimeout(hideAnimation, 3000);
 	}, []);
 
-	//Terminar fluxo de animação
+	
 
 	return(
 		<View style={styles.container}>
