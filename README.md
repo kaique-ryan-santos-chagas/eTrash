@@ -4,7 +4,8 @@
 
 # `E-Trash`
 
-<img src="https://user-images.githubusercontent.com/59677362/90438223-04559080-e0aa-11ea-88bd-86f3c49bdfaa.png" width=200 /><p align="center">
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/59677362/90438223-04559080-e0aa-11ea-88bd-86f3c49bdfaa.png" width=200 />
   <img src="https://user-images.githubusercontent.com/59677362/90438517-75954380-e0aa-11ea-994c-69defdb19555.png" width=200 />
 </p>
 
