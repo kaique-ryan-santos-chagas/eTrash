@@ -37,6 +37,15 @@ const UserEmail = () => {
 	const navigation = useNavigation();
 	const route = useRoute();
 	const input1 = useRef(null);
+
+	useEffect( async () => {
+		const response = await ipApi.get('/json'); 
+	    setCountry(response.data.country);
+	    setCity(response.data.city);
+	   	setRegion(response.data.region);
+	    setLatitude(response.data.lat);
+	   	setLongitude(response.data.lon);
+	}, []);
 	
 
 	useEffect(() => {
@@ -62,15 +71,6 @@ const UserEmail = () => {
 				useNativeDriver: true
 			})
 		]).start();
-	}, []);
-
-	useEffect(async () => {
-	    const response = await ipApi.get('/json'); 
-	    setCountry(response.data.country);
-	    setCity(response.data.city);
-	    setRegion(response.data.region);
-	    setLatitude(response.data.lat);
-	    setLongitude(response.data.lon);
 	}, []);
 	
 
@@ -107,37 +107,26 @@ const UserEmail = () => {
 					placeholder="Seu melhor Email"
 					keyboardType="email-address"
 					placeholderTextColor="black"
-					returnKeyType={'next'}
 					autoCapitalize={'none'}
 					ref={input1}
 				/>
 				<FontAwesomeIcon style={styles.emailIcon} icon={ faEnvelope } size={20} />
 				<TouchableOpacity style={styles.nextButton} 
-				onPress={ async () => {
+				onPress={() => {
 					if(email != null && email != ''){
-						await api.post('/users/create', {
+						navigation.navigate('LoadingSignUp', {
+							user: 'user',
 							name: route.params.usernameTextInput,
+							password: route.params.passwordTextInput,
 							email: email,
-							passwordInput: route.params.passwordTextInput,
 							country: country,
 							city: city,
 							region: region,
 							latitude: latitude,
-							longitude: longitude
-						})
-
-						.then(function(response){
-							navigation.navigate('Avatar', {
-								user: 'user',
-								welcome: response.data.welcome,
-								id: response.data.id,
-								token: response.data.token
-							});
-						})
-
-						.catch(function(error){
-							console.log(error);
+							longitude: longitude,
+							
 						});
+					
 
 					}
 					
