@@ -63,26 +63,20 @@ const DiscardMain = () => {
 						contentContainerStyle={{paddingHorizontal: 110}}
 					>
 					<RectButton style={styles.readyBtn} onPress={async () => {
-						await api.post('/point/create', {
-								name: route.params.usernameTextInput,
-								passwordInput: route.params.passwordTextInput,
-								discarts: discards,
-								rua: route.params.streetInput,
-								numero: route.params.numberInput,
-								country: route.params.localCountry,
-								city: route.params.localCity,
-								region: route.params.localRegion,
-								latitude: route.params.localLatitude,
-								longitude: route.params.localLongitude
-
-						})
-						.then(function(response){
-							console.log(response.data);
-							navigation.navigate('Avatar');
-						})
-						.catch(function(error){
-							console.log(error);
-						});
+						navigation.navigate('LoadingSignUp', {
+							name: route.params.usernameTextInput,
+							passwordInput: route.params.passwordTextInput,
+							discarts: discards,
+							rua: route.params.streetInput,
+							numero: route.params.numberInput,
+							country: route.params.localCountry,
+							city: route.params.localCity,
+							region: route.params.localRegion,
+							latitude: route.params.localLatitude,
+							longitude: route.params.localLongitude,
+							user: route.params.user
+						});	
+						
 					}} >
 						<FontAwesomeIcon style={styles.readyIcon} icon={ faCheck } size={25} />
 						<Text style={styles.readyText}>Pronto</Text>
