@@ -65,7 +65,7 @@ module.exports = {
         });
         
         return response.json({
-            sucess: "Ponto registrado com sucesso!",
+            welcome: "Bem-vindo (a) Ponto de Coleta",
             id: id,
             token: generateToken({id: id})
         });
