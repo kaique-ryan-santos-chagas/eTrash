@@ -135,7 +135,8 @@ const Anddress = () => {
 							localCity: city,
 							localRegion: region,
 							localLatitude: latitude,
-							localLongitude: longitude
+							localLongitude: longitude,
+							user: 'discardPoint'
 						});
 					}
 					 
