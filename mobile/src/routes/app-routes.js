@@ -13,6 +13,7 @@ import DiscardMain from '../pages/discards/index';
 import SignUpCompany from '../pages/companies/signUp';
 import SignUpUser from '../pages/users/signUp';
 import UserEmail from '../pages/users/email';
+import LoadingSignUp from '../pages/loadingPages/loadingSignUp';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -48,6 +49,7 @@ const Routes = () => {
 				<AppStack.Screen name="SignUpCompany" component={SignUpCompany} />
 				<AppStack.Screen name="SignUpUser" component={SignUpUser} />
 				<AppStack.Screen name="UserEmail" component={UserEmail} />
+				<AppStack.Screen name="LoadingSignUp" component={LoadingSignUp} />
 			</AppStack.Navigator>
 		</NavigationContainer>
 	);
