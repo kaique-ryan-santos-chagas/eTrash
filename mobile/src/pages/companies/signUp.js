@@ -28,6 +28,7 @@ const SignUpCompany = () => {
 	const [centralViewOpacity] = useState(new Animated.Value(0));
 	const [cnpj, setCnpj] = useState();
 	const [password, setPassword] = useState();
+	const [collector, setCollector] = useState();
 	const [country, setCountry] = useState();
 	const [city, setCity] = useState();
 	const [region, setRegion] = useState();
@@ -123,19 +124,31 @@ const SignUpCompany = () => {
 				/>
 				<FontAwesomeIcon style={styles.passwordIcon} icon={ faLock } size={20} />
 				<TouchableOpacity style={styles.nextButton} 
-				onPress={() => {				
+				onPress={ async () => {				
 					if(cnpj != null && password != null && cnpj != '' && password != ''){
-						getLocalization();
-						navigation.navigate('Avatar', {
-					  		cnpjTextInput: cnpj,
-					  		passwordTextInput: password,
-					  		country: country,
-					  		city: city,
-					  		region: region,
-					  		latitude: latitude,
-					  		longitude: longitude,
-					  		user: 'company'
-					  	});
+						await getLocalization();
+						await api.post('/companies/create', {
+							cnpj: cnpj,
+							passwordInput: password,
+							collector: collector,
+							country: country,
+							city: city, 
+							region: region,
+							latitude: latitude,
+							longitude: longitude,
+
+						})
+						.then(function(response){
+							navigation.navigate('Avatar', {
+					  			user: 'company',	
+					  			welcome: response.data.welcome,
+					  			id: response.data.id,
+					  			token: response.data.token
+					  		});
+						})
+						.catch(function(error){ 
+							console.log(error);
+						})
 					}
 					 
 				}}>
