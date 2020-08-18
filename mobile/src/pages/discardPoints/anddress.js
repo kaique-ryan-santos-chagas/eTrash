@@ -155,7 +155,7 @@ const Anddress = () => {
 					source={require('../../assets/animations/markerMap.json')}
 					autoPlay loop /> 
 
-					<Text style={[styles.textFooter, footerDisplay]}>Lembre-se sua localizão é importante{'\n'}para que pessoas te encontrem</Text>
+					<Text style={[styles.textFooter, footerDisplay]}>Lembre-se sua localização é importante{'\n'}para que pessoas te encontrem</Text>
 			</Animated.View>
 		  </View>
 		
