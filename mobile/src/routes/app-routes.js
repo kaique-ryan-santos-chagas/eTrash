@@ -9,7 +9,7 @@ import SignIn from '../pages/signIn/index';
 import SignUpPoints from '../pages/discardPoints/signUp';
 import Anddress from '../pages/discardPoints/anddress';
 import Avatar from '../pages/avatar-upload/index';
-import DiscardMain from '../pages/discards/index';
+import DiscardMain from '../pages/discardPoints/discards';
 import SignUpCompany from '../pages/companies/signUp';
 import SignUpUser from '../pages/users/signUp';
 import UserEmail from '../pages/users/email';
