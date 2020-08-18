@@ -63,14 +63,6 @@ const SignOption = () => {
 
 	const navigation = useNavigation();
 
-	function changeScreenToSignIn() {
-		navigation.navigate('SignIn');
-	}
-
-	function changeScreenToChooseUser(){
-		navigation.navigate('ChooseUser');
-	} 
-
 	const centralTextStr = 'Descarte seu\nresíduo eletrônico\ne ajude o'; 
 
 	return (
@@ -108,13 +100,13 @@ const SignOption = () => {
 				{ transform: [ { translateY: buttonAnim.y } ] }
 			]}>
 
-				<RectButton style={styles.signInButton} onPress={() => changeScreenToSignIn()}>
+				<RectButton style={styles.signInButton} onPress={() => navigation.navigate('SignIn')}>
 					<View style={styles.buttonIconIn}>
 						<FontAwesomeIcon style={styles.iconIn} icon={ faSignInAlt } size={20} />
 					</View>
 					<Text style={styles.textButtonIn}>Entrar</Text>
 				</RectButton>
-				<RectButton style={styles.signUpButton} onPress={() => changeScreenToChooseUser()}>
+				<RectButton style={styles.signUpButton} onPress={() => navigation.navigate('ChooseUser')}>
 					<View style={styles.buttonIconUp}>
 						<FontAwesomeIcon style={styles.iconUp} icon={ faUserPlus }/>
 					</View>
