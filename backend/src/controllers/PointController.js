@@ -65,7 +65,7 @@ module.exports = {
         });
         
         return response.json({
-            welcome: "Bem-vindo (a) Ponto de Coleta",
+            welcome: `Bem-vindo(a) Ponto de Coleta ${name}`,
             id: id,
             token: generateToken({id: id})
         });
