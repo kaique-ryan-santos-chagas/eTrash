@@ -92,7 +92,7 @@ module.exports = {
         });
 
         return response.json({
-            sucess: "Companhia cadastrada com sucesso",
+            welcome: `Bem vindo(a) ${name}`,
             id: id,
             token: generateToken({id: id})
         });
