@@ -13,12 +13,15 @@ const Routes = () => {
 	
 	const { signed } = useContext(AuthContext);
 	const [oldUser, setOldUser] = useState();
+	const [signInUser, setSignInUser] = useState(); 
 
 	useEffect(() => {
 		const getUser = async () => {
 			try {
-				const user = await AsyncStorage.getItem('@user'); 
+				const user = await AsyncStorage.getItem('@user');
+				const signIn = await AsyncStorage.getItem('@signIn');
 				setOldUser(user);
+				setSignInUser(signIn);
 			} catch(error){
 				console.log(error);
 			}
@@ -33,7 +36,7 @@ const Routes = () => {
 		return <NewUserRoutes />
 	}
 
-	else if (signed == true) {
+	else if (signed == true || signInUser == true) {
 		return <AuthRoutes />
 	}
 
