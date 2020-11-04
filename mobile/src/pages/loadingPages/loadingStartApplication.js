@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
+import AuthContext from '../../context/authContext';
+
 const LoadingStartApplication = () => {
 
 	const navigation = useNavigation();
 
 	const [loading, setLoading] = useState(true);
+
+	const { signed , signUpUser } = useContext(AuthContext);
 
 	const renderLoading = () => {
 		while(loading){
@@ -27,13 +31,17 @@ const LoadingStartApplication = () => {
 		navigation.navigate('SignOption');
 	}
 
+	
 	useEffect(() => {
 		const getNewUserData = async () => {
 			try {
 				const userStorage = await AsyncStorage.getItem('@user');
+				const signInUser = await AsyncStorage.getItem('@signIn');
 				
-				if(userStorage != null){
-					setTimeout(navigateToSignOption, 1000);
+				if(signInUser == 'true' && userStorage != null){
+					signUpUser(true);
+				}else if(signInUser == null && userStorage != null){
+					setTimeout(navigateToSignOption, 3000);
 				}else{
 					setTimeout(navigateToSlider, 1000);
 				}
