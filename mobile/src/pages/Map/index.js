@@ -14,7 +14,7 @@ const Map = () => {
             <MapView 
             style={styles.map}
             provider={PROVIDER_GOOGLE}
-            region={{
+            initialregion={{
                 latitude: latitude,
                 longitude: longitude,
                 latitudeDelta: 0.015,
