@@ -20,8 +20,12 @@ const ChatBot = () => {
 
     const [inputText, setInputText] = useState();
     const [conversation] = useState([]);
-    const [btnPressed, setBtnPressed] = useState(false); 
+    const [loading, setLoading] = useState(false); 
+    const [inputValue, setInputValue] = useState()
+  
+
     const input = useRef(null);
+    const scrollview = useRef(null);
 
     const [containerAnimation] = useState(new Animated.ValueXY({x: 0, y: 80}));
     const [containerAnimationOpacity] = useState(new Animated.Value(0));
@@ -70,71 +74,105 @@ const ChatBot = () => {
     }
     
     const awaitReponseFromBot = () => {
-        while(conversation == '' && btnPressed == true){
+        while(loading){
             return (
                 <>
                 <View style={styles.userOutput}>
-                    <Text style={styles.inputTextRender}>{inputText}</Text>
+                    <Text style={styles.inputTextRender}>{inputValue}</Text>
                 </View>
                 <LottieView style={styles.chatbotAnimation} source={require('../../assets/animations/chatbot.json')} autoPlay loop />
+                <LottieView style={styles.chatAnimation} source={require('../../assets/animations/chat.json')} autoPlay loop />
                 </>
             );
         }
     }
 
+
+    const sendMessageToBot = async () => {
+        const userToken = await AsyncStorage.getItem('@token');
+
+        const message = { message: inputText }
+
+        try {
+  
+            const response = await api.post('/watson/send', message, {
+                headers: {
+                    authentication: `Bearer ${userToken}`
+                }
+            });
+
+            const conversationKey = Math.floor(Math.random() * 1000);
+
+            conversation.push({bot: response.data.output, key: conversationKey, user: inputText});
+            input.current.clear();
+                            
+            setInputText('');   
+            setLoading(false);
+            console.log(response.data.output);
+
+            }catch(error){
+                console.log(error);
+            }       
+    }
+
     return (
             
-        <View style={styles.container}>
+        <Animated.View style={[styles.container, { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
 
             {renderAnimationWithoutMessages()}
-            {awaitReponseFromBot()}
-            <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+
+            <ScrollView 
+            ref={scrollview} 
+            contentContainerStyle={styles.scroll} 
+            snapToEnd={false} 
+            showsVerticalScrollIndicator={false}
+            onContentSizeChange={() => scrollview.current.scrollToEnd({animated: true})}>
             {conversation.map((item) => {
                 if(conversation == ''){
                     return (
-                        <View style={styles.userOutput}>
+                        <Animated.View style={[styles.userOutput,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
                             <Text style={styles.inputTextRender}>{inputText}</Text>
-                        </View>
+                        </Animated.View>
                     );
                 }
                 else if(item.bot.generic[0].response_type == "suggestion"){
                     console.log('1');
                     return (
                         <>
-                        <View style={styles.userOutput}>
+                        <Animated.View style={[styles.userOutput,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
                              <Text style={styles.inputTextRender}>{item.user}</Text>
-                        </View>
-                        <View style={styles.botViewResponse}>
+                        </Animated.View>
+                        <Animated.View style={[styles.botViewResponse,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
                             <Text style={styles.botText}>{item.bot.generic[0].suggestions[0].output.text}</Text>
-                        </View>
+                        </Animated.View>
                         </>
                     );
                 }
-                else if(item.bot.generic[0].response_type == 'text' && item.bot.generic[1] != undefined){
+                else if(item.bot.generic[0].response_type == 'text' && item.bot.generic[1] != undefined && item.bot.generic[1].source != undefined){
                     console.log('2');
                     return (
                         <>
-                        <View style={styles.userOutput}>
+                        <Animated.View style={[styles.userOutput,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
                              <Text style={styles.inputTextRender}>{item.user}</Text>
-                        </View>
-                        <View style={styles.botViewResponse}>
+                        </Animated.View>
+                        <Animated.View style={[styles.botViewResponse,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
                             <Text style={styles.botText}>{item.bot.text}</Text>
-                        </View>
-                        <View style={styles.botViewResponse}>
+                        </Animated.View>
+                        <Animated.View style={[styles.botViewResponse,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
                             <Image source={{ uri: item.bot.generic[1].source }} style={styles.pointImage} />
                             <Text style={styles.botTextBold}>{item.bot.generic[1].title}</Text>
                             <Text style={styles.botTextBold}>{item.bot.generic[1].description}</Text>
-                        </View>
-                        <View style={styles.botViewResponse}>
+                        </Animated.View>
+                        <Animated.View style={[styles.botViewResponse,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
                             <Image source={{ uri: item.bot.generic[2].source }} style={styles.pointImage} />
                             <Text style={styles.botTextBold}>{item.bot.generic[2].title}</Text>
                             <Text style={styles.botTextBold}>{item.bot.generic[2].description}</Text>
-                        </View>
-                        <View style={styles.botViewResponse}>
+                        </Animated.View>
+                        <Animated.View style={[styles.botViewResponse,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
                             <Image source={{ uri: item.bot.generic[3].source }} style={styles.pointImage} />
                             <Text style={styles.botTextBold}>{item.bot.generic[3].title}</Text>
                             <Text style={styles.botTextBold}>{item.bot.generic[3].description}</Text>
-                        </View>
+                        </Animated.View>
                         </>
                     );
                 }
@@ -142,16 +180,88 @@ const ChatBot = () => {
                     console.log('3');
                     return (
                         <>
+                        <Animated.View style={[styles.userOutput,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
+                             <Text style={styles.inputTextRender}>{item.user}</Text>
+                        </Animated.View>
+                        <Animated.View style={[styles.botViewResponse,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
+                            <Text style={styles.botText}>{item.bot.text}</Text>
+                        </Animated.View>
+                        </>
+                    );
+                }
+                else if(item.bot.generic[0].response_type == 'text' && item.bot.generic[1] != undefined){
+                    console.log('4');
+                    return (
+                        <>
                         <View style={styles.userOutput}>
                              <Text style={styles.inputTextRender}>{item.user}</Text>
                         </View>
                         <View style={styles.botViewResponse}>
                             <Text style={styles.botText}>{item.bot.text}</Text>
+                            <Text style={styles.botText}>{item.bot.generic[1].description}</Text>
+                            <Text style={styles.botTextBold}>{item.bot.generic[1].title}</Text>
                         </View>
                         </>
                     );
                 }
+                else if(item.bot.generic[0].description != undefined && item.bot.generic[1] != undefined && item.bot.generic[1].source != undefined){
+                    console.log('5');
+                    return (
+                        <>
+                        <Animated.View style={[styles.userOutput,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
+                             <Text style={styles.inputTextRender}>{item.user}</Text>
+                        </Animated.View>
+                        <Animated.View style={[styles.botViewResponse,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
+                            <Text style={styles.botText}>{item.bot.text}</Text>
+                        </Animated.View>
+                        <Animated.View style={[styles.botViewResponse,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
+                            <Image source={{ uri: item.bot.generic[0].source }} style={styles.pointImage} />
+                            <Text style={styles.botTextBold}>{item.bot.generic[0].title}</Text>
+                            <Text style={styles.botTextBold}>{item.bot.generic[0].description}</Text>
+                        </Animated.View>
+                        <Animated.View style={[styles.botViewResponse,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
+                            <Image source={{ uri: item.bot.generic[1].source }} style={styles.pointImage} />
+                            <Text style={styles.botTextBold}>{item.bot.generic[1].title}</Text>
+                            <Text style={styles.botTextBold}>{item.bot.generic[1].description}</Text>
+                        </Animated.View>
+                        <Animated.View style={[styles.botViewResponse,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
+                            <Image source={{ uri: item.bot.generic[2].source }} style={styles.pointImage} />
+                            <Text style={styles.botTextBold}>{item.bot.generic[2].title}</Text>
+                            <Text style={styles.botTextBold}>{item.bot.generic[2].description}</Text>
+                        </Animated.View>
+                        </>
+                    );
+                }
+                else if(item.bot.generic[0].response_type == undefined && item.bot.generic[1] != undefined && item.bot.generic[1].source != undefined){
+                    console.log('6');
+                    return (
+                        <>
+                        <Animated.View style={[styles.userOutput,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
+                             <Text style={styles.inputTextRender}>{item.user}</Text>
+                        </Animated.View>
+                        <Animated.View style={[styles.botViewResponse,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
+                            <Text style={styles.botText}>{item.bot.text}</Text>
+                        </Animated.View>
+                        <Animated.View style={[styles.botViewResponse,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
+                            <Image source={{ uri: item.bot.generic[0].source }} style={styles.pointImage} />
+                            <Text style={styles.botTextBold}>{item.bot.generic[0].title}</Text>
+                            <Text style={styles.botTextBold}>{item.bot.generic[0].description}</Text>
+                        </Animated.View>
+                        <Animated.View style={[styles.botViewResponse,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
+                            <Image source={{ uri: item.bot.generic[1].source }} style={styles.pointImage} />
+                            <Text style={styles.botTextBold}>{item.bot.generic[1].title}</Text>
+                            <Text style={styles.botTextBold}>{item.bot.generic[1].description}</Text>
+                        </Animated.View>
+                        <Animated.View style={[styles.botViewResponse,  { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ] }]}>
+                            <Image source={{ uri: item.bot.generic[2].source }} style={styles.pointImage} />
+                            <Text style={styles.botTextBold}>{item.bot.generic[2].title}</Text>
+                            <Text style={styles.botTextBold}>{item.bot.generic[2].description}</Text>
+                        </Animated.View>
+                        </>
+                    );
+                }
             })}
+            {awaitReponseFromBot()}
             </ScrollView>
 
             <TextInput 
@@ -166,33 +276,10 @@ const ChatBot = () => {
 
                     if(inputText != '' && inputText != undefined){
 
-                        setBtnPressed(true);
-
-                        const userToken = await AsyncStorage.getItem('@token');
-
-                        const message = { message: inputText }
-
-                        try {
-  
-                            const response = await api.post('/watson/send', message, {
-                                 headers: {
-                                    authentication: `Bearer ${userToken}`
-                                 }
-                            });
-
-                             const conversationKey = Math.floor(Math.random() * 1000);
-
-                             conversation.push({bot: response.data.output, key: conversationKey, user: inputText});
-                             input.current.clear();
-                             setInputText('');
-                             
-                             console.log(response.data.output);
-
-                        }catch(error){
-                            console.log(error);
-                        }       
-
-                    
+                        setInputValue(inputText);
+                        setLoading(true);
+                        setTimeout(sendMessageToBot, 3000);
+           
                 }
 
                 }}>
@@ -201,7 +288,7 @@ const ChatBot = () => {
             </TouchableOpacity>
 
             <FontAwesomeIcon size={25} icon={faRobot} style={styles.botIcon} />
-            </View>
+            </Animated.View>
 
     );
 }
@@ -215,15 +302,16 @@ const styles = StyleSheet.create({
     scroll: {
         paddingHorizontal: 20,
         paddingTop: 300,
-        paddingBottom: 100,
+        paddingBottom: 70,
     },
     chatbotAnimation: {
-        width: 60,
+        width: 0,
         height: 70,
         left: 0,
         position:  'relative',
-        marginRight: 220,
-        bottom: 0
+        marginRight: 250,
+        bottom: 0,
+        
     },
     input: {
         left: 0,
@@ -295,7 +383,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginLeft: 80,
         bottom: 0,
-        marginBottom: 50,
+        marginBottom: 20,
         position: 'relative',
         padding: 20,
         borderRadius: 30
@@ -341,6 +429,15 @@ const styles = StyleSheet.create({
         width: 240,
         height: 200,
         marginBottom: 20
+    },
+    chatAnimation: {
+        width: 70,
+        height: 70,
+        left: 0,
+        position:  'absolute',
+        marginLeft: 35,
+        bottom: 0,
+        marginBottom: 45
     }
 
 });
