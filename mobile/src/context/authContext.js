@@ -45,6 +45,7 @@ export const AuthProvider = ({children}) => {
 		.then(async function(response){
 			console.log(response.data);
 			await AsyncStorage.setItem('@token', response.data.token);
+			await AsyncStorage.setItem('@signIn', 'true');
 			return setSigned(true);
 		})
 		.catch(function(error){
@@ -64,6 +65,7 @@ export const AuthProvider = ({children}) => {
 		.then(async function(response){
 			console.log(response.data);
 			await AsyncStorage.setItem('@token', response.data.token);
+			await AsyncStorage.setItem('@signIn', 'true');
 			return setSigned(true);
 		})
 		.catch(function(error){
@@ -83,6 +85,7 @@ export const AuthProvider = ({children}) => {
 		.then(async function(response){
 			console.log(response.data);
 			await AsyncStorage.setItem('@token', response.data.token);
+			await AsyncStorage.setItem('@signIn', 'true');
 			return setSigned(true);
 		})
 		.catch(function(error){
