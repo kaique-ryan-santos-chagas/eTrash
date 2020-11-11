@@ -9,12 +9,17 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import AuthContext from '../context/authContext';
 
+import api from '../services/api';
+
 const Routes = () => {
 	
-	const { signed } = useContext(AuthContext);
+	const { signed, setSigned } = useContext(AuthContext);
 	const [oldUser, setOldUser] = useState();
+	const [token, setToken] = useState();
 	const [signInUser, setSignInUser] = useState(); 
 
+
+	
 	useEffect(() => {
 		const getUser = async () => {
 			try {

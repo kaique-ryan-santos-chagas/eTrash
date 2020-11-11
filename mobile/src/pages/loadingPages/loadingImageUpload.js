@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, ActivityIndicator, StyleSheet, StatusBar } from 'react-native';
+import React, { useEffect, useContext } from 'react';
+import { View, Text, StyleSheet, StatusBar } from 'react-native';
 
 import api from '../../services/api';
 
@@ -11,6 +11,7 @@ import AuthContext from '../../context/authContext';
 
 import LottieView from 'lottie-react-native';
 
+import axios from 'axios';
 
 const LoadingImageUpload = () => {
 
@@ -29,9 +30,18 @@ const LoadingImageUpload = () => {
 
 			console.log(userId);
 
-			const formImage = new FormData();
+			const image = new FormData();
 
-			formImage.append('file', {
+			image.append('image', {
+				name: route.params.imageName,
+				fileSize: route.params.imageSize,
+				uri: route.params.imageUri,
+				type: route.params.imageType
+			});
+
+			const file = new FormData();
+
+			file.append('file', {
 				name: route.params.imageName,
 				fileSize: route.params.imageSize,
 				uri: route.params.imageUri,
@@ -40,42 +50,85 @@ const LoadingImageUpload = () => {
 
 			if(route.params.user == 'user'){	
 
-				const response = await api.post('/users/upload', formImage, {
+				try {
+
+				const responseImgBB = await axios.post('https://api.imgbb.com/1/upload', image,  {
+					params: {
+						key: 'c80ac19b5ea65aec082b0f6e4a8d0c8b'
+					}
+				}); 
+
+				const response = await api.post('/users/upload', file, {
 					headers: {
-						'authentication': `Bearer ${userToken}`,
-						'authorization': userId,
+						url: responseImgBB.data.url,
+						authentication: `Bearer ${userToken}`,
+						authorization: userId,
 						'Content-Type': 'multipart/form-data'
 					}
-				})
+				});
+
+				
 
 				navigation.navigate('DiscardMainUser');
+
+				}catch(error){
+					console.log(error.response);
+				}
 				
 
 			}
 
 			if(route.params.user == 'company'){
-				const response = await api.post('/companies/upload', formImage, {
-					headers: {
-						'authentication': `Bearer ${userToken}`,
-						'authorization': userId,
-						'Content-Type': 'multipart/form-data'
-					}
-				});
 
-				navigation.navigate('DiscardCompany');
+				try {
+					const responseImgBB = await axios.post('https://api.imgbb.com/1/upload', image,  {
+						params: {
+							key: 'c80ac19b5ea65aec082b0f6e4a8d0c8b'
+						}
+					}); 
+
+					const response = await api.post('/companies/upload', file, {
+						headers: {
+							url: responseImgBB.data.url,
+							authentication: `Bearer ${userToken}`,
+							authorization: userId,
+							'Content-Type': 'multipart/form-data'
+						}
+					});
+
+					navigation.navigate('DiscardCompany');
+
+				}catch(error){
+					console.log(error.response);
+				}
 			}
 
 
 			if(route.params.user == 'point'){
-				const response = await api.post('/point/upload', formImage, {
-					headers: {
-						'authentication': `Bearer ${userToken}`,
-						'authorization': userId,
-						'Content-Type': 'multipart/form-data'
-					}
-				});
 
-				signUpPoint();
+				try {
+					const responseImgBB = await axios.post('https://api.imgbb.com/1/upload', image,  {
+						params: {
+							key: 'c80ac19b5ea65aec082b0f6e4a8d0c8b'
+						}
+					}); 
+
+					const response = await api.post('/point/upload', image, {
+						headers: {
+							url: responseImgBB.data.url,
+							authentication: `Bearer ${userToken}`,
+							authorization: userId,
+							'Content-Type': 'multipart/form-data'
+						}
+					});
+
+					signUpPoint();
+				
+				}catch(error){
+					console.log(error.response);
+				}
+
+
 			}
 
 		}catch(error){

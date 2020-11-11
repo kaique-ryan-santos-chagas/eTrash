@@ -21,7 +21,8 @@ const AuthContext = createContext({
 	latitude: 0,
 	longitude: 0,
 	error: '',
-	setError: ''
+	setError: '',
+	setSigned: ''
   });
 
 export const AuthProvider = ({children}) => {
@@ -135,7 +136,8 @@ export const AuthProvider = ({children}) => {
 			latitude: latitude,
 			longitude: longitude,
 			error: error,
-			setError: setError
+			setError: setError,
+			setSigned: setSigned
 		}}>
 			{children}
 		</AuthContext.Provider>
