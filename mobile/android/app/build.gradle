@@ -172,6 +172,7 @@ android {
             signingConfig signingConfigs.debug
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
+            release { signingConfig signingConfigs.release }
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -207,6 +208,8 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     implementation 'com.android.support:multidex:1.0.1'
+
+    implementation project(':react-native-webview')
 
     implementation project(':lottie-react-native')
 

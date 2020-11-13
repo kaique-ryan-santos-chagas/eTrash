@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, 
 		 StatusBar, 
 		 StyleSheet, 
 		 TouchableOpacity,
-		 Animated,
 		 ScrollView, 
 		 Text,
 		 Image } from 'react-native';
@@ -17,29 +16,12 @@ import MapView, { Marker } from 'react-native-maps';
 
 const PointView = () => {
 
-	const [containerAnimation] = useState(new Animated.ValueXY({x: 0, y: 80}));
-	const [containerAnimationOpacity] = useState(new Animated.Value(0));
+
 	const [mapDisplay, setMapDisplay] = useState({ display: 'none' });
 	const [btnDisplay, setBtnDisplay] = useState();
 
     const navigation = useNavigation();
     const route = useRoute();
-
-	useEffect(() => {
-		Animated.parallel([
-			Animated.timing(containerAnimationOpacity, {
-				toValue: 1,
-				duration: 500,
-				useNativeDriver: true
-			}),
-			Animated.spring(containerAnimation.y, {
-				toValue: 0,
-				speed: 1,
-				useNativeDriver: true
-			})
-        ]).start();
-	}, []);
-
  
 	const renderPoint = () => {
 		if(mapDisplay.display == 'flex'){
@@ -57,7 +39,7 @@ const PointView = () => {
 	}
 
 	return (
-		<Animated.View style={[styles.container, { opacity: containerAnimationOpacity, transform: [ { translateY: containerAnimation.y } ]  }]}>
+		<View style={styles.container}>
 			<StatusBar backgroundColor="#38c172" barStyle="light-content" /> 
 			<View style={styles.searchView}>
 				<Image source={{ uri: route.params.avatar }} style={styles.topPointImage} />
@@ -133,7 +115,7 @@ const PointView = () => {
 
             </View>
 
-		</Animated.View>
+		</View>
 	);
 }
 

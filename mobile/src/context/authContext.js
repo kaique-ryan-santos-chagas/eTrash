@@ -46,6 +46,8 @@ export const AuthProvider = ({children}) => {
 		.then(async function(response){
 			console.log(response.data);
 			await AsyncStorage.setItem('@token', response.data.token);
+			await AsyncStorage.setItem('@id', response.data.id);
+			await AsyncStorage.setItem('@user', 'user');
 			await AsyncStorage.setItem('@signIn', 'true');
 			return setSigned(true);
 		})
@@ -66,6 +68,8 @@ export const AuthProvider = ({children}) => {
 		.then(async function(response){
 			console.log(response.data);
 			await AsyncStorage.setItem('@token', response.data.token);
+			await AsyncStorage.setItem('@id', response.data.id);
+			await AsyncStorage.setItem('@user', 'company');
 			await AsyncStorage.setItem('@signIn', 'true');
 			return setSigned(true);
 		})
@@ -86,6 +90,8 @@ export const AuthProvider = ({children}) => {
 		.then(async function(response){
 			console.log(response.data);
 			await AsyncStorage.setItem('@token', response.data.token);
+			await AsyncStorage.setItem('@id', response.data.id);
+			await AsyncStorage.setItem('@user', 'point');
 			await AsyncStorage.setItem('@signIn', 'true');
 			return setSigned(true);
 		})

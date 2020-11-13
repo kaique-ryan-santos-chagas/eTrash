@@ -33,26 +33,22 @@ const LoadingStartApplication = () => {
 
 	
 	useEffect(() => {
-		const getNewUserData = async () => {
-			try {
-				const userStorage = await AsyncStorage.getItem('@user');
-				const signInUser = await AsyncStorage.getItem('@signIn');
+		const getAuthData = async () => {
+			const userStorage = await AsyncStorage.getItem('@user');
+			const signInUser = await AsyncStorage.getItem('@signIn');
+			console.log(signInUser);
 				
-				if(signInUser == 'true' && userStorage != null){
-					signUpUser(true);
-				}else if(signInUser == null && userStorage != null){
-					setTimeout(navigateToSignOption, 3000);
-				}else{
-					setTimeout(navigateToSlider, 1000);
-				}
-			}catch(error){
-				console.log(error);
-			}
+			if(signInUser == 'true'){
+				signUpUser(true);
 
+			}else if(signInUser == null && userStorage != null){
+				setTimeout(navigateToSignOption, 3000);
+			}else{
+				setTimeout(navigateToSlider, 1000);
+			}
 		}
-		
-		getNewUserData();
-		
+			
+		getAuthData();
 	}, []);
 
 

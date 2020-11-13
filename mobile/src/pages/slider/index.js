@@ -15,7 +15,7 @@ const slides = [
   {
     key: 1,
     title: 'Notícias',
-    text: 'Acompanhe as notícias a respeito\n do lixo eletrônico no Brasil e no mundo',
+    text: 'Acompanhe as notícias a respeito\n do residuo eletrônico no Brasil e no mundo',
     image: require('../../assets/animations/news.json'), 
     backgroundColor: '#ffffff',
   },
@@ -39,7 +39,7 @@ const slides = [
   {
     key: 4,
     title: 'Inteligência Artificial',
-    text: 'Estou aqui para te ajudar\ncom seu lixo eletrônico',
+    text: 'Estou aqui para te ajudar\ncom seu resíduo eletrônico',
     image: require('../../assets/animations/chatbot.json'), 
     backgroundColor: '#ffffff',
   },
@@ -58,6 +58,10 @@ const slides = [
 const Slider = () => {
 
   const navigation = useNavigation();
+
+  _onSkip = () => {
+    navigation.navigate('SignOption');
+  }
 
   _renderItem = ({ item }) => {
       return (
@@ -111,6 +115,7 @@ const Slider = () => {
         data={slides} 
         showSkipButton 
         dotClickEnabled 
+        onSkip={_onSkip}
         showPrevButton
         dotStyle={{backgroundColor: '#38c172'}}
         activeDotStyle={{backgroundColor: '#2E8B57'}}

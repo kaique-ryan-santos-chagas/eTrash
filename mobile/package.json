@@ -22,7 +22,6 @@
     "@react-navigation/native": "^5.5.1",
     "@react-navigation/stack": "^5.5.1",
     "axios": "^0.19.2",
-    "itertools": "^1.6.1",
     "lottie-react-native": "^3.4.0",
     "react": "16.13",
     "react-native": "0.62.2",

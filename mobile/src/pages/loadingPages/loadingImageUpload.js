@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { View, Text, StyleSheet, StatusBar } from 'react-native';
 
 import api from '../../services/api';
@@ -18,6 +18,7 @@ const LoadingImageUpload = () => {
 	const route = useRoute();
 	const navigation = useNavigation();
 
+
 	const { signUpPoint } = useContext(AuthContext);
 
 	const imageUpload = async () => {
@@ -27,8 +28,7 @@ const LoadingImageUpload = () => {
 
 			const userId = await AsyncStorage.getItem('@id');
 			const userToken = await AsyncStorage.getItem('@token');
-
-			console.log(userId);
+		
 
 			const image = new FormData();
 
@@ -39,41 +39,35 @@ const LoadingImageUpload = () => {
 				type: route.params.imageType
 			});
 
-			const file = new FormData();
-
-			file.append('file', {
-				name: route.params.imageName,
-				fileSize: route.params.imageSize,
-				uri: route.params.imageUri,
-				type: route.params.imageType
-			});
-
+			
 			if(route.params.user == 'user'){	
 
 				try {
 
 				const responseImgBB = await axios.post('https://api.imgbb.com/1/upload', image,  {
 					params: {
-						key: 'c80ac19b5ea65aec082b0f6e4a8d0c8b'
+						key: 'e5fa439eb2f80ff06c8f5af991482e60'
 					}
 				}); 
 
-				const response = await api.post('/users/upload', file, {
+				
+				console.log(responseImgBB.data.data.url);
+			
+				const responseApi = await api.post('/users/upload', { url: responseImgBB.data.data.url } ,  {
 					headers: {
-						url: responseImgBB.data.url,
 						authentication: `Bearer ${userToken}`,
 						authorization: userId,
-						'Content-Type': 'multipart/form-data'
 					}
 				});
 
 				
-
 				navigation.navigate('DiscardMainUser');
+								
 
 				}catch(error){
-					console.log(error.response);
+					console.log(error);
 				}
+		
 				
 
 			}
@@ -87,12 +81,11 @@ const LoadingImageUpload = () => {
 						}
 					}); 
 
-					const response = await api.post('/companies/upload', file, {
+					const response = await api.post('/companies/upload', {
 						headers: {
 							url: responseImgBB.data.url,
 							authentication: `Bearer ${userToken}`,
 							authorization: userId,
-							'Content-Type': 'multipart/form-data'
 						}
 					});
 
@@ -113,12 +106,11 @@ const LoadingImageUpload = () => {
 						}
 					}); 
 
-					const response = await api.post('/point/upload', image, {
+					const response = await api.post('/point/upload', {
 						headers: {
 							url: responseImgBB.data.url,
 							authentication: `Bearer ${userToken}`,
 							authorization: userId,
-							'Content-Type': 'multipart/form-data'
 						}
 					});
 

@@ -17,11 +17,11 @@ import api from '../../services/api';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
+import localStorage from 'react-native-sync-localstorage';
+
 import AuthContext from '../../context/authContext';
 
 import { useNavigation } from '@react-navigation/native';
-
-import localStorage from 'react-native-sync-localstorage';
 
 const Main = () => {
 
